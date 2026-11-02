@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dispatch Platinum Guide</title>
-<meta name="description" content="Dispatch PS5 platinum guide: every trophy, every choice for both runs, who to send on every call, and a walkthrough for all 28 hacks.">
+<meta name="description" content="Dispatch PS5 platinum guide: every trophy with its exact unlock rule from the game files, every choice for both runs, who to send on every call, and a walkthrough for all 28 hacks.">
 <meta name="theme-color" content="#0E1421">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -246,6 +246,12 @@ ol.choices,ol.calls,ul.checks{list-style:none;margin:0;padding:0;display:grid;ga
 .t-desc{font-size:.8125rem;color:var(--muted);font-style:italic}
 .t-how{font-size:.9375rem;margin-top:4px}
 .t-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:6px;font-size:.8125rem}
+.t-file{font-size:.875rem;margin-top:6px;padding:7px 10px;border-radius:8px;background:var(--bg);border:1px dashed var(--line)}
+.t-file b{font:700 .6875rem/1 var(--mono);text-transform:uppercase;letter-spacing:.04em;color:var(--good);margin-right:6px}
+.t-file .mono{color:var(--muted)}
+.keylist{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.keylist li{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--good);border-radius:10px;padding:10px 12px}
+table.grid td.pts{font-family:var(--mono);font-weight:700;white-space:nowrap}
 .resetbtn{font:700 .8125rem/1 var(--body);padding:8px 11px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer}
 .resetbtn.armed{border-color:var(--bad);color:var(--bad)}
 
@@ -326,8 +332,8 @@ const RUN_LABEL = {"1":"Run 1 · Invisigal romance, hero", "2":"Run 2 · Blazer 
 const OVERVIEW = {
   tiles:[["36","trophies · 1P 3G 16S 16B"],["3/10","difficulty"],["10–15 h","plus luck retries"],["2 + 1","full runs + a replay"]],
   facts:[
-    ["Difficulty setting","None. If the first-launch \"Tailor Your Experience\" menu offers unlimited hacking lives, leave it off: Gamepressure reports the hacks don't count with it on."],
-    ["Glitched","H4ck3d by R0b3rt was broken at launch. PS5 update 1.000.007 (Nov 21, 2025) fixed it and a Min Max unlock issue. Update before you start."],
+    ["Difficulty setting","None. Leave the hacking easy mode (unlimited hacking lives) off: the game files show it blocks Burning Chrome and Time's Running Out. It does not block H4ck3d by R0b3rt in the current version."],
+    ["Glitched","H4ck3d by R0b3rt was broken at launch. PS5 update 1.000.007 (Nov 21, 2025) fixed it and a Min Max unlock issue. Update before you start. In the current files H4ck3d counts 26 different hacking levels across all your saves (Game Files tab)."],
     ["Missable","All choice, ending and story-hack trophies. All can be recovered with Scene Select."]
   ],
   saves:[
@@ -378,7 +384,7 @@ const TROPHIES = [
  {n:"\"Watch your back, Robert.\"", g:"S", d:"Collected a Tie", h:"End of Ep 3: cut Sonar.", w:"Run 2 · Ep 3", p:"r2", ep:"ep3"},
  {n:"\"But I cheered for Invisigal...\"", g:"S", d:"Collected a Knife", h:"End of Ep 3: cut Coupé.", w:"Run 1 · Ep 3", p:"r1", ep:"ep3"},
  {n:"Career Development", g:"S", d:"Aced Your Performance Review", h:"Reach the top dispatcher rank (Junior, Assistant, Associate, Dispatcher). Successful calls raise it; failed or missed calls lower it.", w:"Run 1", p:"r1", ep:"heroes"},
- {n:"H4ck3d by R0b3rt", g:"S", d:"Succeeded On All Hacking Levels", h:"Win all 28 hacking puzzles, including the optional ones you only get by picking the hack option. Walkthrough and checklist on the Hacks tab.", w:"Run 1", p:"r1", ep:"hacks"},
+ {n:"H4ck3d by R0b3rt", g:"S", d:"Succeeded On All Hacking Levels", h:"Win 26 different hacking levels. A full run has about 27, including the optional ones you only get by picking the hack option, so you can miss one. Wins from every save slot add up. Walkthrough and checklist on the Hacks tab.", w:"Run 1 (+ Run 2 top-up)", p:"r1", ep:"hacks"},
  {n:"Work Spouse", g:"S", d:"Reached Max Synergy With a Hero Duo", h:"Keep sending one synergy pair together (Sonar + Malevola is easiest) until synergy level 3.", w:"Run 1 · Ep 3–4", p:"r1", ep:"ep4"},
  {n:"Anti-Antivirus Club", g:"S", d:"Destroyed 3 Antiviruses in Less Than 15 Seconds", h:"Charge at an electric node, then zap three antiviruses fast. Ep 5's film-shoot and East Torrance hacks have three; Ep 6's safe hack has many.", w:"Run 1 · Ep 5–6", p:"r1", ep:"hacks"},
  {n:"Power Trip", g:"S", d:"Expanded Powers for 4 Different Heroes", h:"Send four different heroes to Hero Training calls. Pops at your 4th training (Ep 5 with this guide's order).", w:"Run 1 · Ep 3–5", p:"r1", ep:"heroes"},
@@ -392,7 +398,7 @@ const TROPHIES = [
  {n:"Snake Eyes", g:"B", d:"Failed a Call with >70% of Success", h:"Ep 2: send Coupé alone to Lost Balloon (72%). Reload until it fails. Not in Run 1's Ep 2, because a failure there breaks Shift Was Lit.", w:"Run 2 · Ep 2", p:"r2", ep:"ep2"},
  {n:"Nailed It", g:"B", d:"Achieved a Perfect Dispatch With Only One Hero", h:"Ep 2: send Flambae alone to Lost Balloon (100%).", w:"Run 1 · Ep 2", p:"r1", ep:"ep2"},
  {n:"Overkill", g:"B", d:"Covered the Entire Graph on a Single Call", h:"Ep 1 tutorial: fill all 4 slots of Chase El Diabolito with Pom Pom, Brickhouse, Equilibrium and Brainbook.", w:"Run 1 · Ep 1", p:"r1", ep:"ep1"},
- {n:"Modded", g:"B", d:"Reached all bonuses and successfully avoid all failures", h:"In one shift, clear every 2x-XP stat threshold and never trip an auto-fail threshold. Ep 7 is the recommended shift.", w:"Run 1 · Ep 7", p:"r1", ep:"ep7"},
+ {n:"Modded", g:"B", d:"Reached all bonuses and successfully avoid all failures", h:"In one shift, clear every 2x-XP stat threshold and never trip an auto-fail threshold. Only the Ep 6, 7 and 8 shifts count. Ep 7 is the recommended shift.", w:"Run 1 · Ep 7", p:"r1", ep:"ep7"},
  {n:"Phoenixes Down", g:"B", d:"Healed the Same Hero Twice in a Shift", h:"Malevola heals the hero she's sent with. Get the same injured hero healed by her twice in one shift.", w:"Run 1 or 2", p:"any", ep:"cleanup"},
  {n:"Time's Running Out", g:"B", d:"Completed a Hacking Level With less than 5 Seconds Left", h:"On a timed hack, wait on the last move and finish with under 5 s left.", w:"Any", p:"any", ep:"hacks"},
  {n:"Burning Chrome", g:"B", d:"Completed a Hacking Level With at least a third of the Timer Left", h:"Finish a timed hack fast (Ep 2 Cray Cray Bidet or Museum Robbery).", w:"Any · Ep 2", p:"any", ep:"hacks"},
@@ -406,9 +412,9 @@ const EPISODES = [
   lead:"Episode 1 is the tutorial. Here you split the two runs (kiss Blazer or not), win the first hack, and earn Overkill on the last tutorial call.",
   facts:[["Trophies","Overkill, \"Did I drool on you?\" (end of episode)"],["Hacks","The tablet hack (1 of 19)"]],
   choices:[
-    {m:"Dangling villain (Toxic)", r1:"Pull him back", r2:"Let him drop", why:"Into Indie's good-mentor route never drops him."},
+    {m:"Dangling villain (Toxic)", r1:"Pull him back", r2:"Let him drop", why:"No mentor points in the game files (Episode 1 has none)."},
     {m:"Tablet hacking tutorial", r1:"Win it", r2:"Win it", why:"First of the 28 hacks for H4ck3d (the Hacks tab has every route). Don't turn on unlimited attempts."},
-    {m:"Press conference: dad question", r1:"Answer", r2:"Answer", why:"Positive pick; may feed mentor points."},
+    {m:"Press conference: dad question", r1:"Answer", r2:"Answer", why:"No mentor points in the game files."},
     {m:"Bar: \"Why did you do it?\"", r1:"I like helping people.", r2:"I like helping people.", why:"Raises Blazer, and is remembered."},
     {m:"Flambae's injury", r1:"Either", r2:"Either", why:"Cosmetic only (tooth or eyebrows)."},
     {m:"Blazer leans in on the billboard", r1:"Let the moment pass", r2:"Kiss her", why:"The kiss starts the Blazer romance. Skipping it keeps Run 1's no-romance cleanup clean.", key:true},
@@ -435,7 +441,7 @@ const EPISODES = [
     {m:"Blazer: was the kiss a mistake?", r1:"We were drunk.", r2:"I'll take your lead.", why:"Blazer route. Options are the same whether or not you kissed her."},
     {m:"Royd in the bathroom", r1:"Bro fist.", r2:"Bro fist.", why:"Royd remembers."},
     {m:"Granny's Donuts: \"favorite donut\"", r1:"The long cream ones", r2:"Same, or the current least-picked", why:"Least-popular trophy. Copy the slot when the question appears. Options: Jelly filled / The long cream ones / Plain glazed. If it doesn't pop, Scene Select the last scene of Ep 2 and try another.", save:true},
-    {m:"Granny's Donuts hacks (cameras, then sprinklers)", r1:"Win both. Locks: Up, Down, Left, Left, then Up, Down, Left, Up", r2:"Win both if H4ck3d isn't done yet", why:"H4ck3d, and Invisigal remembers (mentor)."},
+    {m:"Granny's Donuts hacks (cameras, then sprinklers)", r1:"Win both. Locks: Up, Down, Left, Left, then Up, Down, Left, Up", r2:"Win both if H4ck3d isn't done yet", why:"H4ck3d. One of these hacks is worth +1 mentor on a win and -1 on a failure."},
     {m:"Disarm Granny / Take out the thief", r1:"Either", r2:"Either", why:"Same outcome."},
     {m:"Talk with Invisigal: confrontation", r1:"You ignored my order.", r2:"I told Chase you disobeyed.", why:"The tattle angers her (villain path).", key:true},
     {m:"Blazer asks about your face", r1:"I bumped my head.", r2:"Invisigal punched me.", why:"Snitching is a villain-path pick.", key:true},
@@ -472,10 +478,10 @@ const EPISODES = [
     {m:"Golem shoves you at the meeting", r1:"Give him the chair", r2:"Give him the chair", why:"Kicking him out costs you Golem on Personal Shopper."},
     {m:"\"What I see is...\"", r1:"Potential.", r2:"Potential.", why:"Good-leader pick."},
     {m:"Phoenix speech", r1:"All of you are Phoenixes.", r2:"All of you are Phoenixes.", why:"Good-leader pick."},
-    {m:"Invisigal on the playground (fate)", r1:"You make your own destiny.", r2:"Any other option", why:"Mentor-critical.", key:true},
-    {m:"The burglary in progress", r1:"This could make a difference.", r2:"Take your anger out on him.", why:"Mentor."},
-    {m:"Jewelry store: 3 antivirus hacks", r1:"Win all three (Camera Override, Camera Override, System Override)", r2:"Win if H4ck3d isn't done; failing helps the villain ending", why:"H4ck3d + mentor. In the third, lure the antivirus to the bottom of the web and close it in."},
-    {m:"Blazer: \"Did you mean all that?\"", r1:"I hope so.", r2:"No, I don't.", why:"Mentor."},
+    {m:"Invisigal on the playground (fate)", r1:"You make your own destiny.", r2:"Any other option", why:"The game files show no mentor points for this pick.", key:true},
+    {m:"The burglary in progress", r1:"This could make a difference.", r2:"Take your anger out on him.", why:"+1 mentor (the anger option is -1)."},
+    {m:"Jewelry store: 3 antivirus hacks", r1:"Win all three (Camera Override, Camera Override, System Override)", r2:"Win if H4ck3d isn't done; failing helps the villain ending", why:"H4ck3d. Camera 2 and the master light are worth +2 mentor each on a win and -2 on a failure; camera 1 has none. In the third, lure the antivirus to the bottom of the web and close it in."},
+    {m:"Blazer: \"Did you mean all that?\"", r1:"I hope so.", r2:"No, I don't.", why:"No mentor points in the game files."},
     {m:"Who to cut", r1:"Coupé → Knife trophy", r2:"Sonar → Tie trophy", why:"The cut hero joins Shroud's side. Their friend (Punch Up for Coupé, Malevola for Sonar) leaves Ep 4's first shift early.", save:true}
   ],
   extraHtml:"sabotage",
@@ -521,7 +527,7 @@ const EPISODES = [
     {m:"New recruit (Scene 7)", r1:"Waterboy → First Shot trophy", r2:"Phenomaman → Second Chance trophy", why:"No story lock. Waterboy starts weak but levels fast.", save:true},
     {m:"Pep talk for the recruit", r1:"Believe in yourself. (Waterboy)", r2:"That's not healthy. (Phenomaman)", why:"Remembered."},
     {m:"Invisigal: \"Are we friends?\"", r1:"Though we already were.", r2:"We're getting there.", why:"Friendly pick for Run 1."},
-    {m:"End of episode: the date", r1:"Movie with Invisigal", r2:"Dinner with Blazer", why:"Locks the romance route. The movie is worth +6 mentor.", save:true},
+    {m:"End of episode: the date", r1:"Movie with Invisigal", r2:"Dinner with Blazer", why:"Locks the romance route. The movie is worth +5 mentor, and \"To be fair, I thought we already were…\" adds +1.", save:true},
     {m:"At dinner (Blazer's reveal)", r1:"—", r2:"Kiss her.", why:"Required for the Blazer romance.", key:true}
   ],
   shifts:[
@@ -566,9 +572,9 @@ const EPISODES = [
   lead:"Stat thresholds arrive: some calls auto-fail if a stat is too high, some pay double XP past a bonus line. The episode ends with the identity reveal, a SAVE POINT.",
   facts:[["Trophies","Told the Truth (Run 1) or Hid the Truth (Run 2), Power Trip. Often Anti-Antivirus Club"],["Hacks","Stalker film-shoot hack, the three power-outage hacks"]],
   choices:[
-    {m:"Chase asks if you'd kill Shroud", r1:"Heroes don't kill people.", r2:"Yes", why:"Into Indie's good-mentor route."},
+    {m:"Chase asks if you'd kill Shroud", r1:"Heroes don't kill people.", r2:"Yes", why:"No mentor points in the game files."},
     {m:"Invisigal brings up the movie (bar)", r1:"I had a good time.", r2:"—", why:"Keeps the Invisigal romance alive."},
-    {m:"Bar-fight flashback QTEs", r1:"Hit every prompt", r2:"Miss them on purpose (optional)", why:"Story QTEs feed the mentor score."},
+    {m:"Bar-fight flashback QTEs", r1:"Hit every prompt", r2:"Miss them on purpose (optional)", why:"The three QTE beats are worth +1, +1 and +2 mentor. A miss subtracts the same amount."},
     {m:"\"Who are you?\"", r1:"I'm Mecha Man. → Told the Truth", r2:"I'm Robert. → Hid the Truth", why:"Mecha Man makes Flambae attack you, and he sits out Ep 6's shift.", save:true}
   ],
   notes0:["**Threshold rules:** a star or double-XP line is a bonus: reach past it for double XP. An X or auto-fail zone is a trap: a hero whose stat reaches into it fails the call. Check before every send. Everything else in Ep 5 (who Blazer should be on your date, the bar banter) has no visible effect."],
@@ -615,10 +621,10 @@ const EPISODES = [
     {m:"Royd after the suit test", r1:"I believe in you.", r2:"I believe in you.", why:"Royd remembers."},
     {m:"Chase: how are things with Invisigal?", r1:"I'm warming up to her.", r2:"It's strictly professional.", why:"Invisigal romance."},
     {m:"Party: what to say to Invisigal", r1:"Thanks guys.", r2:"Thanks guys.", why:"Everyone remembers."},
-    {m:"\"Attack tonight?\"", r1:"We go tonight.", r2:"Make a plan first.", why:"Siding with her is a mentor pick; the plan raises Blazer.", key:true},
+    {m:"\"Attack tonight?\"", r1:"We go tonight.", r2:"Make a plan first.", why:"Both \"We go tonight\" and \"Make a plan\" give +1 mentor; only \"This is way out of our league\" is -1. The plan also raises Blazer.", key:true},
     {m:"During the argument", r1:"Back off, Chase.", r2:"Everybody calm down.", why:"Run 1 sides with Invisigal."},
     {m:"The dance", r1:"Dance with Invisigal", r2:"Dance with Blazer", why:"Required for each romance.", key:true},
-    {m:"Heist: 5 hacks to find and steal the Astral Pulse", r1:"Win all five", r2:"Fail or skip them if H4ck3d is done (villain path)", why:"H4ck3d + mentor. Locks: Locate (Up, Up, Right), Door (Left, Left, Up, Right), Speaker tower (no lock: reroute electricity), Crane (Left, Left, Left, Right), Safe (no lock: go to the bottom-right electricity, lure antiviruses to the middle and zap them; three in 15 s = Anti-Antivirus Club)."},
+    {m:"Heist: 5 hacks to find and steal the Astral Pulse", r1:"Win all five", r2:"Fail or skip them if H4ck3d is done (villain path)", why:"H4ck3d + mentor: door ±1, speaker ±2, crane ±2, safe +1 (the first locate hack has none). Locks: Locate (Up, Up, Right), Door (Left, Left, Up, Right), Speaker tower (no lock: reroute electricity), Crane (Left, Left, Left, Right), Safe (no lock: go to the bottom-right electricity, lure antiviruses to the middle and zap them; three in 15 s = Anti-Antivirus Club)."},
     {m:"Chase: \"Why do you help people?\"", r1:"It's the right thing to do.", r2:"It's the right thing to do.", why:"Chase remembers."}
   ],
   shifts:[{t:"The shift", calls:[
@@ -650,7 +656,7 @@ const EPISODES = [
     {m:"Conference-room vote (Scene 5)", r1:"Defend her", r2:"Cut her", why:"Defending is required for the hero ending, but the heroes who voted against her start Ep 8 weakened. Cutting keeps the team at full strength.", save:true},
     {m:"Locker room: forgiveness", r1:"I forgive you", r2:"We're done", why:"Required for the hero ending.", key:true},
     {m:"Locker room: her kiss", r1:"Lean in", r2:"Lean out", why:"Romance only. Lean out keeps Blazer, or no one.", key:true},
-    {m:"What to tell the press", r1:"Track Star", r2:"Invisigal", why:"Into Indie's good-mentor route credits Track Star."},
+    {m:"What to tell the press", r1:"Track Star", r2:"Invisigal", why:"Naming Invisigal costs 2 mentor points; Track Star costs nothing."},
     {m:"Bar: the hero you cut", r1:"Glass him / Let it go", r2:"Either", why:"Same outcome."},
     {m:"Blazer's last question", r1:"I trust her", r2:"Either", why:"Gamepressure's pick for Ep 8."}
   ],
@@ -678,7 +684,7 @@ const EPISODES = [
   facts:[["Run 1","All gas no brakes baby., Sorry kid., I'm a bleeder., bad ass (spare), then Muuuuurrrdaaaaah! on the replay. H4ck3d pops after Defeat Mindf*cker"],["Run 2","Any plans tonight?, Didn't see that coming?"],["Cleanup","We can just be friends."]],
   choices:[
     {m:"Blazer leaving the office", r1:"Just come back", r2:"Just come back", why:"Blazer remembers (Blazer route)."},
-    {m:"Invisigal tied up in Royd's lab", r1:"Untie her", r2:"Go alone", why:"Leaving her costs mentor points. Untying is required for her romance.", save:true},
+    {m:"Invisigal tied up in Royd's lab", r1:"Untie her", r2:"Go alone", why:"+5 mentor if you untie her, -5 if you leave her. Untying is required for her romance.", save:true},
     {m:"The hero you cut, mid-fight", r1:"I'm sorry", r2:"I'm sorry", why:"They attack either way."},
     {m:"Shroud demands the Astral Pulse", r1:"Give the Astral Pulse", r2:"Any", why:"All three answers lead to the same outcome."},
     {m:"Shroud at your mercy", r1:"Spare him → Mercy trophy", r2:"Not offered if Invisigal turned villain", why:"Replay this scene later and kill him for Vengeance.", save:true},
@@ -796,8 +802,8 @@ const HACK_RULES = [
   "**Key and padlock:** a key node shows a code; walk to the padlock node and enter it. Later codes come in two halves from two key nodes.",
   "**Antivirus:** the red chaser. If it catches you, you lose an attempt. Bait it into loops, stay a node or two ahead, and trap it behind a toggled bridge.",
   "**Electricity (Ep 5 on):** pick up a charge (hold R2 on the node) and carry it to a lightbulb socket to power a path or reveal a code, or run it into an antivirus to destroy it. Charges can be moved and reused.",
-  "**Attempts are limited** (2 before lockout in Ep 8). A lockout counts as a failed hack, so if it happens, quit to the main menu and reload the shift or scene. Leave the unlimited-lives assist off: Gamepressure reports hacks don't count toward H4ck3d with it on.",
-  "**Burning Chrome:** finish any timed hack with a third of the timer left (Ep 2's short ones are ideal). **Time's Running Out:** on a hack you know well, wait on the final move and finish with under 5 s left. **Anti-Antivirus Club:** kill three antiviruses within 15 s (Ep 5 film shoot, Ep 5 East Torrance, Ep 6 safe)."
+  "**Attempts are limited** (2 before lockout in Ep 8). A lockout counts as a failed hack, so if it happens, quit to the main menu and reload the shift or scene. The hacking easy mode (unlimited lives) still counts toward H4ck3d in the current game files, but it switches off Burning Chrome and Time's Running Out, so leave it off.",
+  "**Burning Chrome:** finish any timed hack with at least a third of the timer left (Ep 2's short ones are ideal). **Time's Running Out:** on a timed hack you know well, wait on the final node and finish with 5 s or less left. The game reads the timer when the final node's button prompt completes; hacks without a real timer never count. **Anti-Antivirus Club:** kill three antiviruses yourself within any 15-second window (Ep 5 film shoot, Ep 5 East Torrance, Ep 6 safe). The antiviruses the game clears when a hack ends don't count."
 ];
 /* Each hack: ep, n, when, codes, steps, tip, vids [[label,url]], guides [GD keys], miss (missable trigger) */
 const HACKS = [
@@ -841,7 +847,7 @@ const HACKS = [
    "Activate the first node, then enter the three sequences at the three hammer nodes in order. They're also shown on screen.",
    "Continue to the finish node."],
    tip:"No antivirus.", vids:[["Ep 3 video",YT.e3]], guides:["tp3"]},
- {ep:3, n:"Jewelry store: camera 1", when:"Story, end of Ep 3, with Invisigal. Mentor-relevant.", codes:[], steps:[
+ {ep:3, n:"Jewelry store: camera 1", when:"Story, end of Ep 3, with Invisigal. No mentor points for this one (cameras 2 and the master light are worth ±2).", codes:[], steps:[
    "Activate the first hammer node.",
    "The antivirus starts chasing once you activate the second hammer node: keep moving down the path without stopping.",
    "Activate one more hammer node just before the finish."],
@@ -894,7 +900,7 @@ const HACKS = [
    "Grab a current and read the first half of the code (Up, Up, Down). Put it in the double lightbulb, fetch the current above to complete it, and read the second half (Left, Right, Left).",
    "Carry a current to the top lightbulb, enter the full code, and finish."],
    tip:"Don't chase the antivirus too far around the loop, or it catches you.", vids:[["Ep 6 video",YT.e6]], guides:["ii6","gp6"]},
- {ep:6, n:"Heist 1: find the Astral Pulse", when:"Ep 6 story, at Robert's apartment. Mentor-relevant.", codes:["Up, Up, Right"], steps:[
+ {ep:6, n:"Heist 1: find the Astral Pulse", when:"Ep 6 story, at Robert's apartment. No mentor points for this one (the later heist hacks have them).", codes:["Up, Up, Right"], steps:[
    "Go right and use the map space to reveal the board.",
    "Get the code from the top-left corner and enter it at the bottom-right build path.",
    "Work through the bottom, middle and left to find the frequency."],
@@ -950,15 +956,15 @@ const HACKS = [
 ];
 
 const MENTOR = [
-  ["Ep 2","Win both Granny's Donuts hacks, don't tattle, don't say she punched you"],
-  ["Ep 3","\"You make your own destiny.\", \"This could make a difference.\", win the jewelry hacks, \"I hope so.\""],
-  ["Ep 3","Train Invisigal (Wolf Pack), worth +5"],
-  ["Ep 4","Movie with Invisigal (+6)"],
-  ["Ep 5","Hit every bar-fight QTE, \"Heroes don't kill people.\", \"I'm Mecha Man.\""],
-  ["Ep 6","\"We go tonight.\", win the heist hacks"],
-  ["Ep 7","Defend her, \"I forgive you\", \"Track Star\""],
-  ["Ep 8","Untie her, spare Shroud"],
-  ["Every shift","Send Invisigal on 1-slot Mobility calls and Golem pairings she can win (+1 each, -1 per failure)"]
+  ["Ep 2","Win the Granny's Donuts hack with her (+1). Avoid \"No one made you pick a life of crime\", tattling to Chase, \"You're not half the hero that I am\" and telling Blazer she punched you (-1 each)"],
+  ["Ep 3","\"The day's not done… it could make a difference\" (+1), then win jewelry camera 2 and the master-light hack (+2 each)"],
+  ["Ep 3","Train Invisigal (Wolf Pack): +5"],
+  ["Ep 4","Movie night with Invisigal (+5) and \"To be fair, I thought we already were…\" (+1)"],
+  ["Ep 5","Hit all three bar-fight QTE beats (+1, +1, +2) and say \"I'm Mecha Man\" (+5; \"I'm Robert\" costs -5)"],
+  ["Ep 6","Apartment talk (+1, either answer), go tonight or make a plan (+1 either way), defend her when Chase blows up (+1), win the door, speaker, crane and safe hacks (+1, +2, +2, +1)"],
+  ["Ep 7","Keep her in the conference room (+5), use the caring locker-room lines (+2 each), never \"I think we're done\" (-5), name Track Star, not Invisigal, at the press conference (avoids -2)"],
+  ["Ep 8","Skip \"I can't trust you. Flat out.\" (-2), then untie her in Royd's lab (+5)"],
+  ["Every shift","Send her only on calls she'll win: +1 per success, -1 per failure, 0 for a miss"]
 ];
 
 const STEP_A = [
@@ -996,10 +1002,122 @@ const STEP_C = [
   ["Protected Los Angeles","Ep 8 shift","Easier on a save where Invisigal was cut (full-strength team)"],
   ["Phoenixes Down","Any shift","Send a hero to a call they'll fail so they come back hurt, heal them with Malevola, repeat in the same shift"],
   ["Getting to Know Yous","Ep 2–3 shifts","Trigger the missing hero's power (hero cheat sheet)"],
-  ["H4ck3d by R0b3rt","—","Hacks are tracked on the save, so a missed hack means replaying from that point. Easiest fix: win every hack in Run 2, which still allows the villain ending"]
+  ["H4ck3d by R0b3rt","Any hack you haven't won","The game counts 26 different hacking levels across all your saves, so win the missing ones on any slot (Scene Select or Run 2). A different hero's tracker hack in Ep 8 counts as a new level too"]
+];
+
+/* Read from the PC game files (build of Sep 28, 2026). One entry per TROPHIES row, same order: [internal ID, exact rule]. */
+const FILE_RULES = [
+ ["ACH_DISPATCH_ALL","The 36th achievement ID. On PS5 the platinum unlocks once the other 35 are earned."],
+ ["ACH_MENTOR_SUCCESS","Ep 8 tests Var_RobertMentorCounter >= 45. Every point source is on the Game Files tab."],
+ ["ACH_MENTOR_FAIL","Plays in Ep 8 when the same counter is under 45."],
+ ["ACH_CONVOY","Unlocks when the Ep 8 boss shift ends with the villain defeated."],
+ ["ACH_MERCY","Tied to the Ep 8 sequence where you spare Shroud."],
+ ["ACH_VENGEANCE","Tied to the Ep 8 sequence where you kill Shroud."],
+ ["ACH_STRETCHER","Tied to the Ep 8 stretcher scene, which only plays on the Invisigal romance + good mentor branch."],
+ ["ACH_CAR","Tied to the Ep 8 car-roof kiss scene (Blazer branch)."],
+ ["ACH_FRIENDS","Tied to the Ep 8 ending scene with no romance."],
+ ["ACH_TRUTH_TOLD","End of Ep 5. The same answer is worth +5 mentor points."],
+ ["ACH_TRUTH_HID","End of Ep 5. This answer costs 5 mentor points, so do it on a run where her ending doesn't matter."],
+ ["ACH_FIRST_SHOT","Ep 4 recruit scene: Waterboy."],
+ ["ACH_SECOND_CHANCE","Ep 4 recruit scene: Phenomaman."],
+ ["ACH_TIE","Last scene of Ep 3: Sonar is cut."],
+ ["ACH_KNIFE","Last scene of Ep 3: Coupé is cut."],
+ ["ACH_PERFORMANCE","Reach the 5th rank, DISPATCHER. Each shift review scores +2 per successful call, -1 per failed call and -2 per missed call. Rank bars need 12, 32, 34 and 36 points. Pops on the end-of-shift screen when you rank up to Dispatcher."],
+ ["ACH_HACK_ALL","Every won hack adds its level to a profile-wide list shared by all save slots. The trophy pops when the list holds 26 different levels. Easy mode doesn't block it."],
+ ["ACH_SYNERGY","A synergy pair reaches level 3. They gain level 1 on their first successful call together, then a level every 2nd call together, as long as that call succeeds. That's 5 calls at minimum."],
+ ["ACH_VIRUS","Three antivirus kills by you inside any rolling 15-second window. Kills the game makes when a hack finishes don't count."],
+ ["ACH_TRAIN","A counter rises each time you confirm a Hero Training pick. It pops at 4 in the same save."],
+ ["ACH_HIRED","Story scene, end of Ep 1."],
+ ["ACH_LISTEN","Story scene in Ep 2."],
+ ["ACH_DONUT","Checked against live worldwide choice counts when that choice's stats screen is shown. Your pick must be the option with the lowest count at that moment, so play online."],
+ ["ACH_STORE","Same live check as the donut, for the Ep 7 store item."],
+ ["ACH_PERFECT","Any shift counts, not only Ep 2. It fires on the end-of-shift screen if that shift had 0 failed and 0 missed calls."],
+ ["ACH_POWER","Eight starting-power reveals in one save: Sonar, Invisigal, Flambae, Coupé, Golem, Malevola, Prism and Punch Up. Powers learned in training don't count."],
+ ["ACH_SCEN_SUCCESS","A call succeeds with a shown chance of 15% or less (the check is 15.4%). Hacking calls and choice-only calls are skipped."],
+ ["ACH_SCEN_FAIL","A call fails with a shown chance of 70–99%."],
+ ["ACH_SCEN_PERFECT","Shown chance 100% with exactly one hero on the call."],
+ ["ACH_SCEN_MAX","Shown chance 100%, two or more heroes, and all five combined stats above 9.4 (in practice, all five at 10)."],
+ ["ACH_SCEN_MODS","Checked only at the end of Shift 6, 7, 8a, 8b or 8c. Every reported call with a 2x XP zone must reach it, and every call with an X zone must avoid it."],
+ ["ACH_HEAL_TWICE","One hero's injuries cleared twice in the same shift. Healing from Malevola, Waterboy or Coupé counts, and so do the Patch Up and Phoenix Up items."],
+ ["ACH_HACK_SLOW","Timed hack finished with 5.0 s or less left, read when the final node's prompt completes. Blocked by easy mode and on untimed hacks."],
+ ["ACH_HACK_FAST","Timed hack finished with at least a third of its timer left, read at the same moment. Same exclusions."],
+ ["ACH_STAT_MAX","Any hero stat reaches 10, whether by upgrade or respec."],
+ ["ACH_HERO_MAX","A hero reaches the level cap (MaxLevel = 10), checked in the Hero Database."]
+];
+
+const FILE_KEY = [
+  "**H4ck3d by R0b3rt is cumulative.** Won hacks go into a profile-wide list shared by every save slot, and the trophy pops at 26 different hacking levels. A Run 1 sees about 27, and the other heroes' Ep 8 tracker hacks are extra levels, so one miss doesn't force a replay.",
+  "**Hacking easy mode** (unlimited lives) does not stop H4ck3d. It does switch off Burning Chrome and Time's Running Out.",
+  "**Modded only counts in the Ep 6, 7 and 8 shifts** (Shift 6, 7, 8a, 8b, 8c). Earlier shifts are never checked.",
+  "**Shift Was Lit works in any shift.** Zero failed and zero missed calls is the whole rule.",
+  "**The mentor ending is exactly 45 points.** \"I'm Robert\" in Ep 5 costs 5 and \"I'm Mecha Man\" gives 5. Each Invisigal training gives +5, and her calls give +1 on a success and -1 on a failure.",
+  "**Thresholds are on the displayed %.** Fool's Luck is 15% or less, Snake Eyes is 70–99%, Nailed It and Overkill need 100%. Overkill also needs all five combined stats at 10.",
+  "**Work Spouse needs at least 5 calls** with the same synergy pair: level 1 on the first success, then one level every second call together, if that call succeeds.",
+  "**Career Development is math.** +2 per success, -1 per failure, -2 per miss. Rank bars need 12, 32, 34 and 36 points.",
+  "**Least-popular picks are checked live** against worldwide counts each time the choice's stats screen appears, so stay online and revisit Choice Stats if it didn't pop."
+];
+
+/* Every node that changes Var_RobertMentorCounter, read from the episode story assets. */
+const MENTOR_EXACT = [
+  ["Ep 2","Granny's Donuts hack with Invisigal","Win +1 · Fail -1"],
+  ["Ep 2","\"You had a choice. No one made you pick a life of crime.\"","-1"],
+  ["Ep 2","Telling Chase she disobeyed (\"I told Chase what happened\")","-1"],
+  ["Ep 2","\"You're not half the hero that I am.\"","-1"],
+  ["Ep 2","Telling Blazer \"Invisigal punched me in the face\"","-1"],
+  ["Ep 3","\"The day's not done… it could make a difference\" vs \"You're pissed… go punch things\"","+1 / -1"],
+  ["Ep 3","Jewelry store camera 2 hack","Win +2 · Fail -2"],
+  ["Ep 3","Jewelry store master-light hack","Win +2 · Fail -2"],
+  ["Ep 4","Movie night with Invisigal","+5"],
+  ["Ep 4","\"To be fair, I thought we already were…\"","+1"],
+  ["Ep 5","Bar fight, three QTE beats","±1, ±1, ±2"],
+  ["Ep 5","\"I'm Mecha Man\" vs \"I'm Robert\"","+5 / -5"],
+  ["Ep 6","Robert's apartment, \"Why'd you do all this?\" (either answer)","+1"],
+  ["Ep 6","\"They're ready\" or \"We make a plan\" vs \"This is way out of our league\"","+1 / -1"],
+  ["Ep 6","\"He doesn't mean that\" or \"Chase! That's enough!\" vs \"Everybody just calm down!\"","+1 / -1"],
+  ["Ep 6","Heist hacks: door, speaker, crane, safe","±1, ±2, ±2, +1"],
+  ["Ep 7","Conference room: keep Invisigal vs cut her","+5 / -5"],
+  ["Ep 7","Locker room caring lines (\"I really care about you\", \"I don't want it to end like this\", \"They'll come around\", \"This isn't your fault\")","+2 each"],
+  ["Ep 7","\"You fired yourself when you went after the Pulse.\"","-2"],
+  ["Ep 7","\"I think we're done.\"","-5"],
+  ["Ep 7","Naming Invisigal at the press conference","-2"],
+  ["Ep 8","\"I can't trust you. Flat out.\"","-2"],
+  ["Ep 8","Royd's lab: untie her vs leave her tied","+5 / -5"],
+  ["Shifts","Invisigal on a call: success / failure (a miss, or a call where she was the sabotage victim, changes nothing)","+1 / -1"],
+  ["Training","Each power Invisigal learns in Hero Training","+5"]
+];
+
+const HACK_LEVELS = [
+  ["1","Shroud's hideout tablet","LV_Hacking_101"],
+  ["2","Cray Cray Bidet","LV_HackingShift02_Bidet"],
+  ["2","Museum Robbery","LV_HackingShift02_Museum"],
+  ["2","Granny's Donuts: cameras, sprinklers","LV_Hacking_102_Part_1, _Part_2"],
+  ["3","Flambae's water tank","LV_HackingShift03a_SabotageFlambae"],
+  ["3","Hack the Scammer","LV_HackingShift03a_Scammer"],
+  ["3","Bank Robbery","LV_HackingShift03b"],
+  ["3","Jewelry store 1, 2, 3","LV_Hacking_103_Part_1, _2, _3"],
+  ["4","Superhero Squabble in Aisle 9","LV_Hacking_Shift4a"],
+  ["4","Discern the Target","LV_Hacking_Shift4b"],
+  ["5","Stalker Stalking Film Shoot","LV_Hacking_Shift5a"],
+  ["5","Torrance substations (3)","LV_Hacking_Shift5b_Blackout_Part_1, _2, _3"],
+  ["6","Cyberbully","LV_Hacking_Shift6"],
+  ["6","Heist 1 (Astral Pulse), Heist 5 (safe)","LV_Hacking_106_Part_1, _Part_3"],
+  ["6","Heist 2 door, 3 speaker, 4 crane","LV_Hacking_106_Part_2 sections 1, 2, 3"],
+  ["7","Runaway Car","LV_Hacking_Shift7"],
+  ["8","Locate Hero Tracker (one hero per run)","LV_Hacking_Shift8_MES_Coupe, _Sonar, _PMan, _Waterboy, _Flambae"],
+  ["8","Lockdown","LV_Hacking_Shift8_School"],
+  ["8","Defeat Mindf*cker","LV_Hacking_Shift8_Brain"]
+];
+
+const CAREER = [
+  ["Trainee Dispatcher","Start","None"],
+  ["Junior Dispatcher","12","Random stat point + Second Wind item"],
+  ["Assistant Dispatcher","32","Random stat point + 1 hacking health"],
+  ["Associate Dispatcher","34","Random stat point + Patch Up item"],
+  ["Dispatcher","36","Random stat point + Phoenix Up item · Career Development"]
 ];
 
 const SOURCES = [
+  ["Dispatch game files, PC/Steam build of Sep 28, 2026 (achievement blueprints, story assets and config read directly; see the Game Files tab)","#files"],
   ["Dispatch PS5 trophy list (vgtimes)","https://vgtimes.ru/games/dispatch/achievements-and-trophies/ps5/"],
   ["Dispatch Trophy Guide & Roadmap (Dayngls' Guides)","https://daynglsgameguides.com/2025/11/25/dispatch-trophy-guide-roadmap/"],
   ["Dispatch Achievement and Trophy Guide (T-Pose Gaming)","https://tposegaming.com/dispatch-achievement-and-trophy-guide/"],
@@ -1107,7 +1225,7 @@ function partChip(p){
   return '<span class="chip '+m[0]+'">'+m[1]+'</span>';
 }
 function viewLabel(v){
-  if(v==="start") return "Start"; if(v==="trophies") return "Trophies"; if(v==="hacks") return "Hacks"; if(v==="heroes") return "Heroes"; if(v==="cleanup") return "Cleanup"; if(v==="sources") return "Sources";
+  if(v==="start") return "Start"; if(v==="trophies") return "Trophies"; if(v==="hacks") return "Hacks"; if(v==="heroes") return "Heroes"; if(v==="cleanup") return "Cleanup"; if(v==="files") return "Game Files"; if(v==="sources") return "Sources";
   const e = EPISODES.find(x=>x.id===v); return e ? "Ep "+e.num : v;
 }
 function runNote(ctx){
@@ -1116,7 +1234,7 @@ function runNote(ctx){
 }
 
 /* ================= RENDER ================= */
-const VIEWS = ["start","trophies"].concat(EPISODES.map(e=>e.id)).concat(["hacks","heroes","cleanup","sources"]);
+const VIEWS = ["start","trophies"].concat(EPISODES.map(e=>e.id)).concat(["hacks","heroes","cleanup","files","sources"]);
 
 function renderTabs(){
   const nav=document.getElementById("tabs");
@@ -1157,6 +1275,7 @@ function renderTrophies(){
     return '<li class="trophy'+(done?' done':'')+'" id="tr-'+i+'" data-grade="'+t.g+'" data-part="'+t.p+'">'+tickBox(k,"Earned "+t.n)+
       '<div><div class="t-top"><span class="medal '+t.g+'" title="'+({P:"Platinum",G:"Gold",S:"Silver",B:"Bronze"})[t.g]+'"></span><span class="t-name">'+esc(t.n)+'</span></div>'+
       '<p class="t-desc">'+esc(t.d)+'</p><p class="t-how">'+md(t.h)+'</p>'+
+      (FILE_RULES[i]?'<p class="t-file"><b>Game files</b>'+md(FILE_RULES[i][1])+' <span class="mono">'+esc(FILE_RULES[i][0])+'</span></p>':'')+
       '<div class="t-meta">'+partChip(t.p)+'<span class="muted">'+esc(t.w)+'</span>'+(t.ep?'<a href="#'+t.ep+'">Go to '+esc(viewLabel(t.ep))+'</a>':'')+'</div></div></li>';
   }).join("");
   h+='</ol></section>';
@@ -1238,7 +1357,7 @@ function renderHeroes(){
   h+='<section class="block"><h2>Run 1 training order</h2><p class="muted">Power Trip pops at #4.</p><ol class="plain">'+TRAINING.map(t=>'<li><span class="mono muted">'+esc(t[0])+'</span> · <strong>'+esc(t[1])+'</strong></li>').join("")+'</ol>';
   h+='<p class="panel"><strong>Min Max and From Zero To Hero:</strong> make Golem your project hero. Pair him with Invisigal (synergy, and Wolf Pack doubles his XP). Right after Found Himself (Ep 4 Shift 2), respec him to 10 Vigor for Min Max, then keep feeding him XP until he hits level 10.</p></section>';
   h+='<p class="panel">Hacking routes, lock codes and videos are on the <a href="#hacks">Hacks tab</a>.</p>';
-  h+='<section class="block"><h2>Mentor score · Run 1</h2><p class="muted">You need 45+. Story picks top out around 36–42, so the rest comes from Invisigal\'s successful calls (+1 each, -1 per failure) and her Blazer training (+5).</p>'+checklist("m",MENTOR)+'</section>';
+  h+='<section class="block"><h2>Mentor score · Run 1</h2><p class="muted">The Ep 8 check is exactly 45 or more. Perfect story picks and hacks add up to about 44, so the rest has to come from her Hero Training (+5 per power) and her calls (+1 per success, -1 per failure). Every value is listed on the <a href="#files">Game Files tab</a>.</p>'+checklist("m",MENTOR)+'</section>';
   return h;
 }
 
@@ -1258,7 +1377,7 @@ function renderHack(x,i){
 }
 function renderHacks(){
   const done=HACKS.filter((_,i)=>state.ticks[hackKey(i)]).length;
-  let h='<section class="hero"><h1>All 28 <em>hacks</em></h1><p class="lead">H4ck3d by R0b3rt needs every hacking puzzle won, including the optional ones that only appear if you pick the hack option. Each card has the lock codes, the route and a video. Tick a card when you win it.</p></section>';
+  let h='<section class="hero"><h1>All 28 <em>hacks</em></h1><p class="lead">H4ck3d by R0b3rt pops once you\'ve won 26 different hacking levels. The count is shared by all your save slots, so a hack you miss in Run 1 can be won in Run 2 or through Scene Select. Win every card anyway; some only appear if you pick the hack option. Each card has the lock codes, the route and a video. Tick a card when you win it. The <a href="#files">Game Files tab</a> lists the level behind each hack.</p></section>';
   h+='<section class="block"><h2>How hacking works</h2><ul class="plain notes">'+HACK_RULES.map(r=>'<li>'+md(r)+'</li>').join("")+'</ul></section>';
   h+='<section class="block panel"><h2>Easy to miss</h2><p class="muted small">These only appear if you pick the hack option or trigger them on a call. Tap one to jump to it.</p><ul class="misslist">'+HACKS.map((x,i)=>x.miss?'<li><a href="#hacks" data-view="hacks" data-jump="hk-'+i+'"><span>EP '+x.ep+'</span>'+esc(x.n)+'</a></li>':'').join("")+'</ul></section>';
   h+='<section class="block"><div class="block-head"><h2>Every hack, in order</h2><span class="mono" id="hackCount">'+done+'/28</span></div>';
@@ -1279,6 +1398,24 @@ function renderCleanup(){
   return h;
 }
 
+function renderFiles(){
+  const tbl=(head,rows,ptsCol)=>'<div class="scroll-x"><table class="grid"><thead><tr>'+head.map(x=>'<th>'+esc(x)+'</th>').join("")+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map((c,j)=>'<td'+(j===ptsCol?' class="pts"':'')+'>'+(j===0?'<strong>'+md(c)+'</strong>':md(c))+'</td>').join("")+'</tr>').join("")+'</tbody></table></div>';
+  let h='<section class="hero"><h1>Straight from the <em>game files</em></h1><p class="lead">These rules come from the PC (Steam) build of Sep 28, 2026: the achievement blueprints, the story assets and the trophy ID list in the game config. The PS5 version runs the same game logic and the same 36 IDs, so the rules match. Some came out different from the community guides, and the trophy cards and checklists now use these values.</p></section>';
+  h+='<section class="block"><h2>What changes your plan</h2><ul class="keylist">'+FILE_KEY.map(x=>'<li>'+md(x)+'</li>').join("")+'</ul></section>';
+  h+='<section class="block"><h2>Exact rule for every trophy</h2>'+tbl(["Trophy","Rule in the game files","ID"],TROPHIES.map((t,i)=>[t.n,FILE_RULES[i][1],FILE_RULES[i][0]]),2)+'</section>';
+  h+='<section class="block"><h2>Invisigal mentor score, point by point</h2><p class="muted">The good ending needs <strong>45 or more</strong> by the Ep 8 check. Hacks marked ± give the plus value on a win and the minus value on a failure. Episode 1 has no mentor points.</p>'+tbl(["When","Moment","Points"],MENTOR_EXACT,2)+'</section>';
+  h+='<section class="block"><h2>H4ck3d by R0b3rt: the 26-level count</h2><p class="muted">Each win adds its level to the list once. Replaying a level you\'ve already won adds nothing, and losing one never removes it. One run reaches about 27 levels. The Ep 8 Locate Hero Tracker hack has a separate level for each hero, so tracking a different hero in Run 2 adds another. Early Ep 8\'s Locate the Tracker has no level of its own in the files, so don\'t count on it. If you quit mid-shift right after a shift hack, replay it, because the shift writes the list when it saves.</p>'+tbl(["Ep","Hack","Level file"],HACK_LEVELS)+'</section>';
+  h+='<section class="block"><h2>Career Development math</h2><p class="muted">Each end-of-shift review scores <strong>+2 per successful call, -1 per failed call, -2 per missed call</strong>, then fills the current rank bar. The trophy pops when you rank up to Dispatcher.</p>'+tbl(["Rank","Points for the bar","Rank-up reward"],CAREER,1)+'</section>';
+  h+='<section class="block panel"><h2>Other exact numbers</h2><ul class="plain notes">'+[
+    "**Work Spouse:** synergy level 1 comes on a pair\'s first successful call together. After that the pair levels up on every 2nd call together, as long as that call succeeds. A failed deciding call just pushes the level to their next win. Level 3 = trophy.",
+    "**Phoenixes Down:** the heal counter belongs to the hero and resets each shift. Two heals on the same hero in one shift is the rule. The Patch Up item (Associate rank) and Phoenix Up item (Dispatcher rank) count, so injure a hero, heal with an item, repeat.",
+    "**From Zero To Hero / Min Max:** level cap 10, any stat at 10. A Found Himself respec counts for Min Max.",
+    "**Getting to Know Yous / Power Trip:** both are per-save counters (8 starting reveals, 4 trainings). Don\'t split them across slots."
+  ].map(x=>'<li>'+md(x)+'</li>').join("")+'</ul></section>';
+  h+='<nav class="pager" aria-label="Next page"><a href="#cleanup">← Cleanup</a><a href="#sources">Sources →</a></nav>';
+  return h;
+}
+
 function renderSources(){
   let h='<section class="block"><h2>Sources</h2><ul class="plain">'+SOURCES.map(s=>'<li><a href="'+esc(s[1])+'">'+esc(s[0])+'</a></li>').join("")+'</ul>';
   h+='<p class="muted small">The PSNProfiles and PlayStationTrophies guides blocked access, so a few details come only from their search previews: the scene numbers (Ep 4 Scenes 7–8, Ep 7 Scene 5), the four save slots and the Phenomaman Snake Eyes tip. Confirm those on the in-game scene list.</p>';
@@ -1295,6 +1432,7 @@ function renderAll(){
   html+='<div class="view" id="view-hacks">'+renderHacks()+'</div>';
   html+='<div class="view" id="view-heroes">'+renderHeroes()+'</div>';
   html+='<div class="view" id="view-cleanup">'+renderCleanup()+'</div>';
+  html+='<div class="view" id="view-files">'+renderFiles()+'</div>';
   html+='<div class="view" id="view-sources">'+renderSources()+'</div>';
   main.innerHTML=html;
   applyTrophyFilter(); updateCounts();
@@ -1341,7 +1479,9 @@ function applyTrophyFilter(){
 let INDEX=[];
 function buildIndex(){
   INDEX=[];
-  TROPHIES.forEach((t,i)=>INDEX.push({ctx:"Trophy", title:t.n, sub:t.d+" · "+t.w, view:"trophies", id:"tr-"+i, text:(t.n+" "+t.d+" "+t.h).toLowerCase()}));
+  TROPHIES.forEach((t,i)=>INDEX.push({ctx:"Trophy", title:t.n, sub:t.d+" · "+t.w, view:"trophies", id:"tr-"+i, text:(t.n+" "+t.d+" "+t.h+" "+(FILE_RULES[i]?FILE_RULES[i].join(" "):"")).toLowerCase()}));
+  MENTOR_EXACT.forEach(r=>INDEX.push({ctx:"Mentor", title:r[1], sub:r[0]+" · "+r[2], view:"files", id:null, text:(r.join(" ")+" mentor invisigal score points").toLowerCase()}));
+  HACK_LEVELS.forEach(r=>INDEX.push({ctx:"Level · Ep "+r[0], title:r[1], sub:r[2], view:"files", id:null, text:(r.join(" ")+" hack level h4ck3d").toLowerCase()}));
   EPISODES.forEach(ep=>{
     ep.choices.forEach(c=>INDEX.push({ctx:"Ep "+ep.num, title:c.m, sub:"Run 1: "+c.r1+" · Run 2: "+c.r2, view:ep.id, id:null, text:(c.m+" "+c.r1+" "+c.r2+" "+(c.why||"")).toLowerCase()}));
     ep.shifts.forEach((s,si)=>s.calls.forEach((c,ci)=>INDEX.push({ctx:"Ep "+ep.num, title:c.n, sub:"Send "+c.send+(c.r2?" · Run 2: "+c.r2:""), view:ep.id, id:"c-"+ep.id+"-"+si+"-"+ci, text:(c.n+" "+c.send+" "+(c.r2||"")+" "+(c.pick||"")+" "+(c.note||"")+" "+(c.need||"")).toLowerCase()})));

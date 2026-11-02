@@ -6,7 +6,9 @@ A one-page, phone-friendly walkthrough for the Dispatch platinum:
 - **Trophies:** all 36 with filters, tick boxes and a progress code for moving ticks between devices
 - **E1 to E8:** every story choice for both runs, plus who to send on every dispatch call
 - **Hacks:** all 28 hacking puzzles with lock codes, routes and video links
-- **Heroes, Cleanup, Sources**
+- **Heroes, Cleanup**
+- **Game Files:** exact unlock rules read from the game's own files (PC build of Sep 28, 2026). It covers every trophy's condition, every Invisigal mentor-score change, the 26-level H4ck3d count and the career-rank math.
+- **Sources**
 
 Everything is in `index.html`, with no build step. Ticks are stored in each browser's local storage.
 
