@@ -4,7 +4,7 @@ A one-page, phone-friendly walkthrough for the Dispatch platinum:
 
 - **Start:** the roadmap (Run 1, the Shroud replay, the Slot 2 cleanup, Run 2) and how the four save slots are used
 - **Trophies:** all 36 with filters, tick boxes and a progress code for moving ticks between devices
-- **E1 to E8:** every dialogue choice in the game (127, read from the story files) in story order, with the pick for each run, what each option changes, and a tick box per run. Plus who to send on every dispatch call
+- **E1 to E8:** every dialogue choice in the game (127, read from the story files) in story order, with the pick for each run, what each option changes, and a tick box per run. Plus who to send on every dispatch call, in the order calls appear, with who is still out at each call and what to do if your pick isn't back yet
 - **Hacks:** all 28 hacking puzzles with lock codes, routes and video links
 - **Heroes, Cleanup**
 - **Game Files:** exact unlock rules read from the game's own files (PC build of Sep 28, 2026). It covers every trophy's condition, every Invisigal mentor-score change, the 26-level H4ck3d count and the career-rank math.
