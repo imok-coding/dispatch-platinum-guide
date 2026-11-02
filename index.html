@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dispatch Platinum Guide</title>
+<meta name="description" content="Dispatch PS5 platinum guide: every trophy, every choice for both runs, who to send on every call, and a walkthrough for all 28 hacks.">
+<meta name="theme-color" content="#0E1421">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Dispatch Plat">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{
+  /* Layout: a dispatch console. Sticky header with run switch + section tabs; one reading column; calls are ticket rows with a stat pentagon. */
+  --bg:#EBEEF3;
+  --surface:#FFFFFF;
+  --ink:#121925;
+  --muted:#596374;
+  --line:#D3D9E3;
+  --accent:#F2B300;
+  --accent-ink:#7A5200;
+  --r1:#6448E0;
+  --r2:#CF4A12;
+  --good:#1D8A4C;
+  --bad:#C2352F;
+  --plat:#6C90B2; --gold:#C4931A; --silver:#8C97A3; --bronze:#A5652E;
+  --display:"Big Shoulders Display","Big Shoulders","Arial Narrow","Roboto Condensed",sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1421; --surface:#161F31; --ink:#E6EBF3; --muted:#9BA6B9; --line:#28334C;
+    --accent:#FFC233; --accent-ink:#FFC233; --r1:#A893FF; --r2:#FF8C50;
+    --good:#4CC38A; --bad:#FF6F69;
+    --plat:#9DC0DF; --gold:#E5B53A; --silver:#B6C0CB; --bronze:#D08A4F;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1421; --surface:#161F31; --ink:#E6EBF3; --muted:#9BA6B9; --line:#28334C;
+  --accent:#FFC233; --accent-ink:#FFC233; --r1:#A893FF; --r2:#FF8C50;
+  --good:#4CC38A; --bad:#FF6F69;
+  --plat:#9DC0DF; --gold:#E5B53A; --silver:#B6C0CB; --bronze:#D08A4F;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--body)}
+a{color:var(--ink);text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:3px}
+a:hover{text-decoration-color:var(--ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+strong{font-weight:700}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.mono{font-family:var(--mono);font-size:.8125rem;letter-spacing:-.01em}
+h1,h2,h3{font-family:var(--display);font-weight:800;line-height:1.05;text-wrap:balance;margin:0;letter-spacing:.01em}
+h2{font-size:1.875rem;text-transform:uppercase}
+h3{font-size:1.25rem;text-transform:uppercase;letter-spacing:.03em}
+p{margin:0}
+
+/* ---------- Header ---------- */
+header.app{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px 6px;max-width:1040px;margin:0 auto}
+.brand{display:flex;flex-direction:column;text-decoration:none;min-width:0}
+.brand-top{font-family:var(--display);font-weight:800;font-size:1.75rem;line-height:.9;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+.brand-top i{font-style:normal;color:var(--accent-ink)}
+.brand-sub{font-size:.75rem;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.bar-right{display:flex;align-items:center;gap:8px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:2px;background:var(--bg)}
+.seg button{font:700 .8125rem/1 var(--body);border:0;background:transparent;color:var(--muted);padding:8px 11px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed="true"]{color:#fff;background:var(--ink)}
+.seg button[data-run="1"][aria-pressed="true"]{background:var(--r1)}
+.seg button[data-run="2"][aria-pressed="true"]{background:var(--r2)}
+:root[data-theme="dark"] .seg button[aria-pressed="true"]{color:#0E1421}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .seg button[aria-pressed="true"]{color:#0E1421}}
+.icon-btn{font:700 .8125rem/1 var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 12px;border-radius:999px;cursor:pointer}
+.icon-btn[aria-expanded="true"]{background:var(--accent);border-color:var(--accent);color:#121925}
+nav.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;padding:0 12px;max-width:1040px;margin:0 auto}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs a{flex:0 0 auto;text-decoration:none;font:700 .875rem/1 var(--body);color:var(--muted);padding:10px 10px 11px;border-bottom:3px solid transparent;white-space:nowrap}
+nav.tabs a.ep{font-family:var(--mono);font-size:.8125rem}
+nav.tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--accent)}
+.search{max-width:1040px;margin:0 auto;padding:4px 16px 12px}
+.search input{width:100%;font:1rem var(--body);padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.results{list-style:none;margin:8px 0 0;padding:0;max-height:55vh;overflow:auto;border-radius:10px}
+.results li a{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;padding:9px 10px;text-decoration:none;border-bottom:1px solid var(--line)}
+.results .ctx{grid-row:span 2;font:700 .6875rem/1.2 var(--mono);color:var(--accent-ink);text-transform:uppercase;padding-top:3px;min-width:58px}
+.results .rt{font-weight:700}
+.results .rs{font-size:.8125rem;color:var(--muted)}
+.results .empty{padding:10px;color:var(--muted)}
+
+/* ---------- Layout ---------- */
+main{max-width:1040px;margin:0 auto;padding:20px 16px 64px}
+.view{display:none}
+.view.on{display:grid;gap:28px;animation:rise .18s ease-out}
+@keyframes rise{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.view.on{animation:none}}
+section.block{display:grid;gap:12px}
+.block-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.lead{font-size:1.0625rem;max-width:68ch}
+.muted{color:var(--muted)}
+.small{font-size:.875rem}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
+ul.plain,ol.plain{margin:0;padding-left:1.2em;display:grid;gap:6px}
+.chip{display:inline-block;font:700 .6875rem/1 var(--mono);text-transform:uppercase;letter-spacing:.04em;padding:4px 7px;border-radius:5px;border:1px solid var(--line);color:var(--muted);vertical-align:2px;white-space:nowrap}
+.chip.r1{color:#fff;background:var(--r1);border-color:var(--r1)}
+.chip.r2{color:#fff;background:var(--r2);border-color:var(--r2)}
+.chip.cl{color:var(--ink);border-color:var(--ink)}
+.chip.any{color:var(--muted)}
+.badge{display:inline-block;font:700 .6875rem/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:4px 7px;border-radius:5px;vertical-align:2px}
+.badge.save{background:var(--accent);color:#121925}
+.badge.tb{border:1px solid var(--accent-ink);color:var(--accent-ink)}
+.badge.hk{border:1px solid var(--muted);color:var(--muted)}
+.badge.tr{border:1px solid var(--r1);color:var(--r1)}
+.badge.key{border:1px solid var(--ink);color:var(--ink)}
+.badge.trap{background:var(--bad);color:#fff}
+.badge.bonus{border:1px solid var(--good);color:var(--good)}
+.runnote{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:.875rem;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface)}
+.runnote .rn-text{flex:1 1 180px}
+@media (max-width:640px){.head-seg{display:none}.brand-top{font-size:1.5rem}}
+.runnote .stripe{width:6px;align-self:stretch;border-radius:3px;background:var(--ink)}
+.run-1 .runnote .stripe{background:var(--r1)}
+.run-2 .runnote .stripe{background:var(--r2)}
+.scroll-x{overflow-x:auto}
+table.grid{border-collapse:collapse;width:100%;font-size:.9375rem;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+table.grid th,table.grid td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+table.grid th{font:700 .75rem/1.2 var(--mono);text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+table.grid tr:last-child td{border-bottom:0}
+
+/* ---------- Start ---------- */
+.hero{display:grid;gap:16px}
+.hero h1{font-size:clamp(2.5rem,7vw,4.25rem);text-transform:uppercase;line-height:.92}
+.hero h1 em{font-style:normal;color:var(--accent-ink)}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:2px}
+.tile b{font-family:var(--display);font-size:2.25rem;line-height:1;font-variant-numeric:tabular-nums}
+.tile span{font-size:.8125rem;color:var(--muted)}
+@media (max-width:640px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.timeline{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.timeline > li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;position:relative;padding-bottom:18px}
+.timeline > li::before{content:"";position:absolute;left:21px;top:46px;bottom:4px;width:2px;background:var(--line)}
+.timeline > li:last-child::before{display:none}
+.timeline > li > div{min-width:0}
+.timeline .node{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font:800 1.375rem/1 var(--display);color:#fff;background:var(--ink)}
+.timeline .r1 .node{background:var(--r1)}
+.timeline .r2 .node{background:var(--r2)}
+.timeline .rp .node{background:var(--surface);color:var(--r1);border:3px solid var(--r1)}
+.timeline .cl .node{background:var(--surface);color:var(--ink);border:3px solid var(--ink)}
+.timeline .fin .node{background:var(--accent);color:#121925}
+.timeline h3{font-size:1.25rem;margin-top:2px}
+.timeline .slotchip{font:700 .6875rem/1 var(--mono);color:var(--muted);text-transform:uppercase;margin-left:6px}
+.timeline p{margin-top:4px;max-width:66ch}
+.timeline ul{margin:6px 0 0;padding-left:1.1em;display:grid;gap:4px;font-size:.9375rem}
+.epgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:760px){.epgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.eptile{display:grid;gap:4px;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-height:112px}
+.eptile:hover{border-color:var(--ink)}
+.eptile .n{font:800 2rem/1 var(--display);color:var(--accent-ink)}
+.eptile .t{font:800 1.125rem/1.05 var(--display);text-transform:uppercase}
+.eptile .k{font-size:.8125rem;color:var(--muted);line-height:1.35}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+
+/* ---------- Episode ---------- */
+.ep-head{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:end}
+.ep-num{font-family:var(--display);font-weight:800;line-height:.8;text-transform:uppercase;color:var(--accent-ink);display:flex;flex-direction:column;align-items:flex-start}
+.ep-num small{font-size:1rem;letter-spacing:.2em;color:var(--muted)}
+.ep-num b{font-size:6rem;letter-spacing:-.02em}
+.ep-head h1{font-size:clamp(2.25rem,6vw,3.5rem);text-transform:uppercase}
+.ep-head .lead{margin-top:8px}
+@media (max-width:520px){.ep-num b{font-size:4.5rem}}
+.facts{display:grid;gap:6px;font-size:.9375rem}
+.facts div{display:grid;grid-template-columns:96px 1fr;gap:10px}
+.facts dt{font:700 .75rem/1.6 var(--mono);text-transform:uppercase;color:var(--muted)}
+.facts dd{margin:0}
+ol.choices,ol.calls,ul.checks{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.choice{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:8px}
+.choice.save{border-color:var(--accent);box-shadow:inset 4px 0 0 var(--accent)}
+.choice .moment{font-weight:700;font-size:.9375rem;color:var(--muted)}
+.choice .picks{display:grid;gap:6px}
+.choice .pick{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:baseline;font-size:1.0625rem}
+.choice .why{font-size:.875rem;color:var(--muted)}
+.run-1 .pick-r2,.run-2 .pick-r1{display:none}
+.run-1 [data-only="2"],.run-2 [data-only="1"]{display:none}
+.shift-head{display:grid;gap:4px;margin-top:6px}
+.grp{font:700 .75rem/1 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--accent-ink);padding:10px 2px 0}
+.call{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 12px 12px 10px;display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:start}
+.call.done{opacity:.55}
+.call.done .call-name{text-decoration:line-through;text-decoration-color:var(--muted)}
+.call-top{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:baseline}
+.call-name{font:800 1.1875rem/1.1 var(--display);text-transform:uppercase;letter-spacing:.02em}
+.slots{font:700 .6875rem/1 var(--mono);color:var(--muted);text-transform:uppercase}
+.call-body{display:grid;gap:5px;min-width:0}
+.line{display:grid;grid-template-columns:44px 1fr;gap:8px;align-items:baseline;font-size:.9375rem}
+.lbl{font:700 .6875rem/1.7 var(--mono);text-transform:uppercase;color:var(--muted)}
+.send strong{font-size:1rem}
+.send-r2 .lbl{color:var(--r2)}
+.send-r1 .lbl{color:var(--r1)}
+.run-1 .send-r2,.run-2 .has-r2 .send-r1{display:none}
+.run-1 .send-r1 .lbl,.run-2 .send-r2 .lbl{color:var(--muted)}
+.note{font-size:.875rem;color:var(--muted)}
+.need{color:var(--muted)}
+.radar{width:64px;height:66px;display:block}
+.radar .ring{fill:none;stroke:var(--line);stroke-width:1}
+.radar .axes line{stroke:var(--line);stroke-width:.75}
+.radar .shape{fill:var(--accent);fill-opacity:.35;stroke:var(--accent-ink);stroke-width:1.25}
+.radar text{font:700 5.5px var(--mono);fill:var(--muted)}
+.tick{position:relative;display:inline-grid;place-items:center;width:28px;height:28px;cursor:pointer}
+.tick input{position:absolute;opacity:0;width:28px;height:28px;margin:0;cursor:pointer}
+.tick .box{width:22px;height:22px;border:2px solid var(--line);border-radius:6px;background:var(--surface);display:grid;place-items:center}
+.tick input:checked + .box{background:var(--good);border-color:var(--good)}
+.tick input:checked + .box::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.tick input:focus-visible + .box{outline:3px solid var(--accent);outline-offset:2px}
+.notes{display:grid;gap:8px}
+.notes li{max-width:72ch}
+.srcs{font-size:.8125rem;color:var(--muted)}
+.srcs a{color:var(--muted)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pager a{font:800 1rem/1 var(--display);text-transform:uppercase;letter-spacing:.04em;text-decoration:none;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.pager a:hover{border-color:var(--ink)}
+
+/* ---------- Trophies ---------- */
+.progress{display:grid;gap:8px}
+.meter{height:12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s ease}
+.counts{display:flex;flex-wrap:wrap;gap:14px;font-size:.875rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.counts b{color:var(--ink)}
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.filters button{font:700 .8125rem/1 var(--body);padding:8px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.trophy{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 12px 12px 10px;display:grid;grid-template-columns:32px 1fr;gap:10px}
+.trophy.done{opacity:.6}
+.t-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.medal{width:14px;height:14px;border-radius:50%;flex:0 0 auto;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}
+.medal.P{background:var(--plat)}.medal.G{background:var(--gold)}.medal.S{background:var(--silver)}.medal.B{background:var(--bronze)}
+.t-name{font:800 1.1875rem/1.1 var(--display);text-transform:uppercase;letter-spacing:.02em}
+.t-desc{font-size:.8125rem;color:var(--muted);font-style:italic}
+.t-how{font-size:.9375rem;margin-top:4px}
+.t-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:6px;font-size:.8125rem}
+.resetbtn{font:700 .8125rem/1 var(--body);padding:8px 11px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer}
+.resetbtn.armed{border-color:var(--bad);color:var(--bad)}
+
+/* ---------- Heroes ---------- */
+.heroes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:760px){.heroes{grid-template-columns:1fr}}
+.herocard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:4px 12px}
+.herocard h3{font-size:1.375rem}
+.herocard dl{margin:4px 0 0;display:grid;gap:4px;grid-column:1/-1;font-size:.9rem}
+.herocard dl div{display:grid;grid-template-columns:84px 1fr;gap:8px}
+.herocard dt{font:700 .6875rem/1.75 var(--mono);text-transform:uppercase;color:var(--muted)}
+.herocard dd{margin:0}
+.checks li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px 8px 8px;display:grid;grid-template-columns:32px 1fr;gap:8px;align-items:center}
+.checks li.done span.txt{text-decoration:line-through;color:var(--muted)}
+.checks .ep{font:700 .6875rem/1 var(--mono);color:var(--accent-ink);margin-right:6px}
+footer.foot{max-width:1040px;margin:0 auto;padding:0 16px 40px;color:var(--muted);font-size:.8125rem}
+
+/* ---------- Hacks ---------- */
+.hackcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px 14px 10px;display:grid;grid-template-columns:32px minmax(0,1fr);gap:10px}
+.hackcard.done{opacity:.6}
+.hackcard,#transfer,.call,.trophy{scroll-margin-top:112px}
+.hackcard.done .call-name{text-decoration:line-through;text-decoration-color:var(--muted)}
+.hk-when{font-size:.875rem;color:var(--muted);margin-top:4px}
+.codes{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.code{font:700 .8125rem/1 var(--mono);padding:7px 9px;border-radius:7px;background:var(--ink);color:var(--surface);letter-spacing:.02em}
+.code .arrows{font-size:1rem;margin-left:6px;letter-spacing:.12em}
+.hk-steps{margin:8px 0 0;padding-left:1.35em;display:grid;gap:4px;font-size:.9375rem;list-style:decimal}
+.hk-steps li::marker{color:var(--muted);font:700 .8125rem var(--mono)}
+.misslist{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0;padding:0;list-style:none}
+.misslist a{display:inline-block;font-size:.875rem;font-weight:700;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);text-decoration:none}
+.misslist a span{font:700 .6875rem/1 var(--mono);color:var(--accent-ink);margin-right:6px}
+.hk-tip{margin-top:8px;font-size:.875rem;padding:8px 10px;border-radius:8px;border:1px dashed var(--line)}
+.hk-links{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:.875rem}
+.hk-links a{font-weight:700}
+.hk-links .vid::before{content:"▶ ";color:var(--bad)}
+ol.hacklist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.transfer{display:grid;gap:8px}
+.transfer .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.transfer input{flex:1 1 220px;font:.9375rem var(--mono);padding:9px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);min-width:0}
+.btn{font:700 .875rem/1 var(--body);padding:10px 13px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--surface);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.status{font-size:.8125rem;color:var(--muted);min-height:1.2em}
+</style>
+</head>
+<body class="run-1">
+<header class="app">
+  <div class="bar">
+    <a class="brand" href="#start" aria-label="Dispatch Platinum Guide, start">
+      <span class="brand-top">Dispatch <i>Plat</i></span>
+      <span class="brand-sub" id="brandCount">PS5 guide · 0/36 trophies</span>
+    </a>
+    <div class="bar-right">
+      <div class="seg head-seg" role="group" aria-label="Show choices for">
+        <button type="button" id="run1Btn" data-run="1" aria-pressed="true">Run 1</button>
+        <button type="button" id="run2Btn" data-run="2" aria-pressed="false">Run 2</button>
+        <button type="button" id="runBothBtn" data-run="both" aria-pressed="false">Both</button>
+      </div>
+      <button type="button" class="icon-btn" id="searchToggle" aria-expanded="false" aria-controls="searchPanel">Search</button>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+  <div class="search" id="searchPanel" hidden>
+    <label for="q" class="sr-only">Search the guide</label>
+    <input id="q" type="search" autocomplete="off" placeholder="Search calls, trophies, choices, lock codes">
+    <ol class="results" id="results"></ol>
+  </div>
+</header>
+<main id="main"></main>
+<footer class="foot">
+  Built from your Dispatch platinum doc. Spoilers for the whole story. Ticks are saved in this browser only; the code on the Trophies tab moves them to another device. On iPhone, open the guide in Safari and use Share → Add to Home Screen to launch it like an app.
+</footer>
+
+<script>
+"use strict";
+/* ================= DATA ================= */
+const RUN_LABEL = {"1":"Run 1 · Invisigal romance, hero", "2":"Run 2 · Blazer romance, villain", "both":"Both runs side by side"};
+
+const OVERVIEW = {
+  tiles:[["36","trophies · 1P 3G 16S 16B"],["3/10","difficulty"],["10–15 h","plus luck retries"],["2 + 1","full runs + a replay"]],
+  facts:[
+    ["Difficulty setting","None. If the first-launch \"Tailor Your Experience\" menu offers unlimited hacking lives, leave it off: Gamepressure reports the hacks don't count with it on."],
+    ["Glitched","H4ck3d by R0b3rt was broken at launch. PS5 update 1.000.007 (Nov 21, 2025) fixed it and a Min Max unlock issue. Update before you start."],
+    ["Missable","All choice, ending and story-hack trophies. All can be recovered with Scene Select."]
+  ],
+  saves:[
+    "**Four save slots.** To copy a save: Main Menu > Play, select \"Save Slot X\" at the top left, pick the save, then Copy to new slot.",
+    "**Episode/Scene Select** replays from any scene but overwrites the slot you start from and every scene after it. Copy the slot first.",
+    "**Autosave** happens at the start of each shift. Quit to the main menu mid-shift and reload to redo a shift, which is how you retry a failed hack or call.",
+    "**PS Plus cloud backup.** On the PS5 home screen press Options on Dispatch > Upload/Download Saved Data (or Settings > Saved Data and Game/App Settings). A download replaces the console save. Upload at every SAVE POINT; use in-game slot copies for routine branching."
+  ],
+  rules:[
+    "Fully update the game before you start.",
+    "In Run 1, never let a hack fail. If one goes wrong, quit to the main menu and reload the shift.",
+    "Copy your slot (and upload to the cloud) at every SAVE POINT: the Ep 2 donut, Ep 3 cut, Ep 4 recruit, Ep 5 identity reveal, Ep 7 Scene 5 and the Ep 8 Shroud choice.",
+    "If a least-popular-choice trophy doesn't pop, check Main Menu > Extras > Choice Stats later. It unlocks if your pick has since become the least popular.",
+    "Invisigal's ending depends on a hidden mentor score, not just dialogue. You need 45+, and her successful dispatches count toward it."
+  ]
+};
+
+const ROADMAP = [
+  {cls:"r1", n:"1", t:"Run 1: hero run", slot:"Slot 1", p:"Romance Invisigal, be her good mentor, cut Coupé, recruit Waterboy, tell the team you're Mecha Man, spare Shroud. Win every hack and aim for zero failed calls. This run carries all the performance trophies (about 27).", li:["At every SAVE POINT, copy the slot and upload to PS Plus.","Farm luck trophies (Fool's Luck, least-popular picks) by reloading the shift or scene."]},
+  {cls:"rp", n:"2", t:"Kill Shroud", slot:"Slot 1", p:"After the credits, copy Slot 1 to Slot 2. Then in Slot 1, Scene Select the final Episode 8 scene and choose to kill Shroud for \"Muuuuurrrdaaaaah!\"."},
+  {cls:"cl", n:"3", t:"No romance + villain Invisigal", slot:"Slot 2", p:"Scene Select Episode 7, Scene 5. Cut Invisigal, tell her \"We're done\", Lean out, name her on the news, leave her tied up in Ep 8. Earns \"We can just be friends.\" and often \"Didn't see that coming?\", but only if her mentor score drops below 45."},
+  {cls:"r2", n:"4", t:"Run 2: Blazer run", slot:"Slot 3 · new game", p:"Romance Blonde Blazer, stay cold to Invisigal and bench her, cut Sonar, recruit Phenomaman, say \"I'm Robert\". Earns the four opposite-choice trophies, \"Any plans tonight?\", Snake Eyes, and \"Didn't see that coming?\" if still missing."},
+  {cls:"fin", n:"5", t:"Final sweep", slot:"Any slot", p:"Check Main Menu > Extras > Choice Stats for the donut and store-item trophies. Scene Select anything still missing (Cleanup tab) and the platinum pops."}
+];
+
+const SLOTS = [
+  ["1","Run 1, then the Shroud-kill replay","Everything in Run 1 + Muuuuurrrdaaaaah!"],
+  ["2","Copy of finished Run 1","Ep 7 Scene 5 cleanup (no romance, villain Invisigal)"],
+  ["3","Run 2","Blazer romance + every opposite choice"],
+  ["4","Scratch","Temporary copies for luck-based retries"],
+  ["Cloud","Latest PS Plus upload","Backup before every SAVE POINT"]
+];
+
+const TROPHIES = [
+ {n:"Dispatched", g:"P", d:"Collected All Trophies", h:"Earn the other 35.", w:"End", p:"end"},
+ {n:"\"Sorry, kid.\"", g:"G", d:"Succeeded as a Mentor", h:"Invisigal stays a hero: hidden mentor score 45+ by the end of Ep 8. Make every pro-Invisigal choice, win her story hacks and the Ep 5 bar-fight QTEs, send her on calls she can win (+1 each), and train her once.", w:"Run 1 · Ep 8", p:"r1", ep:"heroes"},
+ {n:"\"Didn't see that coming?\"", g:"G", d:"Failed as a Mentor", h:"Invisigal turns villain and kills Shroud herself (score under 45). Do the opposite of the mentor choices: cut her in Ep 7, don't untie her in Ep 8.", w:"Cleanup or Run 2", p:"cl", ep:"cleanup"},
+ {n:"\"All gas no brakes baby.\"", g:"G", d:"Protected Los Angeles", h:"Ep 8 shift: drain the cut hero's boss bar with the \"Attack Coupé/Sonar\" calls before the city health bar empties. Every failed call drains the city.", w:"Run 1 · Ep 8", p:"r1", ep:"ep8"},
+ {n:"\"I can confirm he's a bad ass.\"", g:"S", d:"Chose the Path of Mercy", h:"Spare Shroud. The choice only appears if Invisigal is a hero.", w:"Run 1 · Ep 8", p:"r1", ep:"ep8"},
+ {n:"\"Muuuuurrrdaaaaah!\"", g:"S", d:"Chose the Path of Vengeance", h:"Kill Shroud, via a Scene Select replay of the finale.", w:"Run 1 replay", p:"r1", ep:"ep8"},
+ {n:"\"I'm a bleeder.\"", g:"S", d:"Kissed on a Stretcher", h:"Invisigal romance (Ep 4 movie, Ep 6 dance, Ep 7 defend + forgive + Lean in, Ep 8 untie her) plus the good mentor ending.", w:"Run 1 · Ep 8", p:"r1", ep:"ep8"},
+ {n:"\"Any plans tonight?\"", g:"S", d:"Kissed on a Car", h:"Blonde Blazer romance (Ep 1 kiss, Ep 4 dinner + kiss, Ep 6 dance with her, Ep 7 Lean out of Invisigal's kiss).", w:"Run 2 · Ep 8", p:"r2", ep:"cleanup"},
+ {n:"\"We can just be friends.\"", g:"S", d:"Kept Romance Out of the Workplace", h:"Finish with no romance. Easiest is the Ep 7 Scene 5 replay with Lean out.", w:"Cleanup", p:"cl", ep:"cleanup"},
+ {n:"\"That's, like, a real superhero.\"", g:"S", d:"Told the Truth", h:"End of Ep 5: \"I'm Mecha Man\".", w:"Run 1 · Ep 5", p:"r1", ep:"ep5"},
+ {n:"\"I'm the guy behind the desk.\"", g:"S", d:"Hid the Truth", h:"End of Ep 5: \"I'm Robert\".", w:"Run 2 · Ep 5", p:"r2", ep:"ep5"},
+ {n:"\"It smells very chemically in here.\"", g:"S", d:"Gave Him His First Shot", h:"Ep 4: recruit Waterboy.", w:"Run 1 · Ep 4", p:"r1", ep:"ep4"},
+ {n:"\"I wish to make love to you again.\"", g:"S", d:"Gave Him a Second Chance", h:"Ep 4: recruit Phenomaman.", w:"Run 2 · Ep 4", p:"r2", ep:"ep4"},
+ {n:"\"Watch your back, Robert.\"", g:"S", d:"Collected a Tie", h:"End of Ep 3: cut Sonar.", w:"Run 2 · Ep 3", p:"r2", ep:"ep3"},
+ {n:"\"But I cheered for Invisigal...\"", g:"S", d:"Collected a Knife", h:"End of Ep 3: cut Coupé.", w:"Run 1 · Ep 3", p:"r1", ep:"ep3"},
+ {n:"Career Development", g:"S", d:"Aced Your Performance Review", h:"Reach the top dispatcher rank (Junior, Assistant, Associate, Dispatcher). Successful calls raise it; failed or missed calls lower it.", w:"Run 1", p:"r1", ep:"heroes"},
+ {n:"H4ck3d by R0b3rt", g:"S", d:"Succeeded On All Hacking Levels", h:"Win all 28 hacking puzzles, including the optional ones you only get by picking the hack option. Walkthrough and checklist on the Hacks tab.", w:"Run 1", p:"r1", ep:"hacks"},
+ {n:"Work Spouse", g:"S", d:"Reached Max Synergy With a Hero Duo", h:"Keep sending one synergy pair together (Sonar + Malevola is easiest) until synergy level 3.", w:"Run 1 · Ep 3–4", p:"r1", ep:"ep4"},
+ {n:"Anti-Antivirus Club", g:"S", d:"Destroyed 3 Antiviruses in Less Than 15 Seconds", h:"Charge at an electric node, then zap three antiviruses fast. Ep 5's film-shoot and East Torrance hacks have three; Ep 6's safe hack has many.", w:"Run 1 · Ep 5–6", p:"r1", ep:"hacks"},
+ {n:"Power Trip", g:"S", d:"Expanded Powers for 4 Different Heroes", h:"Send four different heroes to Hero Training calls. Pops at your 4th training (Ep 5 with this guide's order).", w:"Run 1 · Ep 3–5", p:"r1", ep:"heroes"},
+ {n:"\"Did I drool on you?\"", g:"B", d:"Hired at SDN", h:"Story, end of Ep 1.", w:"Run 1 · Ep 1", p:"r1", ep:"ep1"},
+ {n:"\"You gonna eat those twinks?\"", g:"B", d:"Disobeyed by Invisigal", h:"Story, Ep 2.", w:"Run 1 · Ep 2", p:"r1", ep:"ep2"},
+ {n:"\"Love 'em from my mouth to my butt.\"", g:"B", d:"Chose the Least Popular Donut", h:"Ep 2: when Invisigal asks your favorite donut, pick the least-picked one. \"The long cream ones\" has usually been it; confirm in Choice Stats.", w:"Run 1 or 2 · Ep 2", p:"any", ep:"ep2"},
+ {n:"\"There. You happy now?\"", g:"B", d:"Chose the Least Popular Item from the Store", h:"Ep 7 prologue: Twinkies, Beer or Cigar. Pick the least popular and confirm in Choice Stats.", w:"Run 1 or 2 · Ep 7", p:"any", ep:"ep7"},
+ {n:"Shift Was Lit", g:"B", d:"Completed a Z-Team Shift Without Missing or Failing a Call", h:"Ep 2 shift using the Episode 2 call list.", w:"Run 1 · Ep 2", p:"r1", ep:"ep2"},
+ {n:"Getting to Know Yous", g:"B", d:"Discovered Every Hero's Starting Power", h:"Trigger each original Z-Team hero's power once before the Ep 3 cut (reveal triggers in the hero cheat sheet).", w:"Run 1 · Ep 2–3", p:"r1", ep:"heroes"},
+ {n:"Fool's Luck", g:"B", d:"Succeeded a Call with <15% of Success", h:"Ep 4 Shift 2: send Waterboy alone to Stop the Assassination (7%). Reload until it works.", w:"Run 1 · Ep 4", p:"r1", ep:"ep4"},
+ {n:"Snake Eyes", g:"B", d:"Failed a Call with >70% of Success", h:"Ep 2: send Coupé alone to Lost Balloon (72%). Reload until it fails. Not in Run 1's Ep 2, because a failure there breaks Shift Was Lit.", w:"Run 2 · Ep 2", p:"r2", ep:"ep2"},
+ {n:"Nailed It", g:"B", d:"Achieved a Perfect Dispatch With Only One Hero", h:"Ep 2: send Flambae alone to Lost Balloon (100%).", w:"Run 1 · Ep 2", p:"r1", ep:"ep2"},
+ {n:"Overkill", g:"B", d:"Covered the Entire Graph on a Single Call", h:"Ep 1 tutorial: fill all 4 slots of Chase El Diabolito with Pom Pom, Brickhouse, Equilibrium and Brainbook.", w:"Run 1 · Ep 1", p:"r1", ep:"ep1"},
+ {n:"Modded", g:"B", d:"Reached all bonuses and successfully avoid all failures", h:"In one shift, clear every 2x-XP stat threshold and never trip an auto-fail threshold. Ep 7 is the recommended shift.", w:"Run 1 · Ep 7", p:"r1", ep:"ep7"},
+ {n:"Phoenixes Down", g:"B", d:"Healed the Same Hero Twice in a Shift", h:"Malevola heals the hero she's sent with. Get the same injured hero healed by her twice in one shift.", w:"Run 1 or 2", p:"any", ep:"cleanup"},
+ {n:"Time's Running Out", g:"B", d:"Completed a Hacking Level With less than 5 Seconds Left", h:"On a timed hack, wait on the last move and finish with under 5 s left.", w:"Any", p:"any", ep:"hacks"},
+ {n:"Burning Chrome", g:"B", d:"Completed a Hacking Level With at least a third of the Timer Left", h:"Finish a timed hack fast (Ep 2 Cray Cray Bidet or Museum Robbery).", w:"Any · Ep 2", p:"any", ep:"hacks"},
+ {n:"Min Max", g:"B", d:"Upgraded a Stat to 10", h:"Pour points into one stat until it hits 10. Golem's Found Himself respec makes this instant.", w:"Run 1 · Ep 4", p:"r1", ep:"ep4"},
+ {n:"From Zero To Hero", g:"B", d:"Maxed Out a Hero", h:"Get one hero to the max level (10).", w:"Run 1", p:"r1", ep:"heroes"}
+];
+
+/* Call fields: n name, s slots, st [C,V,M,Ch,I], need text, send (Run 1), r2 (Run 2 swap), pick, note, only (1|2), tags [[type,label]] */
+const EPISODES = [
+{ id:"ep1", num:1, title:"Pivot", key:"Overkill · first hack · Blazer kiss fork",
+  lead:"Episode 1 is the tutorial. Here you split the two runs (kiss Blazer or not), win the first hack, and earn Overkill on the last tutorial call.",
+  facts:[["Trophies","Overkill, \"Did I drool on you?\" (end of episode)"],["Hacks","The tablet hack (1 of 19)"]],
+  choices:[
+    {m:"Dangling villain (Toxic)", r1:"Pull him back", r2:"Let him drop", why:"Into Indie's good-mentor route never drops him."},
+    {m:"Tablet hacking tutorial", r1:"Win it", r2:"Win it", why:"First of the 28 hacks for H4ck3d (the Hacks tab has every route). Don't turn on unlimited attempts."},
+    {m:"Press conference: dad question", r1:"Answer", r2:"Answer", why:"Positive pick; may feed mentor points."},
+    {m:"Bar: \"Why did you do it?\"", r1:"I like helping people.", r2:"I like helping people.", why:"Raises Blazer, and is remembered."},
+    {m:"Flambae's injury", r1:"Either", r2:"Either", why:"Cosmetic only (tooth or eyebrows)."},
+    {m:"Blazer leans in on the billboard", r1:"Let the moment pass", r2:"Kiss her", why:"The kiss starts the Blazer romance. Skipping it keeps Run 1's no-romance cleanup clean.", key:true},
+    {m:"Beef", r1:"Who's a good boy.", r2:"Who's a good boy.", why:"No effect."}
+  ],
+  shifts:[{t:"Tutorial dispatch", intro:"Call order can shift slightly. Send by name.", calls:[
+    {n:"Assault on Criminal Hideout!", s:2, st:[6,4,3,1,1], send:"Phenomaman", note:"Forced tutorial pick."},
+    {n:"Investigate the Dorm Room!", s:2, st:[1,2,2,4,8], send:"Brainbook + anyone except Brickhouse", note:"Intellect test. Let the team fully rest afterward."},
+    {n:"Art Exhibit Opening!", s:2, send:"Sweetalker", pick:"Jokes"},
+    {n:"High Speed Chase!", s:2, st:[7,3,7,1,1], send:"Phenomaman + Pom Pom", note:"Combat and Mobility."},
+    {n:"Monster Attack!", s:3, st:[4,9,3,4,2], send:"Brickhouse + Equilibrium", note:"Mostly Vigor."},
+    {n:"Attack on the Hospital!", s:2, send:"Pom Pom", note:"Every hero has an auto-success option; take Pom Pom's."},
+    {n:"Help Grandma Cross the Road!", s:1, st:[1,2,5,1,1], send:"Pom Pom or Brainbook", note:"Mostly Mobility."},
+    {n:"Negotiate with Hostage Takers!", s:3, st:[2,4,2,8,5], send:"Sweetalker + Phenomaman", note:"Mostly Charisma."},
+    {n:"Chase El Diabolito!", s:4, st:[6,9,9,2,2], send:"Pom Pom + Brickhouse + Equilibrium + Brainbook", note:"Fill all four slots so their shapes cover the whole graph. If it doesn't pop, retry this call with Scene Select.", tags:[["trophy","Overkill"]]}
+  ]}],
+  notes:["Backup for Overkill: Ep 3 Shift 2's 4-slot Lightningstruck Strikes Again with Sonar, Coupé, Flambae and Punch Up."],
+  src:[["Into Indie missions guide","https://intoindiegames.com/walkthroughs/tips-tricks/dispatch-complete-missions-guide/"],["Gamepressure Ep 1","https://www.gamepressure.com/newsroom/dispatch-episode-1-walkthrough-and-choices-guide/z6892c"],["T-Pose Gaming","https://tposegaming.com/dispatch-achievement-and-trophy-guide/"],["Steam missions guide","https://steamcommunity.com/sharedfiles/filedetails/?id=3591755863"]]
+},
+{ id:"ep2", num:2, title:"Onboard", key:"Shift Was Lit · Nailed It · donut",
+  lead:"One shift (Scene 7) of 12 calls plus a hack. Clear it with zero failures for Shift Was Lit, Nailed It and Burning Chrome, and reveal half the heroes' powers.",
+  facts:[["Run 1","Nailed It, Shift Was Lit, Burning Chrome, \"You gonna eat those twinks?\", donut trophy if your pick is least popular"],["Run 2","Snake Eyes"],["Hacks","Cray Cray Bidet, Museum Robbery, two Granny's Donuts hacks"]],
+  choices:[
+    {m:"Blazer: was the kiss a mistake?", r1:"We were drunk.", r2:"I'll take your lead.", why:"Blazer route. Options are the same whether or not you kissed her."},
+    {m:"Royd in the bathroom", r1:"Bro fist.", r2:"Bro fist.", why:"Royd remembers."},
+    {m:"Granny's Donuts: \"favorite donut\"", r1:"The long cream ones", r2:"Same, or the current least-picked", why:"Least-popular trophy. Copy the slot when the question appears. Options: Jelly filled / The long cream ones / Plain glazed. If it doesn't pop, Scene Select the last scene of Ep 2 and try another.", save:true},
+    {m:"Granny's Donuts hacks (cameras, then sprinklers)", r1:"Win both. Locks: Up, Down, Left, Left, then Up, Down, Left, Up", r2:"Win both if H4ck3d isn't done yet", why:"H4ck3d, and Invisigal remembers (mentor)."},
+    {m:"Disarm Granny / Take out the thief", r1:"Either", r2:"Either", why:"Same outcome."},
+    {m:"Talk with Invisigal: confrontation", r1:"You ignored my order.", r2:"I told Chase you disobeyed.", why:"The tattle angers her (villain path).", key:true},
+    {m:"Blazer asks about your face", r1:"I bumped my head.", r2:"Invisigal punched me.", why:"Snitching is a villain-path pick.", key:true},
+    {m:"Blazer as you leave work", r1:"Thanks for setting this up", r2:"Do you want to grab dinner?", why:"Asking is remembered (Blazer route)."},
+    {m:"Blazer offers dinner with her and Phenomaman", r1:"(not offered)", r2:"Sorry, I already ate.", why:"Declining raises Blazer."}
+  ],
+  shifts:[{t:"Shift 1 · Shift Was Lit", intro:"Send in this order as calls appear. If any call fails, quit to the main menu and restart the shift.", calls:[
+    {n:"Lost Balloon", s:1, st:[1,1,3,2,1], send:"Flambae alone", r2:"Coupé alone (72%) for Snake Eyes. Reload until it fails", note:"100% = Nailed It. Also reveals Flambae's On Fire power.", tags:[["trophy","Nailed It"],["trophy","Snake Eyes (Run 2)"]]},
+    {n:"VAND-GO Opening", s:1, st:[1,1,1,3,3], send:"Sonar (hybrid form)", note:"100%. He transforms on the way back, revealing his power."},
+    {n:"Cray Cray Bidet", send:"Hack", note:"Tutorial hack.", tags:[["hack","Hack"]]},
+    {n:"Fight at Crypto-Night", s:3, send:"Prism alone", pick:"Badass sounding names", note:"Her special option, auto-success."},
+    {n:"Retrieve Stolen Boat", s:1, st:[1,2,3,1,2], send:"Invisigal alone", note:"Reveals Lone Wolf. +1 mentor score."},
+    {n:"Museum Robbery", s:2, send:"Coupé or Sonar (bat form)", pick:"Hack into the system", note:"Missable story hack. Finish with a third of the timer left for Burning Chrome.", tags:[["hack","Hack"],["trophy","Burning Chrome"]]},
+    {n:"Blaze in the Burbs", s:1, send:"Golem", pick:"Use your body to smother the flames", note:"Never Flambae. A failure spawns Bigger Blaze in the Burbs."},
+    {n:"In the Zone", s:1, st:[1,1,1,4,4], send:"Prism", note:"Charisma + Intellect."},
+    {n:"Apprehend Art Thieves", s:2, st:[2,1,5,2,4], send:"Invisigal + Coupé", note:"100%. Coupé in slot 1 or 2 reveals En Pointe. Before sending, drag Golem into slot 1 to reveal his power, then swap him out."},
+    {n:"Security call", s:1, send:"Sonar (pick \"Send Sonar As Security\")", pick:"Tell a story", note:"Sonar bonus XP."},
+    {n:"Juvenile Pickpocket At Large", s:1, send:"Malevola", pick:"Her special option", note:"Or Punch Up with \"Pep talk\"."},
+    {n:"Locate Stolen Art", s:2, send:"Coupé or Invisigal", pick:"Take down the thieves, not the art", note:"Auto-success."},
+    {n:"Granny's Donuts", send:"Invisigal (automatic)", note:"Donut pick + two hacks: see story choices.", tags:[["save","SAVE POINT"],["hack","2 hacks"]]}
+  ]}],
+  notes:[
+    "**Upgrades** (press the Touch Pad mid-shift when a hero levels up): Prism Intellect. Sonar Charisma to 4, then Intellect to 5, for Ep 3's Undercover Drug Bust (Run 1). Punch Up Vigor toward 5 for Ep 3's tournament. Invisigal Mobility. Skip Coupé in Run 1, since she's cut in Ep 3.",
+    "**Getting to Know Yous** after this shift: Flambae, Sonar, Invisigal, Coupé and Golem are revealed. Prism, Malevola and Punch Up come in Episode 3."
+  ],
+  src:[["Dayngls' Guides","https://daynglsgameguides.com/2025/11/25/dispatch-trophy-guide-roadmap/"],["Into Indie missions guide","https://intoindiegames.com/walkthroughs/tips-tricks/dispatch-complete-missions-guide/"],["Gamepressure Ep 2","https://www.gamepressure.com/newsroom/dispatch-episode-2-walkthrough-and-choices-guide/z78933"],["Steam missions guide","https://steamcommunity.com/sharedfiles/filedetails/?id=3591755863"]]
+},
+{ id:"ep3", num:3, title:"Turnover", key:"Knife / Tie · sabotage · 4 hacks",
+  lead:"Sabotage arrives: heroes who aren't a synergy pair can sabotage each other. The episode ends with the cut that decides the Knife or Tie trophy, and holds four hacks and your first Hero Training.",
+  facts:[["Trophies","Knife (Run 1) or Tie (Run 2), Getting to Know Yous. Often Phoenixes Down and Work Spouse progress"],["Hacks","Flambae's water-tank hack, Hack the Scammer, Bank Robbery, the three jewelry-store hacks (6 puzzles; see the Hacks tab)"]],
+  choices:[
+    {m:"Blazer tells you she broke up with Phenomaman", r1:"Any", r2:"I'm sorry, Blazer.", why:"Raises Blazer."},
+    {m:"Blazer's plan to cut someone", r1:"Any", r2:"I like it.", why:"Raises Blazer."},
+    {m:"Golem shoves you at the meeting", r1:"Give him the chair", r2:"Give him the chair", why:"Kicking him out costs you Golem on Personal Shopper."},
+    {m:"\"What I see is...\"", r1:"Potential.", r2:"Potential.", why:"Good-leader pick."},
+    {m:"Phoenix speech", r1:"All of you are Phoenixes.", r2:"All of you are Phoenixes.", why:"Good-leader pick."},
+    {m:"Invisigal on the playground (fate)", r1:"You make your own destiny.", r2:"Any other option", why:"Mentor-critical.", key:true},
+    {m:"The burglary in progress", r1:"This could make a difference.", r2:"Take your anger out on him.", why:"Mentor."},
+    {m:"Jewelry store: 3 antivirus hacks", r1:"Win all three (Camera Override, Camera Override, System Override)", r2:"Win if H4ck3d isn't done; failing helps the villain ending", why:"H4ck3d + mentor. In the third, lure the antivirus to the bottom of the web and close it in."},
+    {m:"Blazer: \"Did you mean all that?\"", r1:"I hope so.", r2:"No, I don't.", why:"Mentor."},
+    {m:"Who to cut", r1:"Coupé → Knife trophy", r2:"Sonar → Tie trophy", why:"The cut hero joins Shroud's side. Their friend (Punch Up for Coupé, Malevola for Sonar) leaves Ep 4's first shift early.", save:true}
+  ],
+  extraHtml:"sabotage",
+  shifts:[
+    {t:"Shift 1", calls:[
+      {n:"Beach Clean Up", s:2, st:[1,5,3,4,1], send:"Golem + Flambae (never pair Flambae with Prism here)", r2:"Golem first; the game adds the second hero", pick:"Unlock the tank (when Flambae is sabotaged)", note:"This call always has a sabotage. With Flambae on it, he gets trapped in a water tank and you get the missable tank hack (lock: Left, Down, Down). If the game swaps in a bad partner, close the card and reopen it.", tags:[["hack","Tank hack"]]},
+      {n:"Undercover Drug Bust", s:2, st:[2,1,2,4,5], send:"Sonar (hybrid), needs Charisma 4 / Intellect 5", note:"Succeed, or you get the much harder Drug Deal Shut Down."},
+      {n:"Assault on the Drug Base", s:3, st:[7,7,3,2,2], send:"Sonar (bat) + Malevola", note:"Use a Coffee on Sonar if he's still resting."},
+      {n:"Trouble at the Tailgate", s:2, st:[5,6,2,1,2], send:"Invisigal + Golem", note:"100%, synergy. Invisigal +1 mentor."},
+      {n:"Learn about SDN Scammer", s:2, st:[1,1,2,6,5], send:"Flambae + Prism", note:"Synergy."},
+      {n:"Landslide", s:2, st:[1,3,2,2,5], send:"Sonar (hybrid) + Coupé (auto-assigned)", pick:"Backstroke away (Coupé's sabotage)", note:"She comes back injured: send her with Malevola on her next call to reveal Malevola's heal."},
+      {n:"Save the Mascot in Peril", s:2, st:[3,4,6,1,1], send:"Invisigal + Golem", note:"Synergy."},
+      {n:"Hack the Scammer", send:"Hack (instead of Investigate Tip)", note:"Pick the hack. It's missable and mutually exclusive.", tags:[["hack","Hack"]]},
+      {n:"Runaway Train", s:2, st:[1,6,6,1,2], send:"Sonar (bat) + Malevola", note:"Synergy; Work Spouse progress."},
+      {n:"Parking Lot Backup", s:2, st:[1,1,2,4,5], send:"Flambae + Prism", note:"Synergy. If the tank hack didn't trigger on Beach Clean Up, pair Flambae with a non-Prism hero here instead to try again."},
+      {n:"Burglary in Progress", send:"Malevola", note:"Story call; leads into the jewelry store."}
+    ]},
+    {t:"Shift 2", calls:[
+      {n:"Personal Shopper", s:1, st:[4,4,2,1,2], send:"Golem", note:"Only available if you gave him the chair."},
+      {n:"Line Cutter", s:2, send:"Prism alone", pick:"Her special option", note:"Auto-win."},
+      {n:"Ritualistic Solicitation", s:2, send:"Sonar (hybrid) + Malevola", pick:"Free (Malevola's special)"},
+      {n:"Underground Fighting Ring", s:3, st:[7,7,3,3,1], send:"Flambae (slot 1) + Prism (slot 2) + Punch Up", note:"Prism copies Flambae, which reveals Prism's power."},
+      {n:"Personal Security", s:2, st:[5,5,1,2,1], send:"Sonar (bat) + Malevola", note:"Synergy."},
+      {n:"Fight in the Tournament", s:1, send:"Punch Up", pick:"Tough it out (Vigor 5)", note:"200% XP. Skip Shut Down Tournament."},
+      {n:"Flight School", s:1, send:"Flambae", note:"Don't send the hero you're about to cut."},
+      {n:"Personal Security II: The Ride", s:2, send:"Invisigal", pick:"Disarm", note:"Auto-win, +1 mentor."},
+      {n:"Debate the Bone Zone", s:2, st:[2,1,1,7,5], send:"Sonar (hybrid) + Malevola", note:"Charisma 7 / Intellect 5."},
+      {n:"Hero Training", s:1, send:"Invisigal → Wolf Pack", r2:"Flambae → Supernova", note:"Wolf Pack doubles XP on calls she's on, and Blazer's training is worth +5 mentor. Training #1 of 4 for Power Trip.", tags:[["train","Training #1"]]},
+      {n:"Lightningstruck Strikes Again", s:4, st:[8,8,7,1,5], send:"Punch Up + Sonar (bat) + Prism (+ Flambae)", note:"Backup Overkill spot."},
+      {n:"Bank Robbery", s:3, send:"Golem", r2:"Golem + Coupé", pick:"The hack", note:"Locks: Right; Right ×3; Down, Right, Down, Right, Up, Right, Up.", tags:[["hack","Hack"]]}
+    ]}
+  ],
+  notes:["**Getting to Know Yous** should pop once Prism (Fighting Ring), Malevola (healing Coupé) and Punch Up (his first injury, usually from Beach Clean Up) are revealed. Coupé and Sonar must be revealed before the cut.","**Upgrades:** keep feeding Sonar's Charisma/Intellect, Punch Up's Vigor and Invisigal's Mobility. Give Golem Vigor."],
+  src:[["Gamepressure Ep 3","https://www.gamepressure.com/newsroom/dispatch-episode-3-walkthrough-and-choices-guide/zc89c8"],["Into Indie missions guide","https://intoindiegames.com/walkthroughs/tips-tricks/dispatch-complete-missions-guide/"],["Dayngls' Guides","https://daynglsgameguides.com/2025/11/25/dispatch-trophy-guide-roadmap/"],["Steam missions guide","https://steamcommunity.com/sharedfiles/filedetails/?id=3591755863"]]
+},
+{ id:"ep4", num:4, title:"Restructure", key:"Waterboy / Phenomaman · Fool's Luck · date",
+  lead:"Two forks, both SAVE POINTs: Waterboy or Phenomaman before Shift 2, and the date at the end. Also the 7% Fool's Luck call and the easiest Min Max.",
+  facts:[["Run 1","\"It smells very chemically in here.\", Fool's Luck, Min Max; Work Spouse often pops on Moving In"],["Run 2","\"I wish to make love to you again.\""],["Hacks","Aisle 9 sprinkler hack, Discern the Target"]],
+  choices:[
+    {m:"Blazer: \"How do I look?\"", r1:"Kinda pretty, I guess.", r2:"Incredible.", why:"Remembered; Blazer route."},
+    {m:"Phenomaman asks about you and Blazer", r1:"That's not your business.", r2:"That's not your business.", why:"Safest pick."},
+    {m:"Flambae food fight", r1:"Either", r2:"Either", why:"Cosmetic."},
+    {m:"New recruit (Scene 7)", r1:"Waterboy → First Shot trophy", r2:"Phenomaman → Second Chance trophy", why:"No story lock. Waterboy starts weak but levels fast.", save:true},
+    {m:"Pep talk for the recruit", r1:"Believe in yourself. (Waterboy)", r2:"That's not healthy. (Phenomaman)", why:"Remembered."},
+    {m:"Invisigal: \"Are we friends?\"", r1:"Though we already were.", r2:"We're getting there.", why:"Friendly pick for Run 1."},
+    {m:"End of episode: the date", r1:"Movie with Invisigal", r2:"Dinner with Blazer", why:"Locks the romance route. The movie is worth +6 mentor.", save:true},
+    {m:"At dinner (Blazer's reveal)", r1:"—", r2:"Kiss her.", why:"Required for the Blazer romance.", key:true}
+  ],
+  shifts:[
+    {t:"Shift 1", intro:"The cut hero's friend storms off partway through: Punch Up in Run 1, Malevola in Run 2.", calls:[
+      {n:"Moving Away", s:1, st:[1,4,4,2,2], send:"Flambae", note:"Vigor + Mobility."},
+      {n:"Send Malevola", s:2, only:1, send:"Sonar (hybrid) + Malevola", note:"Run 1 only. Auto-win with Sonar along."},
+      {n:"Join the Cult", s:2, only:2, send:"Punch Up", pick:"Power (Vigor 6)", note:"Run 2 only."},
+      {n:"Car Drives Off Cliff", s:3, send:"Flambae", pick:"Fly", note:"A flyer auto-wins."},
+      {n:"Brawl at the Football Game", s:3, st:[8,8,4,2,3], send:"Invisigal + Punch Up + Golem", r2:"Coupé + Punch Up + Golem", note:"Run 1: +1 mentor."},
+      {n:"Nostalgically Yours", s:3, send:"Flambae", pick:"The Wolves Inside Us"},
+      {n:"Moving In", s:2, st:[1,4,6,2,2], send:"Sonar (bat) + Malevola", note:"Synergy, and the usual Work Spouse pop (Run 1).", tags:[["trophy","Work Spouse"]]},
+      {n:"Substitute Teacher", s:3, st:[6,5,5,1,3], send:"Invisigal + Golem", note:"Synergy."},
+      {n:"Demolition", s:3, st:[10,10,2,1,1], send:"Flambae (slot 1) + Prism (slot 2) + Golem", note:"Prism copies Flambae."},
+      {n:"Criminal Minds", s:2, st:[1,1,6,1,7], only:1, send:"Prism + Malevola", note:"Run 1 only. Coffee Malevola if she's resting."},
+      {n:"Wellness Check", s:3, st:[3,3,1,8,9], only:2, send:"Prism + Coupé + best spare Intellect", note:"Run 2 only. Hard; accept it if it's the only miss."},
+      {n:"Mall Looting Youths", s:1, st:[2,8,6,1,1], send:"Flambae", note:"Needs Vigor 8. Upgrade his Vigor first."},
+      {n:"Superhero Squabble in Aisle 9", s:2, send:"Prism", pick:"The sprinkler hack (not Mediate)", note:"Needed for H4ck3d.", tags:[["hack","Hack"]]},
+      {n:"Theatrically Yours", s:3, send:"Invisigal + Golem", pick:"Standing Alive, then Crawl"},
+      {n:"Hero Training", s:1, send:"Sonar → Talk Shit", r2:"Golem → Found Himself", note:"Talk Shit makes hybrid Sonar re-attempt a failed call.", tags:[["train","Training #2"]]},
+      {n:"Furniture, Assemble", s:1, st:[1,1,1,1,6], send:"Sonar (hybrid)", r2:"Coupé", note:"Intellect 6."},
+      {n:"Dog Walking", s:1, st:[1,5,6,2,1], send:"Flambae", note:"A failure spawns Dog Finding."},
+      {n:"Comically Yours", s:2, send:"Invisigal", pick:"Mecha Man Prime, then \"Can't\"", note:"+1 mentor."}
+    ]},
+    {t:"Shift 2 (Scene 8)", calls:[
+      {n:"Stop the Assassination", s:4, st:[10,6,10,1,3], send:"Fool's Luck: Waterboy alone (about 7%)", r2:"Flambae + Coupé + Golem + Phenomaman", note:"If he fails, quit to the main menu and restart Scene 8. The win also unlocks the Discern the Target hack. If you skip the farm, send Flambae + Invisigal + Golem + Waterboy.", tags:[["trophy","Fool's Luck"],["save","SAVE POINT"]]},
+      {n:"Hero Training", s:1, send:"Golem → Found Himself", r2:"Prism → Perfect Copy", note:"Then respec Golem right away with 10 in one stat for Min Max. A Second Wind item takes him off rest.", tags:[["train","Training #3"],["trophy","Min Max"]]},
+      {n:"Subscriber Recruitment Day", s:1, st:[1,1,1,5,2], send:"Prism", note:"Charisma 5."},
+      {n:"I Need A Hero", s:1, send:"Malevola", pick:"Her special option", note:"Auto-win."},
+      {n:"Mascot Match-Up", s:2, st:[4,4,2,4,1], send:"Flambae + Golem"},
+      {n:"Discern the Target", send:"Hack", note:"Lock: Left, Left, Up, Right, Right, Down.", tags:[["hack","Hack"]]},
+      {n:"Assassination Takedown", s:3, st:[9,4,4,1,7], send:"Flambae + Prism + Malevola", note:"100%."},
+      {n:"Baby Kaiju Attack", s:2, send:"Golem", pick:"Adopt", note:"Auto-win; changes an Ep 8 call."},
+      {n:"Ex-Hero in Crisis", s:2, st:[1,8,1,6,1], send:"Flambae + Prism"},
+      {n:"Meet the Handler", s:2, st:[1,3,2,6,4], send:"Sonar (hybrid) + Punch Up", r2:"Prism + Malevola"},
+      {n:"Brainteaser", send:"Humor the Brainteaser", pick:"The Wolves Inside Us, Standing Alive, Mecha Man Prime", note:"Then send Waterboy (Run 2: anyone) for the easy Intellect check and team XP."}
+    ]}
+  ],
+  notes:["**Run 2 tip:** Phenomaman's first Scene 8 call is reported as a scripted failure, because he leaves to look for Blazer. If it shows over 70%, that's a free Snake Eyes.","**Upgrades:** Flambae Vigor to 8. Waterboy Vigor, keeping Combat and Charisma low. Invisigal Mobility then Combat. Sonar Intellect. Prism Charisma."],
+  src:[["Gamepressure Ep 4","https://www.gamepressure.com/newsroom/dispatch-episode-4-walkthrough-and-choices-guide/zd8a13"],["Into Indie missions guide","https://intoindiegames.com/walkthroughs/tips-tricks/dispatch-complete-missions-guide/"],["Dayngls' Guides","https://daynglsgameguides.com/2025/11/25/dispatch-trophy-guide-roadmap/"],["Waterboy (wiki)","https://dispatch.wiki.gg/wiki/Waterboy"]]
+},
+{ id:"ep5", num:5, title:"Team Building", key:"Mecha Man / Robert · Power Trip",
+  lead:"Stat thresholds arrive: some calls auto-fail if a stat is too high, some pay double XP past a bonus line. The episode ends with the identity reveal, a SAVE POINT.",
+  facts:[["Trophies","Told the Truth (Run 1) or Hid the Truth (Run 2), Power Trip. Often Anti-Antivirus Club"],["Hacks","Stalker film-shoot hack, the three power-outage hacks"]],
+  choices:[
+    {m:"Chase asks if you'd kill Shroud", r1:"Heroes don't kill people.", r2:"Yes", why:"Into Indie's good-mentor route."},
+    {m:"Invisigal brings up the movie (bar)", r1:"I had a good time.", r2:"—", why:"Keeps the Invisigal romance alive."},
+    {m:"Bar-fight flashback QTEs", r1:"Hit every prompt", r2:"Miss them on purpose (optional)", why:"Story QTEs feed the mentor score."},
+    {m:"\"Who are you?\"", r1:"I'm Mecha Man. → Told the Truth", r2:"I'm Robert. → Hid the Truth", why:"Mecha Man makes Flambae attack you, and he sits out Ep 6's shift.", save:true}
+  ],
+  notes0:["**Threshold rules:** a star or double-XP line is a bonus: reach past it for double XP. An X or auto-fail zone is a trap: a hero whose stat reaches into it fails the call. Check before every send. Everything else in Ep 5 (who Blazer should be on your date, the bar banter) has no visible effect."],
+  shifts:[
+    {t:"Shift 1", calls:[
+      {n:"Talent of Torrance", s:2, st:[1,3,2,6,3], send:"Prism + Malevola", note:"Charisma pair."},
+      {n:"Rescue Transit Workers", s:4, need:"Speed 5 / Survey 6", send:"Golem (or Punch Up)", pick:"His special option"},
+      {n:"Talent of Torrance Throwdown", s:2, st:[1,3,2,10,3], send:"Prism + Malevola", note:"Your two best Charisma heroes."},
+      {n:"Aliens Among Us", s:1, need:"Improvise 4 / Enlighten 5", send:"Sonar (hybrid)", r2:"Phenomaman (auto-win)", pick:"Enlighten"},
+      {n:"Hero Training", s:1, send:"Prism → Perfect Copy", r2:"Coupé → À la Seconde", note:"Her copies now get full stats.", tags:[["train","Training #4"],["trophy","Power Trip"]]},
+      {n:"Stalker Stalking Film Shoot", s:2, need:"All stats", send:"Hack (delete his files)", note:"Locks: Left, Right, Right, then Right, Right, Left, Left. Three antiviruses: charge at an electric node and zap all three within 15 s.", tags:[["hack","Hack"],["trophy","Anti-Antivirus Club"]]},
+      {n:"Anti-Bullying Seminar", s:3, st:[2,4,3,8,4], send:"Prism + Malevola + Punch Up", note:"Charisma heavy."},
+      {n:"Your Big Break, Kid", s:1, st:[1,1,2,6,2], send:"Prism (or Malevola)"},
+      {n:"Sewage Spill (not Clog)", s:2, st:[1,7,5,1,5], send:"Golem + Sonar (hybrid)", r2:"Golem + Coupé", note:"Team XP. Mutually exclusive with Sewage Clog."},
+      {n:"Performance Art", s:1, st:[3,3,1,5,5], send:"Sonar (hybrid) or Prism"},
+      {n:"Refinery Explosion", s:4, st:[10,10,10,1,7], send:"Flambae + Golem + Punch Up + Sonar", r2:"Flambae + Golem + Punch Up + Phenomaman", note:"Hard. Check the graph for a Combat X before sending.", x:"trap"}
+    ]},
+    {t:"Shift 2 · the power outage", intro:"After Lost Pet the city goes dark. Hack each district's substation to open its calls. No timer: rest your heroes fully before each hack.", calls:[
+      {g:"Start", n:"Lost Pet", s:2, st:[1,1,6,5,3], send:"Invisigal + Malevola", r2:"Coupé + Malevola", note:"Run 1: +1 mentor."},
+      {g:"Start", n:"3 substation hacks", send:"Hack", note:"Central lock: Up, Left, Right. The last one is an antivirus-zapping hack, another Anti-Antivirus Club chance.", tags:[["hack","3 hacks"]]},
+      {g:"West", n:"Power Outage Looting", s:3, st:[8,8,6,1,1], send:"Flambae + Golem + Punch Up"},
+      {g:"West", n:"Missing Teens", s:2, need:"Cool 6 / Lecture 6", send:"Malevola", note:"Auto-win; search the beach."},
+      {g:"West", n:"Multi-Car Pile-Up", s:3, st:[2,8,8,1,4], send:"Golem + Invisigal + Sonar (hybrid)", r2:"Golem + Coupé + Phenomaman"},
+      {g:"West", n:"The Wheelies", s:2, need:"Mobility + Intellect", send:"Invisigal + Sonar (hybrid)", r2:"Coupé + Prism", note:"Bonus line on Mobility.", x:"bonus"},
+      {g:"Central", n:"Evacuation Assistance", s:2, st:[1,1,6,6,3], send:"Prism + Invisigal", r2:"Prism + Coupé", note:"Intellect over 3 = double XP.", x:"bonus"},
+      {g:"Central", n:"Thwart Graffiti Vandals", s:1, st:[2,1,6,1,2], send:"Invisigal alone", r2:"Coupé alone", note:"Run 1: Lone Wolf speed, +1 mentor."},
+      {g:"Central", n:"Stabilize Experiment", s:4, need:"Combat under 5 or auto-fail · V6 M9 I10", send:"Sonar (hybrid) + Invisigal + Waterboy (+ Malevola)", r2:"Malevola + Prism (no Combat 5+)", note:"Nobody with Combat 5+. Very hard.", x:"trap"},
+      {g:"Central", n:"Hero Training", s:1, send:"Flambae → Supernova", r2:"Phenomaman → Heavily Medicated", tags:[["train","Training #5"]]},
+      {g:"Central", n:"VANDLABS Robbery", s:4, send:"Sonar", r2:"Coupé or Phenomaman", note:"Auto-win."},
+      {g:"East", n:"Ground Team Rescue (not Air)", s:3, need:"Catch 10", send:"Malevola + Prism", pick:"Their special options"},
+      {g:"East", n:"Repairs Required", s:2, need:"Combat under 6 or auto-fail · V8 M9 I7", send:"Sonar (hybrid) + Invisigal", r2:"Malevola + Prism", x:"trap"},
+      {g:"East", n:"Senior Home Check-Up", s:3, st:[1,2,6,6,8], send:"Sonar (hybrid) + Prism + Invisigal", r2:"Coupé + Prism + Malevola"},
+      {g:"East", n:"Super Tantrum", s:2, need:"Combat 8+ = double XP · Vigor/Charisma", send:"Flambae + Prism", note:"Synergy.", x:"bonus"},
+      {g:"East", n:"Shipment Robbery", s:4, need:"5 in every stat", send:"Flambae + Golem + Punch Up + Sonar", r2:"Flambae + Golem + Punch Up + Phenomaman"}
+    ]}
+  ],
+  notes:["**Run 2:** Coupé replaces Sonar on Intellect/Mobility calls, Phenomaman takes the big Combat/Vigor calls, and Invisigal stays on the bench. Where the source guides name no hero, picks are matched to hero stats, so trust the on-screen percentage if it disagrees.","**Upgrades:** Prism Charisma toward 10 (Talent of Torrance Throwdown wants 10). Sonar Intellect toward 10. Invisigal Mobility toward 9–10. Keep Waterboy's Combat at 1 for the auto-fail calls."],
+  src:[["Gamepressure Ep 5","https://www.gamepressure.com/newsroom/dispatch-episode-5-walkthrough-and-choices-guide/z788d3"],["Into Indie missions guide","https://intoindiegames.com/walkthroughs/tips-tricks/dispatch-complete-missions-guide/"]]
+},
+{ id:"ep6", num:6, title:"Moving Parts", key:"The dance · 5-part heist hack",
+  lead:"One shift, a party where you side with Invisigal or Blazer and pick a dance partner, and a five-hack heist for the Astral Pulse. The dance is required for both romances.",
+  facts:[["Trophies","Anti-Antivirus Club if still missing (the safe hack is full of antiviruses)"],["Hacks","Cyberbully + the five heist hacks"],["Note","In Run 1, Flambae sits out this shift because you revealed you're Mecha Man"]],
+  choices:[
+    {m:"Royd after the suit test", r1:"I believe in you.", r2:"I believe in you.", why:"Royd remembers."},
+    {m:"Chase: how are things with Invisigal?", r1:"I'm warming up to her.", r2:"It's strictly professional.", why:"Invisigal romance."},
+    {m:"Party: what to say to Invisigal", r1:"Thanks guys.", r2:"Thanks guys.", why:"Everyone remembers."},
+    {m:"\"Attack tonight?\"", r1:"We go tonight.", r2:"Make a plan first.", why:"Siding with her is a mentor pick; the plan raises Blazer.", key:true},
+    {m:"During the argument", r1:"Back off, Chase.", r2:"Everybody calm down.", why:"Run 1 sides with Invisigal."},
+    {m:"The dance", r1:"Dance with Invisigal", r2:"Dance with Blazer", why:"Required for each romance.", key:true},
+    {m:"Heist: 5 hacks to find and steal the Astral Pulse", r1:"Win all five", r2:"Fail or skip them if H4ck3d is done (villain path)", why:"H4ck3d + mentor. Locks: Locate (Up, Up, Right), Door (Left, Left, Up, Right), Speaker tower (no lock: reroute electricity), Crane (Left, Left, Left, Right), Safe (no lock: go to the bottom-right electricity, lure antiviruses to the middle and zap them; three in 15 s = Anti-Antivirus Club)."},
+    {m:"Chase: \"Why do you help people?\"", r1:"It's the right thing to do.", r2:"It's the right thing to do.", why:"Chase remembers."}
+  ],
+  shifts:[{t:"The shift", calls:[
+    {n:"On Standby", s:1, st:[1,1,4,3,1], send:"Sonar (hybrid) or Malevola", r2:"Malevola", note:"Easy."},
+    {n:"Cat Sitter Wanted", s:4, send:"Golem", note:"Auto-win."},
+    {n:"Housekeeping", s:1, st:[1,1,5,5,1], send:"Malevola", note:"Charisma over 5 = double XP.", x:"bonus"},
+    {n:"Cyberbully", send:"Hack", note:"Lock: Up, Up, Down, Left, Right, Left. Lure the antivirus into a loop first.", tags:[["hack","Hack"]]},
+    {n:"#1 Phenoma-Fan", s:3, st:[7,7,4,1,1], send:"Golem + Punch Up + Waterboy", r2:"Phenomaman + Golem + Punch Up"},
+    {n:"Haunting on Cravens Ave", s:2, send:"Malevola", note:"Auto-win."},
+    {n:"Roast of Mayor Yao", s:2, need:"Charisma + Intellect", send:"Prism + Sonar (hybrid)", r2:"Prism + Coupé"},
+    {n:"Red Alert", s:4, st:[10,10,8,1,7], send:"Golem + Punch Up + Invisigal + Sonar", r2:"Phenomaman + Golem + Punch Up + Coupé", note:"Intellect over 7 = double XP.", x:"bonus"},
+    {n:"Hero Training", s:1, need:"All stats", send:"Malevola → Portal Ritual", tags:[["train","Training #6"]]},
+    {n:"LARP Gone Wrong", s:4, need:"One stat at 7", send:"Golem alone", pick:"Knight (Vigor)", note:"Any hero with a 7 in that class's stat works."},
+    {n:"Yachtie Afterparty", s:4, st:[7,8,8,1,4], send:"Golem + Punch Up + Invisigal + Sonar", r2:"Golem + Punch Up + Coupé + Phenomaman"},
+    {n:"Delivery Bots", s:3, need:"Vigor + Mobility", send:"Golem + Invisigal + Waterboy", r2:"Golem + Coupé + Phenomaman"},
+    {n:"Break the Ice / Melt the Ice", s:4, send:"Break the Ice: Golem + Punch Up + Sonar + Invisigal", r2:"Flambae alone on Melt the Ice (200% XP)"},
+    {n:"Sewer Surveyance", s:4, send:"Sonar", r2:"Prism", pick:"Run 2: Kindness", note:"Sonar auto-wins."},
+    {n:"Shipment Down", s:3, st:[1,8,8,1,3], send:"Golem + Invisigal + Sonar (hybrid)", r2:"Golem + Coupé + Phenomaman", note:"Intellect over 3 = double XP.", x:"bonus"},
+    {n:"Reprogram the Bots", s:2, need:"Combat under 4 or auto-fail · M6 I10", send:"Sonar (hybrid) + Waterboy", r2:"Malevola + Invisigal (if both Combat under 4)", note:"Nobody with Combat 4+. A failure spawns Destroy the Bots.", x:"trap"}
+  ]}],
+  notes:["Calls without a named hero in the source guides are matched to hero strengths, so trust the on-screen percentage if it disagrees.","**Upgrades:** finish Invisigal's Mobility and Golem's Vigor. Make sure your Ep 7 team has Charisma over 6 somewhere (Prism or Malevola) for the bonus lines on Running Late and Fire in the Rain."],
+  src:[["Gamepressure Ep 6","https://www.gamepressure.com/newsroom/dispatch-episode-6-walkthrough-and-choices-guide/zb88d7"],["Into Indie missions guide","https://intoindiegames.com/walkthroughs/tips-tricks/dispatch-complete-missions-guide/"],["Dayngls' Guides","https://daynglsgameguides.com/2025/11/25/dispatch-trophy-guide-roadmap/"]]
+},
+{ id:"ep7", num:7, title:"Retrospective", key:"Defend / cut Invisigal · Modded",
+  lead:"Everything about Invisigal is decided here. Scene 5 is the replay point for the no-romance cleanup, and the shift is the best place for Modded.",
+  facts:[["Trophies","Modded (Run 1); \"There. You happy now?\" if your store pick is least popular"],["Hacks","Runaway Car"],["Cleanup","The Slot 2 replay uses the Run 2 picks from Scene 5 on"]],
+  choices:[
+    {m:"Prologue store: Twinkies / Beer / Cigar", r1:"The least popular one", r2:"The least popular one", why:"Beer worked for Gamepressure, but popularity drifts. Confirm in Choice Stats.", save:true},
+    {m:"Conference-room vote (Scene 5)", r1:"Defend her", r2:"Cut her", why:"Defending is required for the hero ending, but the heroes who voted against her start Ep 8 weakened. Cutting keeps the team at full strength.", save:true},
+    {m:"Locker room: forgiveness", r1:"I forgive you", r2:"We're done", why:"Required for the hero ending.", key:true},
+    {m:"Locker room: her kiss", r1:"Lean in", r2:"Lean out", why:"Romance only. Lean out keeps Blazer, or no one.", key:true},
+    {m:"What to tell the press", r1:"Track Star", r2:"Invisigal", why:"Into Indie's good-mentor route credits Track Star."},
+    {m:"Bar: the hero you cut", r1:"Glass him / Let it go", r2:"Either", why:"Same outcome."},
+    {m:"Blazer's last question", r1:"I trust her", r2:"Either", why:"Gamepressure's pick for Ep 8."}
+  ],
+  notes0:["**Modded:** one shift where every call with a bonus line gets it, and no hero ever pokes into an X zone. A failed call doesn't break it as long as you never touched an X. Quit and reload the shift if you slip. This shift's bonus/trap calls: Land Slip'n'Slide (Intellect over 6), Farmers Market Attack (auto-fail zone), Rescue Bone Zone (Combat over 7), Running Late (Charisma over 6), Go All Out (Combat over 7), Fire in the Rain (Charisma over 6)."],
+  shifts:[{t:"The shift (Run 1 roster: Sonar kept, Waterboy recruited)", calls:[
+    {n:"Beached Whales", s:3, st:[1,10,8,1,1], send:"Flambae + Golem", r2:"Phenomaman + Golem", note:"Hard Vigor/Mobility."},
+    {n:"Land Slip'n'Slide", s:3, need:"Knock 5 / Endure 5 · Intellect 7+ bonus", send:"Invisigal + Sonar (hybrid) + Golem", r2:"Coupé + Prism + Golem", note:"The Intellect hero gets the bonus.", x:"bonus", tags:[["trophy","Modded"]]},
+    {n:"Up-Chuck", s:4, send:"Punch Up alone", note:"His special auto-wins. Golem's option often refuses."},
+    {n:"Runaway Car", send:"Hack", note:"Lock: Left, Right, Right, Left. Bait the 3 antiviruses near the coils.", tags:[["hack","Hack"]]},
+    {n:"Self-Sabotage", s:3, st:[1,10,4,8,1], send:"Sonar + Flambae + Waterboy", r2:"Coupé + Flambae + Phenomaman", note:"If Golem goes he gets hurt; Malevola along heals him (a Phoenixes Down chance)."},
+    {n:"Farmers Market Attack", s:2, st:[6,8,5,3,1], need:"Plus an auto-fail X (Into Indie puts it on Vigor, Gamepressure on Combat)", send:"Punch Up + Prism", note:"Don't let anyone cross the X.", x:"trap", tags:[["trophy","Modded"]]},
+    {n:"Rescue Bone Zone", s:3, need:"Combat 8+ bonus · V8 M2 Ch4", send:"Malevola + Golem + Waterboy", r2:"Malevola + Golem + Phenomaman", note:"Add Flambae for the Combat bonus if Golem's Combat is under 8.", x:"bonus", tags:[["trophy","Modded"]]},
+    {n:"Polarizing Interview", s:1, need:"Facts 8 / Over-hype 8", send:"Sonar", r2:"Prism (Over-hype)", note:"Sonar auto-wins."},
+    {n:"Training", s:1, send:"Punch Up → Squeeze In", note:"He can add himself to any call with fewer than 4 slots.", tags:[["train","Training #7"]]},
+    {n:"Running Late", s:2, need:"M10 · Charisma 7+ bonus", send:"Invisigal + Prism (or Malevola)", r2:"Coupé + Prism", note:"Charisma 7+ hero for the bonus.", x:"bonus", tags:[["trophy","Modded"]]},
+    {n:"Go All Out (not Play It Safe)", s:4, need:"Combat 8+ bonus · V10 M10 Ch6", send:"Sonar (bat) + Flambae + Punch Up + Golem", r2:"Phenomaman + Flambae + Punch Up + Golem", note:"More XP than Play It Safe.", x:"bonus", tags:[["trophy","Modded"]]},
+    {n:"The Floodening", s:3, need:"Fetch M10 / Examine I8", send:"Invisigal + Sonar (hybrid)", r2:"Coupé + Prism", note:"Not Waterboy's special: it fails the call."},
+    {n:"Fire in the Rain", s:1, need:"V10 M10 · Charisma 7+ bonus", send:"Invisigal + Punch Up via Squeeze In", r2:"Phenomaman + Punch Up via Squeeze In", note:"Add a Charisma 7+ hero if a slot allows.", x:"bonus", tags:[["trophy","Modded"]]}
+  ]}],
+  notes:["**Run 2 roster** (Coupé kept, Phenomaman, Invisigal benched): Coupé replaces Sonar on Mobility/Intellect, Phenomaman takes Beached Whales, Go All Out and Fire in the Rain, and Sonar's auto-wins become normal stat checks."],
+  src:[["Gamepressure Ep 7","https://www.gamepressure.com/newsroom/dispatch-episode-7-walkthrough-and-choices-guide/za8936"],["Into Indie endings guide","https://intoindiegames.com/walkthroughs/dispatch-complete-endings-guide/"],["Into Indie missions guide","https://intoindiegames.com/walkthroughs/tips-tricks/dispatch-complete-missions-guide/"],["Dayngls' Guides","https://daynglsgameguides.com/2025/11/25/dispatch-trophy-guide-roadmap/"]]
+},
+{ id:"ep8", num:8, title:"Synergy", key:"Protect LA · endings · Shroud",
+  lead:"One long, four-phase shift defending Los Angeles, then the Shroud finale. The kill/spare choice only appears if Invisigal stays a hero; if she turns villain, she kills Shroud herself.",
+  facts:[["Run 1","All gas no brakes baby., Sorry kid., I'm a bleeder., bad ass (spare), then Muuuuurrrdaaaaah! on the replay. H4ck3d pops after Defeat Mindf*cker"],["Run 2","Any plans tonight?, Didn't see that coming?"],["Cleanup","We can just be friends."]],
+  choices:[
+    {m:"Blazer leaving the office", r1:"Just come back", r2:"Just come back", why:"Blazer remembers (Blazer route)."},
+    {m:"Invisigal tied up in Royd's lab", r1:"Untie her", r2:"Go alone", why:"Leaving her costs mentor points. Untying is required for her romance.", save:true},
+    {m:"The hero you cut, mid-fight", r1:"I'm sorry", r2:"I'm sorry", why:"They attack either way."},
+    {m:"Shroud demands the Astral Pulse", r1:"Give the Astral Pulse", r2:"Any", why:"All three answers lead to the same outcome."},
+    {m:"Shroud at your mercy", r1:"Spare him → Mercy trophy", r2:"Not offered if Invisigal turned villain", why:"Replay this scene later and kill him for Vengeance.", save:true},
+    {m:"Epilogue: the cut hero's fate", r1:"Forgive them", r2:"Forgive them", why:"Only offered if you protected LA and Blazer likes you."},
+    {m:"Final kiss", r1:"Invisigal, on the stretcher", r2:"Blazer, on the car roof", why:"The romance trophies pop here.", key:true}
+  ],
+  notes0:[
+    "**City health bar** (top corner): every failed call drains it. Once it's at half and you fail again, Blonde Blazer arrives with near-maxed stats. Coffee Run never hurts the city.",
+    "**Cut hero's boss bar:** each successful \"Attack Coupé\" (or Sonar) call drains it. Empty it before the city empties for All gas no brakes baby.",
+    "**Don't win too early.** Hold the last Attack call until you've done Defeat Mindf*cker, the final hack. Beating the boss first ends the shift and costs you H4ck3d.",
+    "**Each hack gives 2 attempts before lockout.** A lockout counts as a fail, so quit and reload the shift if it happens.",
+    "High-percentage failures happen by design in this shift. If the city bar gets low, reload the shift rather than limping on. A surprise failure here can pop Snake Eyes.",
+    "Run 1 starts weaker because you defended Invisigal: the heroes who voted against her get -1 to stats (not Golem). In Run 2 the boss is Sonar, Invisigal is absent, and your team is at full strength; swap Coupé into Sonar's Intellect/Mobility jobs."
+  ],
+  shifts:[{t:"The shift", calls:[
+    {g:"Phase 1 · Golem, Prism, Punch Up only", n:"Bomb Threat", s:2, st:[1,7,2,1,5], send:"Golem"},
+    {g:"Phase 1 · Golem, Prism, Punch Up only", n:"Evacuation Order", s:2, st:[1,1,1,7,4], send:"Prism", note:"2x XP."},
+    {g:"Phase 1 · Golem, Prism, Punch Up only", n:"Return to Crypto Night", s:2, st:[8,6,2,1,1], send:"Punch Up"},
+    {g:"Phase 1 · Golem, Prism, Punch Up only", n:"Capture Experiment 1067", s:3, st:[4,8,6,1,1], send:"Punch Up + Golem"},
+    {g:"Phase 1 · Golem, Prism, Punch Up only", n:"Locate the Tracker (Flambae)", send:"Hack", note:"Take your time so heroes rest. Malevola joins after.", tags:[["hack","Hack"]]},
+    {g:"Phase 1 · Golem, Prism, Punch Up only", n:"Rescue Flambae", s:2, st:[1,8,8,1,1], send:"Punch Up + Golem"},
+    {g:"Phase 1 · Golem, Prism, Punch Up only", n:"Help Brainbook", s:1, st:[1,1,1,3,6], send:"Prism"},
+    {g:"Phase 1 · Golem, Prism, Punch Up only", n:"Shopping Spree", s:3, st:[5,8,7,1,1], send:"Flambae + Golem + Punch Up", note:"2x XP."},
+    {g:"Phase 1 · Golem, Prism, Punch Up only", n:"Locate Hero Tracker", send:"Hack", note:"Sonar or Waterboy first; the other comes later.", tags:[["hack","Hack"]]},
+    {g:"Phase 1 · Golem, Prism, Punch Up only", n:"First rescue", s:2, st:[1,3,8,1,1], send:"Flambae + Malevola", note:"The easier rescue."},
+    {g:"Phase 1 · Golem, Prism, Punch Up only", n:"Second rescue", s:2, st:[1,6,9,1,1], send:"Flambae + the hero you just saved", note:"Invisigal joins after this if you defended her."},
+    {g:"Phase 1 · Golem, Prism, Punch Up only", n:"Sewer Bomb #1", s:2, st:[1,5,1,1,8], send:"Sonar (hybrid)", r2:"Coupé + Prism"},
+    {g:"Phase 1 · Golem, Prism, Punch Up only", n:"Help Sweetalker", s:2, need:"8 in the stat you pick", send:"Sonar", r2:"Coupé (combat training)", pick:"Red Ring Roast"},
+    {g:"Phase 2 · Phenomaman joins", n:"The Summoning", s:4, st:[8,9,10,1,1], send:"Sonar + Malevola + Invisigal + Golem", r2:"Phenomaman + Malevola + Golem + Flambae", note:"Synergy pair inside."},
+    {g:"Phase 2 · Phenomaman joins", n:"Escape Artist", s:3, st:[2,8,6,3,3], send:"Flambae + Prism", note:"Synergy."},
+    {g:"Phase 2 · Phenomaman joins", n:"Boom!", s:2, st:[1,8,6,1,3], send:"Golem + Waterboy", r2:"Golem + Coupé"},
+    {g:"Phase 2 · Phenomaman joins", n:"Witch Hunt", s:4, send:"Phenomaman", note:"His special auto-wins."},
+    {g:"Phase 2 · Phenomaman joins", n:"Return of the Kaiju", s:4, need:"10s across the board", send:"Golem + Punch Up + Phenomaman + Flambae", pick:"Attack (Combat) or Break the collar (Vigor)", note:"Golem gets an extra option if he adopted the baby kaiju."},
+    {g:"Phase 2 · Phenomaman joins", n:"Lockdown", send:"Hack", note:"Electricity routing, 2 charges, no enemies.", tags:[["hack","Hack"]]},
+    {g:"Phase 3 · boss attacks begin", n:"Attack Coupé #1", s:2, st:[8,7,10,7,8], send:"Phenomaman + Flambae", r2:"Attack Sonar #1: Phenomaman + Flambae", note:"Start chipping the boss bar.", tags:[["trophy","Protect LA"]]},
+    {g:"Phase 3 · boss attacks begin", n:"The Torrance Terrors", s:2, st:[6,6,3,1,3], send:"Punch Up + Golem", note:"2x XP."},
+    {g:"Phase 3 · boss attacks begin", n:"Sewer Bomb #2", s:2, st:[1,2,3,1,10], send:"Sonar (hybrid)", r2:"Coupé + Prism"},
+    {g:"Phase 3 · boss attacks begin", n:"Eastside Gang", s:2, st:[6,6,3,1,3], send:"Flambae + Punch Up"},
+    {g:"Phase 3 · boss attacks begin", n:"Roadblock", s:4, st:[10,10,4,1,3], send:"Golem + Punch Up + Phenomaman + Flambae"},
+    {g:"Phase 3 · boss attacks begin", n:"Coffee Run", s:1, st:[1,1,3,1,2], send:"Anyone, or skip", note:"Missing it doesn't drain the city."},
+    {g:"Phase 3 · boss attacks begin", n:"Help Pom Pom", s:3, st:[1,8,10,1,2], send:"Invisigal + Flambae + Waterboy", r2:"Coupé + Flambae + Phenomaman", note:"2x XP."},
+    {g:"Phase 3 · boss attacks begin", n:"Help Brickhouse", s:3, st:[2,10,8,1,2], send:"Golem + Invisigal + Flambae", r2:"Golem + Coupé + Flambae"},
+    {g:"Phase 3 · boss attacks begin", n:"Defeat SmileMore", s:4, need:"Charisma 7+ or auto-fail", send:"Prism + Malevola + Golem + Phenomaman", x:"trap"},
+    {g:"Phase 3 · boss attacks begin", n:"Defeat Mister Fister", s:3, need:"Vigor under 7 or auto-fail · C10 M10", send:"Flambae + Invisigal + Sonar", r2:"Flambae + Coupé + Prism", note:"Keep Golem, Punch Up and Phenomaman off.", x:"trap"},
+    {g:"Phase 4 · the city opens up", n:"Attack Coupé #2–#4", s:2, need:"Charisma over 6 auto-fails · C8 V7 M10 I7", send:"Phenomaman + Flambae", r2:"Attack Sonar: Phenomaman + Flambae", note:"No Prism or Malevola.", x:"trap", tags:[["trophy","Protect LA"]]},
+    {g:"Phase 4 · the city opens up", n:"Atomic Automatons", s:3, st:[8,8,7,1,1], send:"Golem + Punch Up + Flambae"},
+    {g:"Phase 4 · the city opens up", n:"We Meet Again", s:2, st:[1,3,1,8,1], send:"Prism + Malevola"},
+    {g:"Phase 4 · the city opens up", n:"Entrapment", s:2, need:"Smart 8", send:"Sonar (hybrid)", r2:"Coupé"},
+    {g:"Phase 4 · the city opens up", n:"Get to the Chopper", st:[1,7,10,7,6], send:"Invisigal + Prism + Sonar", r2:"Coupé + Prism + Malevola", note:"Vigor 8+ = 2x XP.", x:"bonus"},
+    {g:"Phase 4 · the city opens up", n:"Help Equilibrium", s:4, st:[7,7,10,7,7], send:"Invisigal + Prism + Sonar + Golem", r2:"Coupé + Prism + Malevola + Golem"},
+    {g:"Phase 4 · the city opens up", n:"Sewer Bomb #3 (wires)", need:"Yellow = Intellect 3", send:"Sonar (hybrid)", r2:"Coupé", pick:"Yellow", note:"If it fails: Golem or Phenomaman auto-solve, or Run to the ocean (Mobility 8)."},
+    {g:"Phase 4 · the city opens up", n:"Defeat Mindf*cker", send:"Hack", note:"Controls invert midway. Dodge the antivirus via the gap at the top right. Do this before the final Attack.", tags:[["hack","Last hack"]]},
+    {g:"Phase 4 · the city opens up", n:"Hospital Takeover", s:3, st:[8,10,6,3,1], send:"Golem + Punch Up + Flambae", note:"Blazer joins after."},
+    {g:"Phase 4 · the city opens up", n:"Return of the Delivery Bots", st:[7,7,5,1,8], send:"Sonar (hybrid) + Golem + Punch Up", r2:"Coupé + Golem + Punch Up", note:"Intellect 9+ = 2x XP.", x:"bonus"},
+    {g:"Phase 4 · the city opens up", n:"Attack Coupé #5 (final)", s:4, st:[10,10,10,10,10], send:"Blazer + Phenomaman + Golem + Flambae", r2:"Attack Sonar #5: same team", note:"Ends the boss bar. Only after Mindf*cker.", tags:[["trophy","Protect LA"]]}
+  ]}],
+  notes:["**After the credits (Run 1):** 1. Copy Slot 1 to Slot 2 and upload to PS Plus. 2. In Slot 1, Scene Select the final Shroud scene of Episode 8 and choose to kill him for Muuuuurrrdaaaaah! 3. Slot 2 is for the cleanup (Cleanup tab).","The later Ep 8 calls have fewer published hero picks. These are matched to the stat lines from Into Indie Games and the Dispatch wiki, so go with the on-screen percentage if it disagrees."],
+  src:[["Gamepressure Ep 8","https://www.gamepressure.com/newsroom/dispatch-episode-8-walkthrough-and-choices-guide/zc8938"],["Dispatch wiki: Ep 8 scenarios","https://dispatch.wiki.gg/wiki/List_of_Episode_8_scenarios"],["Into Indie missions guide","https://intoindiegames.com/walkthroughs/tips-tricks/dispatch-complete-missions-guide/"],["PCGamesN: final-shift failures","https://www.pcgamesn.com/dispatch/final-shift-failure-rate"],["Dayngls' Guides","https://daynglsgameguides.com/2025/11/25/dispatch-trophy-guide-roadmap/"]]
+}
+];
+
+const SABOTAGE = [
+  ["Golem","Pry yourself loose","Vigor 4"],["Prism","Distract","Charisma 4"],["Malevola","Play the part (or Run)","Charisma 4 (Mobility 3)"],
+  ["Sonar","Track down","Mobility 1"],["Flambae","Unlock the tank (Run 1 hack) / Blast the lead","Hack / Combat 1"],["Coupé (pool)","Backstroke away","Mobility 4"],
+  ["Coupé (dog)","Evade it very slowly","Mobility 1"],["Invisigal","Ditch him","Mobility 3"],["Punch Up","Force it out","Vigor 1"]
+];
+
+const RULES = [
+  "**Read the graph.** Each call shows a five-stat shape (Combat, Vigor, Mobility, Charisma, Intellect). Your team's shapes overlap it and the game shows the success %. Over about 80% is safe, except in Ep 8.",
+  "**Synergy pairs** never sabotage each other and level synergy for Work Spouse: Sonar + Malevola, Golem + Invisigal, Flambae + Prism, Punch Up + Coupé. Recruits: Malevola or Punch Up + Waterboy; Punch Up or Malevola + Phenomaman.",
+  "**From Ep 5, check bonus and trap lines** before every send. Reach past a bonus line for 2x XP; never let a hero poke into an X.",
+  "**Failed and missed calls both lower your career rank.** Keep failures near zero for Career Development. If a shift goes badly, quit to the main menu and replay it from its autosave.",
+  "**Spend points** when a hero levels up: press the Touch Pad during a shift. Coffee and Second Wind items pull a hero off rest.",
+  "**Slot tricks:** Prism copies the hero to her left into an empty slot. Coupé gets +1 Combat in slot 1 or +1 Mobility in slot 2. Golem shifts his stats on 2+ slot calls. With Squeeze In, Punch Up adds himself to any call with fewer than 4 slots."
+];
+
+const HEROES = [
+  {n:"Invisigal", st:[3,2,3,1,2], pw:"Lone Wolf: send her alone", tr:"Wolf Pack (2x XP on her calls)", up:"Mobility, then Combat"},
+  {n:"Golem", st:[3,4,2,2,1], pw:"Diamond in the Rough: put him in slot 1 of a 2+ slot call", tr:"Found Himself (one respec per shift)", up:"Vigor, then Combat"},
+  {n:"Flambae", st:[4,2,3,2,1], pw:"On Fire: any success (+1 Combat/Mobility per win)", tr:"Supernova (2 wins in a row max his Combat/Mobility)", up:"Vigor, then Mobility"},
+  {n:"Sonar", st:[2,1,2,3,4], note:"hybrid form (bat: 4/3/2/1/2)", pw:"Instincts: changes form after each call", tr:"Talk Shit (hybrid retries a failed call)", up:"Intellect, then Charisma"},
+  {n:"Malevola", st:[3,2,2,3,2], pw:"Life Trade: send her with an injured hero", tr:"Portal Ritual", up:"Charisma, then Intellect"},
+  {n:"Prism", st:[4,1,1,4,2], pw:"Doppelgänger: middle slot of a 3-slot call", tr:"Perfect Copy (full-stat copies)", up:"Charisma, then Intellect"},
+  {n:"Punch Up", st:[3,4,1,3,1], pw:"Hard Head: shows the first time he's injured", tr:"Squeeze In", up:"Vigor, then Combat"},
+  {n:"Coupé", run:"2", st:[4,1,3,1,3], pw:"En Pointe: slot 1 or 2 of a 2+ slot call", tr:"À la Seconde", up:"Mobility, then Intellect"},
+  {n:"Waterboy", run:"1", st:[1,2,2,1,2], pw:"Eager Sponge: joins calls on his own", tr:"Eager Super Sponge", up:"Vigor. Keep Combat and Charisma at 1 for auto-fail calls"},
+  {n:"Phenomaman", run:"2", st:[7,7,6,2,1], pw:"Easily Depressed + Fly-Nomenal", tr:"Heavily Medicated (stops the depression)", up:"Charisma, then Intellect"}
+];
+
+const TRAINING = [
+  ["Ep 3 Shift 2","Invisigal → Wolf Pack"],["Ep 4 Shift 1","Sonar → Talk Shit"],["Ep 4 Shift 2","Golem → Found Himself"],
+  ["Ep 5 Shift 1","Prism → Perfect Copy (Power Trip pops)"],["Ep 5 Shift 2","Flambae → Supernova"],["Ep 6","Malevola → Portal Ritual"],["Ep 7","Punch Up → Squeeze In"]
+];
+
+const YT = {
+  comp:"https://www.youtube.com/watch?v=qS2TaC4_oqQ",
+  e3:"https://www.youtube.com/watch?v=8DnayknwgB0", e4:"https://www.youtube.com/watch?v=xriVgXAL_DY", e5:"https://www.youtube.com/watch?v=ya-sBXmkYWM",
+  e6:"https://www.youtube.com/watch?v=Cm_ZcBaQ1cs", e7:"https://www.youtube.com/watch?v=sA_Z29RSPTI", e8:"https://www.youtube.com/watch?v=91OzLBTy6vk"
+};
+const YT_FULL = [["Compilation 1",YT.comp],["Compilation 2","https://www.youtube.com/watch?v=hpX_XgVxGhk"],["Compilation 3","https://www.youtube.com/watch?v=ro5H2z5NseU"],["Compilation 4","https://www.youtube.com/watch?v=Wp8zpRVsa_w"]];
+const GD = {
+  tp1:["T-Pose Ep 1 guide","https://tposegaming.com/dispatch-episode-1-hacking-guide/"],
+  tp2:["T-Pose Ep 2 guide","https://tposegaming.com/dispatch-episode-2-hacking-guide/"],
+  tp3:["T-Pose Ep 3 guide","https://tposegaming.com/dispatch-episode-3-hacking-guide/"],
+  tp4:["T-Pose Ep 4 guide","https://tposegaming.com/dispatch-episode-4-hacking-guide/"],
+  ii5:["Into Indie Ep 5","https://intoindiegames.com/walkthroughs/dispatch-walkthrough-episode-5-team-building/"],
+  ii6:["Into Indie Ep 6","https://intoindiegames.com/walkthroughs/dispatch-walkthrough-episode-6-moving-parts/"],
+  ii7:["Into Indie Ep 7","https://intoindiegames.com/walkthroughs/dispatch-walkthrough-episode-7-retrospective/"],
+  ii8:["Into Indie Ep 8","https://intoindiegames.com/walkthroughs/dispatch-walkthrough-episode-8-synergy/"],
+  gp6:["Gamepressure Ep 6","https://www.gamepressure.com/newsroom/dispatch-episode-6-walkthrough-and-choices-guide/zb88d7"]
+};
+const HACK_RULES = [
+  "**Move** node to node along the lines and reach the exit. Timed hacks show a countdown; if it runs out, the hack fails.",
+  "**Hammer node (build path):** stand on it and enter the arrow sequence shown to bridge a gap. A **double-hammer** node toggles between two bridges: re-activating it removes one path and builds the other. You'll use that both to reach branches and to trap antiviruses.",
+  "**Key and padlock:** a key node shows a code; walk to the padlock node and enter it. Later codes come in two halves from two key nodes.",
+  "**Antivirus:** the red chaser. If it catches you, you lose an attempt. Bait it into loops, stay a node or two ahead, and trap it behind a toggled bridge.",
+  "**Electricity (Ep 5 on):** pick up a charge (hold R2 on the node) and carry it to a lightbulb socket to power a path or reveal a code, or run it into an antivirus to destroy it. Charges can be moved and reused.",
+  "**Attempts are limited** (2 before lockout in Ep 8). A lockout counts as a failed hack, so if it happens, quit to the main menu and reload the shift or scene. Leave the unlimited-lives assist off: Gamepressure reports hacks don't count toward H4ck3d with it on.",
+  "**Burning Chrome:** finish any timed hack with a third of the timer left (Ep 2's short ones are ideal). **Time's Running Out:** on a hack you know well, wait on the final move and finish with under 5 s left. **Anti-Antivirus Club:** kill three antiviruses within 15 s (Ep 5 film shoot, Ep 5 East Torrance, Ep 6 safe)."
+];
+/* Each hack: ep, n, when, codes, steps, tip, vids [[label,url]], guides [GD keys], miss (missable trigger) */
+const HACKS = [
+ {ep:1, n:"Shroud's hideout tablet", when:"Story, right after the hideout fight. Can't be missed.", codes:[], steps:[
+   "Activate the double-hammer node, go up, and download the spatial data from the node just off the path.",
+   "Go back and re-activate the double-hammer node to open the lower branch. Download the spatial data there, then activate the single-hammer node at the end of that branch.",
+   "Re-activate the double-hammer node once more, take the upper path, download the last spatial data, and step onto the final node."],
+   tip:"No antivirus. This is where you learn the double-hammer toggle.", vids:[["Compilation 1 · 0:00",YT.comp+"&t=0s"]], guides:["tp1"]},
+ {ep:2, n:"Cray Cray Bidet", when:"Ep 2 shift call (no hero needed).", codes:[], steps:[
+   "Activate the first hammer node and enter the arrows shown.",
+   "At the double-hammer node, take the lower path and activate the bottom hammer node.",
+   "Go back, re-activate the double-hammer node to finish the upper path, and activate the upper hammer node.",
+   "Return to the double-hammer node without toggling it again and take the middle path to the exit."],
+   tip:"Short and safe: a good place for Burning Chrome.", vids:[["Compilation 1 · 1:00",YT.comp+"&t=60s"]], guides:["tp2"]},
+ {ep:2, n:"Museum Robbery", when:"Ep 2 shift call: send Coupé or bat-form Sonar and pick \"Hack into the system\".", miss:true, codes:[], steps:[
+   "Go right at the crossroad and activate that node.",
+   "Come back, take the left path down, and activate the double-hammer node.",
+   "Go left and activate the node there.",
+   "Return, re-activate the double-hammer node, and head right to the end."],
+   tip:"Finish fast for Burning Chrome.", vids:[["Compilation 1 · 1:44",YT.comp+"&t=104s"]], guides:["tp2"]},
+ {ep:2, n:"Granny's Donuts: cameras", when:"Story call at the end of the Ep 2 shift, with Invisigal. Winning it raises the mentor score.", codes:["Up, Down, Left, Left"], steps:[
+   "Toggle the double-hammer node as you go: up to the first hammer node, back to toggle, down to the bottom hammer node, toggle again, then up and right.",
+   "At the cluster of four nodes, activate the hammer node first, then the key node to see the code.",
+   "Enter the code at the padlock node and go up to finish."],
+   vids:[["Compilation 1 · 2:34",YT.comp+"&t=154s"]], guides:["tp2"]},
+ {ep:2, n:"Granny's Donuts: sprinklers", when:"Straight after the cameras hack.", codes:["Up, Down, Left, Up"], steps:[
+   "Go down at the crossroad, activate the double-hammer node, and visit the upper key node for the first half of the code.",
+   "Toggle the double-hammer node and visit the lower key node for the second half.",
+   "Toggle once more, go back to the first crossroad, enter both halves at the padlock, and finish."],
+   vids:[["Compilation 1 · 2:34",YT.comp+"&t=154s"]], guides:["tp2"]},
+ {ep:3, n:"Flambae's water tank", when:"Ep 3 Shift 1: send Flambae with any hero except Prism (Beach Clean Up always has a sabotage). When he's trapped, pick \"Unlock the tank\".", miss:true, codes:["Left, Down, Down"], steps:[
+   "Work through the single- and double-hammer nodes, toggling the double-hammer node to open each branch in turn.",
+   "Reach the final padlock node and enter the code."],
+   tip:"If Flambae never gets sabotaged, this hack never appears. It's the most commonly missed one.", vids:[["Compilation 1 · 3:38",YT.comp+"&t=218s"],["Ep 3 video",YT.e3]], guides:["tp3"]},
+ {ep:3, n:"Hack the Scammer", when:"Ep 3 Shift 1: pick it instead of Investigate Tip.", miss:true, codes:[], steps:[
+   "Activate the hammer node, then the location marker to enter the node network.",
+   "Watch the two waves at the bottom of the screen: they line up as you get closer.",
+   "From the entry point, go down one node and left four to reach the scammer."],
+   vids:[["Ep 3 video",YT.e3]], guides:["tp3"]},
+ {ep:3, n:"Bank Robbery", when:"Ep 3 Shift 2 call: pick the hacking option.", miss:true, codes:["Down, Right, Right, Up","Right, Right, Up, Right","Down, Right, Down, Right, Up, Right, Up"], steps:[
+   "Activate the first node, then enter the three sequences at the three hammer nodes in order. They're also shown on screen.",
+   "Continue to the finish node."],
+   tip:"No antivirus.", vids:[["Ep 3 video",YT.e3]], guides:["tp3"]},
+ {ep:3, n:"Jewelry store: camera 1", when:"Story, end of Ep 3, with Invisigal. Mentor-relevant.", codes:[], steps:[
+   "Activate the first hammer node.",
+   "The antivirus starts chasing once you activate the second hammer node: keep moving down the path without stopping.",
+   "Activate one more hammer node just before the finish."],
+   vids:[["Ep 3 video",YT.e3]], guides:["tp3"]},
+ {ep:3, n:"Jewelry store: camera 2", when:"Straight after camera 1.", codes:[], steps:[
+   "Activate the lower hammer node, then the upper one.",
+   "Let the antivirus see you, back off, and circle so it follows you around the loop. Don't go so fast that it turns back to meet you.",
+   "When it's on the far side of the loop, sprint to the hammer node and activate it to get clear, then hit the last hammer node."],
+   vids:[["Ep 3 video",YT.e3]], guides:["tp3"]},
+ {ep:3, n:"Jewelry store: master light", when:"Straight after camera 2.", codes:[], steps:[
+   "Go as far down as you can and activate the first hammer node.",
+   "Wait at the bottom of the loop until the slow antivirus is one or two nodes away.",
+   "Circle around the other side and re-activate the hammer node to trap it.",
+   "Head to the upper right and activate the final hammer node."],
+   vids:[["Ep 3 video",YT.e3]], guides:["tp3"]},
+ {ep:4, n:"Superhero Squabble in Aisle 9", when:"Ep 4 Shift 1 call: send Prism and pick the 4th option, \"Activate Sprinkler System\". Timed.", miss:true, codes:[], steps:[
+   "Go up and right to the right double-hammer node. As the antivirus steps onto the right-hand nodes, re-toggle it to trap it there.",
+   "Go left, use the other double-hammer node, and activate the first sprinkler.",
+   "Re-trap the antivirus with the right double-hammer node (toggle when it's on the middle node, then again on the right nodes) and grab sprinkler 2.",
+   "For the last sprinkler, trap it on the left side instead, then take the left path to sprinkler 3. The exit appears after the third."],
+   tip:"It's all timing: watch the antivirus and toggle as it steps onto the nodes you want closed.", vids:[["Ep 4 video · 0:00",YT.e4+"&t=0s"]], guides:["tp4"]},
+ {ep:4, n:"Discern the Target", when:"Ep 4 Shift 2: only appears if Stop the Assassination succeeds.", miss:true, codes:["Left, Left, Up, Right, Right, Down"], steps:[
+   "Go to the padlock node and enter the code.",
+   "Back on the main path, go to its far left, then up and right.",
+   "Activate the double-hammer node and continue to the finish."],
+   tip:"No antivirus.", vids:[["Ep 4 video · 2:39",YT.e4+"&t=159s"]], guides:["tp4"]},
+ {ep:5, n:"Stalker Stalking Film Shoot", when:"Ep 5 Shift 1 call: pick \"Delete all of his files\".", miss:true, codes:["Left, Right, Right","Right, Right, Left, Left"], steps:[
+   "Two padlocks use the codes above, and three antiviruses patrol the board.",
+   "Pick up an electric charge and zap the antiviruses as they come. Three kills within 15 s gives Anti-Antivirus Club."],
+   tip:"The written guides don't break this one down step by step, so watch the Ep 5 video first.", vids:[["Ep 5 video",YT.e5]], guides:["ii5"]},
+ {ep:5, n:"West Torrance substation", when:"Ep 5 Shift 2, after Lost Pet. No timer: rest your heroes before starting.", codes:[], steps:[
+   "Go right then up to the electricity and carry it down to the lightbulb to open a route.",
+   "Follow it down to the build spot, build toward the next electric spot, and carry that charge right to the top-right lightbulb.",
+   "Take the second charge to the bottom lightbulb, then move the top-right charge along the new lower path into the bottom lightbulb and exit."],
+   vids:[["Ep 5 video",YT.e5]], guides:["ii5"]},
+ {ep:5, n:"Central Torrance substation", when:"Ep 5 Shift 2.", codes:["Up, Left, Right"], steps:[
+   "Go right and down to the bottom electricity and carry it to the top-left lightbulb to reveal the code.",
+   "Move that charge to the bottom-right lightbulb to open a path.",
+   "Put the second charge in the double lightbulb, then bring the first charge back from the bottom-right bulb to complete it.",
+   "Enter the code at the padlock and exit."],
+   vids:[["Ep 5 video",YT.e5]], guides:["ii5"]},
+ {ep:5, n:"East Torrance substation", when:"Ep 5 Shift 2.", codes:[], steps:[
+   "Grab the first charge and zap the first antivirus. Build forward and use the next charge below on the second antivirus.",
+   "Go to the top section for another charge and take out the third antivirus. Chain all three quickly for Anti-Antivirus Club.",
+   "Build the route right, put one charge in the top lightbulb and the other in the bottom-right lightbulb, then exit."],
+   vids:[["Ep 5 video",YT.e5]], guides:["ii5"]},
+ {ep:6, n:"Cyberbully", when:"Ep 6 shift call.", codes:["Up, Up, Down, Left, Right, Left"], steps:[
+   "Clear the two opening sequences (down then left; right then down).",
+   "Lure the antivirus toward you, circle it, and break an electric current.",
+   "Grab a current and read the first half of the code (Up, Up, Down). Put it in the double lightbulb, fetch the current above to complete it, and read the second half (Left, Right, Left).",
+   "Carry a current to the top lightbulb, enter the full code, and finish."],
+   tip:"Don't chase the antivirus too far around the loop, or it catches you.", vids:[["Ep 6 video",YT.e6]], guides:["ii6","gp6"]},
+ {ep:6, n:"Heist 1: find the Astral Pulse", when:"Ep 6 story, at Robert's apartment. Mentor-relevant.", codes:["Up, Up, Right"], steps:[
+   "Go right and use the map space to reveal the board.",
+   "Get the code from the top-left corner and enter it at the bottom-right build path.",
+   "Work through the bottom, middle and left to find the frequency."],
+   vids:[["Ep 6 video",YT.e6]], guides:["ii6","gp6"]},
+ {ep:6, n:"Heist 2: locked door", when:"Ep 6 heist.", codes:["Left, Left, Up, Right"], steps:[
+   "Go up and around to the first build path, then on to the top-right one for an electric charge.",
+   "Put the charge in the lightbulb to reveal the code, then enter it at the top lock to open the exit."],
+   vids:[["Ep 6 video",YT.e6]], guides:["ii6","gp6"]},
+ {ep:6, n:"Heist 3: speaker tower", when:"Ep 6 heist.", codes:[], steps:[
+   "Go right then down to the first build path and take the charge.",
+   "Carry it to the top-right lightbulb to open the next build path.",
+   "Take the same charge to the bottom-left lightbulb to open the exit."],
+   tip:"Charges can be reused.", vids:[["Ep 6 video",YT.e6]], guides:["ii6","gp6"]},
+ {ep:6, n:"Heist 4: crane", when:"Ep 6 heist.", codes:["Left, Left, Left, Right"], steps:[
+   "Go around the right side and build forward.",
+   "Stay low, destroy the first of two antiviruses, then read the code.",
+   "Dodge the second antivirus at the bottom and build to a charge. Lead it around the top and destroy it.",
+   "Enter the code at the lock and exit."],
+   vids:[["Ep 6 video",YT.e6]], guides:["ii6","gp6"]},
+ {ep:6, n:"Heist 5: the safe", when:"Ep 6 heist, last part.", codes:[], steps:[
+   "Complete the first encryption on the right to reveal a board full of antiviruses.",
+   "Go left and down to the first electric point and zap one. Use the second point on the right, then the top point through the middle, for two more.",
+   "Grab the right-side encryption, using a nearby point on another antivirus. The bottom one won't notice you unless you get close.",
+   "Lure the last antivirus down to the bottom electric point, destroy it, and collect the final encryption."],
+   tip:"Gamepressure calls this the hardest hack in the game. All those antiviruses make it another Anti-Antivirus Club chance.", vids:[["Ep 6 video",YT.e6]], guides:["ii6","gp6"]},
+ {ep:7, n:"Runaway Car", when:"Ep 7 shift call. Timed.", codes:["Left, Right, Right, Left"], steps:[
+   "Go up until the first antivirus comes, then retreat behind the electric pylon to destroy it.",
+   "Build the route up and right, then down and right. Retreat behind the pylon again for the second antivirus.",
+   "Read the code ahead, then go back to the top-left and enter it.",
+   "Lead the last antivirus to the final pylon, then use the top-left build spot to exit."],
+   vids:[["Ep 7 video",YT.e7]], guides:["ii7"]},
+ {ep:8, n:"Locate the Tracker", when:"Ep 8, early in the shift. The hack itself is timed, but the call can wait while your heroes rest.", codes:[], steps:[
+   "Drop to the lower build path and head right toward the antivirus. Lure it away and use the build path behind it.",
+   "Go to the top area, quickly activate the second build path, grab the electricity and destroy the antivirus.",
+   "Continue through the third build path to the tracker, then calibrate the two spots (middle-right, then top-right)."],
+   vids:[["Ep 8 video",YT.e8]], guides:["ii8"]},
+ {ep:8, n:"Locate Hero Tracker", when:"Ep 8, after Shopping Spree. Pick either hero: the other is rescued later anyway.", codes:[], steps:[
+   "Go up to the tracker spot to start.",
+   "The first frequency is top-left (safe). The second is top-right, reached by a build path.",
+   "This antivirus can't be destroyed: use the left build path to lure it, the bottom build path to trap it, then the left path again to reach the frequency."],
+   vids:[["Ep 8 video",YT.e8]], guides:["ii8"]},
+ {ep:8, n:"Lockdown", when:"Ep 8, after The Summoning and before The Torrance Terrors.", codes:["Left, Left, Right, Up"], steps:[
+   "Go around the center to the top-right build path and open the way to the code.",
+   "Enter it at the locked spot, take the electricity, and carry it to the top-left to open the next build path.",
+   "Bring the second charge down-right toward the center and build downward.",
+   "Fill the center double lightbulb with two charges (one from the right, one from the top-right) to open the exit."],
+   tip:"No antivirus.", vids:[["Ep 8 video",YT.e8]], guides:["ii8"]},
+ {ep:8, n:"Defeat Mindf*cker", when:"Ep 8, late in the shift (around Get to the Chopper). It only appears while the cut hero's boss bar still has some left, so hold the final Attack call until this is done.", miss:true, codes:[], steps:[
+   "Go right into a dead end, then left to another dead end, then right again to the build path. The \"dead ends\" are invisible paths.",
+   "Cross the invisible section past the antivirus, go above it, continue right, and cross another invisible section.",
+   "From here the controls are inverted (Up acts as Down, Left as Right). Into Indie lists the build-spot codes as: top-right Up, Left, Left, Right; bottom-right Left, Right, Up, Up; final Right, Left, Up, Up, Down, Right. It doesn't say whether those already allow for the inversion, so if one won't take, enter the mirrored arrows. Then reach the exit."],
+   tip:"The most-missed hack. The trophy pops right after it if everything else is done.", vids:[["Ep 8 video",YT.e8]], guides:["ii8"]}
+];
+
+const MENTOR = [
+  ["Ep 2","Win both Granny's Donuts hacks, don't tattle, don't say she punched you"],
+  ["Ep 3","\"You make your own destiny.\", \"This could make a difference.\", win the jewelry hacks, \"I hope so.\""],
+  ["Ep 3","Train Invisigal (Wolf Pack), worth +5"],
+  ["Ep 4","Movie with Invisigal (+6)"],
+  ["Ep 5","Hit every bar-fight QTE, \"Heroes don't kill people.\", \"I'm Mecha Man.\""],
+  ["Ep 6","\"We go tonight.\", win the heist hacks"],
+  ["Ep 7","Defend her, \"I forgive you\", \"Track Star\""],
+  ["Ep 8","Untie her, spare Shroud"],
+  ["Every shift","Send Invisigal on 1-slot Mobility calls and Golem pairings she can win (+1 each, -1 per failure)"]
+];
+
+const STEP_A = [
+  "Load Slot 2 (your copy of finished Run 1), open Scene Select, and pick Episode 7, Scene 5.",
+  "Conference room: **Cut her**. Locker room: **We're done**, then **Lean out**. Press: **Invisigal**.",
+  "Episode 8: play the shift. Invisigal is gone, so your team is at full strength (an easy second shot at Protected LA). In Royd's lab, **Go alone**. Don't untie her.",
+  "Finish the episode. Expect **\"We can just be friends.\"** If her score falls under 45 she kills Shroud herself, which also gives **\"Didn't see that coming?\"**. If the gold doesn't pop, Run 2 gets it."
+];
+
+const STEP_B = [
+  ["Ep 1","\"I like helping people.\", then Kiss her on the billboard"],
+  ["Ep 2","\"I'll take your lead.\", \"Do you want to grab dinner?\", then decline the dinner with Phenomaman"],
+  ["Ep 2","Coupé alone on Lost Balloon until she fails: Snake Eyes"],
+  ["Ep 3","\"I'm sorry, Blazer.\", \"I like it.\", then cut Sonar: Tie trophy"],
+  ["Ep 4","\"Incredible.\", Phenomaman (Second Chance trophy), Dinner with Blazer, then Kiss her"],
+  ["Ep 5","\"I'm Robert.\": Hid the Truth trophy"],
+  ["Ep 6","\"Make a plan first.\", dance with Blazer"],
+  ["Ep 7","Cut Invisigal, \"We're done\", Lean out"],
+  ["Ep 8","\"Just come back\", Go alone, then the car-roof kiss: Any plans tonight?"],
+  ["All run","Keep Invisigal benched and take the cold options with her, in case Step A didn't earn the mentor gold"]
+];
+
+const STEP_C = [
+  ["Muuuuurrrdaaaaah! / bad ass","Final Shroud scene, Ep 8 (hero save)","Pick the other option"],
+  ["Knife / Tie","Last scene of Ep 3","Cut the other hero"],
+  ["First Shot / Second Chance","Ep 4, Scene 7","Recruit the other hero"],
+  ["Told / Hid the Truth","Last scene of Ep 5","Give the other answer"],
+  ["Love 'em from my mouth...","Last scene of Ep 2","Pick another donut, then check Extras > Choice Stats"],
+  ["There. You happy now?","Ep 7 prologue","Pick another store item, then check Choice Stats"],
+  ["Fool's Luck","Ep 4, Scene 8 (Waterboy save)","Waterboy alone on Stop the Assassination; reload until it works"],
+  ["Snake Eyes","Ep 2, Scene 7","Coupé alone on Lost Balloon; reload until it fails"],
+  ["Shift Was Lit / Nailed It","Ep 2, Scene 7","Follow the Episode 2 call list"],
+  ["Overkill","Ep 1 final tutorial call","Fill all 4 slots"],
+  ["Modded","Ep 7 shift","Hit every bonus line and avoid every X"],
+  ["Protected Los Angeles","Ep 8 shift","Easier on a save where Invisigal was cut (full-strength team)"],
+  ["Phoenixes Down","Any shift","Send a hero to a call they'll fail so they come back hurt, heal them with Malevola, repeat in the same shift"],
+  ["Getting to Know Yous","Ep 2–3 shifts","Trigger the missing hero's power (hero cheat sheet)"],
+  ["H4ck3d by R0b3rt","—","Hacks are tracked on the save, so a missed hack means replaying from that point. Easiest fix: win every hack in Run 2, which still allows the villain ending"]
+];
+
+const SOURCES = [
+  ["Dispatch PS5 trophy list (vgtimes)","https://vgtimes.ru/games/dispatch/achievements-and-trophies/ps5/"],
+  ["Dispatch Trophy Guide & Roadmap (Dayngls' Guides)","https://daynglsgameguides.com/2025/11/25/dispatch-trophy-guide-roadmap/"],
+  ["Dispatch Achievement and Trophy Guide (T-Pose Gaming)","https://tposegaming.com/dispatch-achievement-and-trophy-guide/"],
+  ["How to get all achievements in Dispatch (The Escapist)","https://www.escapistmagazine.com/dispatch-all-achievements/"],
+  ["Dispatch Complete Achievement Guide (Into Indie Games)","https://intoindiegames.com/walkthroughs/tips-tricks/dispatch-complete-achievement-guide/"],
+  ["Dispatch Complete Endings Guide (Into Indie Games)","https://intoindiegames.com/walkthroughs/dispatch-complete-endings-guide/"],
+  ["Dispatch Complete Missions Guide (Into Indie Games)","https://intoindiegames.com/walkthroughs/tips-tricks/dispatch-complete-missions-guide/"],
+  ["Missions Guide (Steam Community)","https://steamcommunity.com/sharedfiles/filedetails/?id=3591755863"],
+  ["Hacked by Robert hack list (Gamepressure)","https://www.gamepressure.com/newsroom/hacked-by-robert-is-the-one-dispatch-achievement-you-cant-get/zb8964"],
+  ["Robert Mentor Counter explained (PC Gamer)","https://www.pcgamer.com/games/adventure/there-is-no-glitch-turns-out-you-need-more-than-just-heroic-dialogue-choices-to-get-dispatchs-best-ending-youve-gotta-be-good-at-your-job-too"],
+  ["Final-shift failure rates (PCGamesN)","https://www.pcgamesn.com/dispatch/final-shift-failure-rate"],
+  ["PS5 update 1.000.007 patch notes (MP1st)","https://mp1st.com/?p=299232"],
+  ["Dispatch wiki: Invisigal (hero pages linked from here)","https://dispatch.wiki.gg/wiki/Invisigal"],
+  ["Dispatch wiki: Episode 8 scenarios","https://dispatch.wiki.gg/wiki/List_of_Episode_8_scenarios"],
+  ["Gamepressure walkthrough, Episode 1","https://www.gamepressure.com/newsroom/dispatch-episode-1-walkthrough-and-choices-guide/z6892c"],
+  ["Gamepressure walkthrough, Episode 2","https://www.gamepressure.com/newsroom/dispatch-episode-2-walkthrough-and-choices-guide/z78933"],
+  ["Gamepressure walkthrough, Episode 3","https://www.gamepressure.com/newsroom/dispatch-episode-3-walkthrough-and-choices-guide/zc89c8"],
+  ["Gamepressure walkthrough, Episode 4","https://www.gamepressure.com/newsroom/dispatch-episode-4-walkthrough-and-choices-guide/zd8a13"],
+  ["Gamepressure walkthrough, Episode 5","https://www.gamepressure.com/newsroom/dispatch-episode-5-walkthrough-and-choices-guide/z788d3"],
+  ["Gamepressure walkthrough, Episode 6","https://www.gamepressure.com/newsroom/dispatch-episode-6-walkthrough-and-choices-guide/zb88d7"],
+  ["Gamepressure walkthrough, Episode 7","https://www.gamepressure.com/newsroom/dispatch-episode-7-walkthrough-and-choices-guide/za8936"],
+  ["Gamepressure walkthrough, Episode 8","https://www.gamepressure.com/newsroom/dispatch-episode-8-walkthrough-and-choices-guide/zc8938"],
+  ["Dispatch hacking guide (T-Pose Gaming)","https://tposegaming.com/?p=13965"],
+  ["Episode 1 hacking guide (T-Pose Gaming)","https://tposegaming.com/dispatch-episode-1-hacking-guide/"],
+  ["Episode 2 hacking guide (T-Pose Gaming)","https://tposegaming.com/dispatch-episode-2-hacking-guide/"],
+  ["Episode 3 hacking guide (T-Pose Gaming)","https://tposegaming.com/dispatch-episode-3-hacking-guide/"],
+  ["Episode 4 hacking guide (T-Pose Gaming)","https://tposegaming.com/dispatch-episode-4-hacking-guide/"],
+  ["Episode 5 walkthrough with hacks (Into Indie Games)","https://intoindiegames.com/walkthroughs/dispatch-walkthrough-episode-5-team-building/"],
+  ["Episode 6 walkthrough with hacks (Into Indie Games)","https://intoindiegames.com/walkthroughs/dispatch-walkthrough-episode-6-moving-parts/"],
+  ["Episode 7 walkthrough with hacks (Into Indie Games)","https://intoindiegames.com/walkthroughs/dispatch-walkthrough-episode-7-retrospective/"],
+  ["Episode 8 walkthrough with hacks (Into Indie Games)","https://intoindiegames.com/walkthroughs/dispatch-walkthrough-episode-8-synergy/"],
+  ["H4ck3d by R0b3rt codes (Treyex Gaming)","https://www.treyexgaming.com/dispatch-h4ck3d-by-r0b3rt-achievement-codes/"],
+  ["Episode 1 hacking walkthrough (allthings.how)","https://allthings.how/?p=102760"],
+  ["The hidden hacking minigame (Gamepressure)","https://www.gamepressure.com/newsroom/it-took-three-dispatch-playthroughs-before-i-finally-saw-this-hid/ze8a41"]
+];
+
+const DOC_URL = "https://claude.ai/artifact/CM57vLVqBC5AwYzGmRMrNy";
+
+/* ================= STATE ================= */
+const STORE_KEY = "dispatch-plat-v1";
+const state = { run:"1", ticks:{}, filter:{grade:"all", status:"all", part:"all"} };
+function loadStore(){
+  try{ const raw = localStorage.getItem(STORE_KEY); if(raw){ const o = JSON.parse(raw); if(o && typeof o === "object"){ state.ticks = o.ticks || {}; if(o.run) state.run = o.run; } } }catch(e){}
+}
+function saveStore(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify({ticks:state.ticks, run:state.run})); }catch(e){}
+}
+/* The first version had 19 hack rows ("h:N"); map them onto the 28 cards. */
+const OLD_HACK_MAP=[[0],[1],[2],[3,4],[5],[6],[7],[8,9,10],[11],[12],[13],[14,15,16],[17],[18,19,20,21,22],[23],[24],[25],[26],[27]];
+function migrateTicks(){
+  let changed=false;
+  Object.keys(state.ticks).forEach(k=>{ const m=/^h:(\d+)$/.exec(k); if(m){ (OLD_HACK_MAP[+m[1]]||[]).forEach(j=>{ state.ticks["hk:"+j]=true; }); delete state.ticks[k]; changed=true; } });
+  if(changed) saveStore();
+}
+/* Progress code: one bit per tick, in a fixed order, base64url with a version prefix. */
+function allTickKeys(){
+  const keys=[];
+  TROPHIES.forEach(t=>keys.push("t:"+t.n));
+  EPISODES.forEach(ep=>ep.shifts.forEach((s,si)=>s.calls.forEach((c,ci)=>keys.push("c:"+ep.id+":"+si+":"+ci))));
+  HACKS.forEach((_,i)=>keys.push("hk:"+i));
+  MENTOR.forEach((_,i)=>keys.push("m:"+i));
+  STEP_B.forEach((_,i)=>keys.push("b:"+i));
+  return keys;
+}
+function exportCode(){
+  const keys=allTickKeys(); const bytes=new Array(Math.ceil(keys.length/8)).fill(0);
+  keys.forEach((k,i)=>{ if(state.ticks[k]) bytes[i>>3]|=1<<(i&7); });
+  return "D1-"+btoa(String.fromCharCode.apply(null,bytes)).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+}
+function importCode(code){
+  code=String(code||"").replace(/\s+/g,"");
+  if(code.slice(0,3).toUpperCase()!=="D1-") return false;
+  let b=code.slice(3).replace(/-/g,"+").replace(/_/g,"/"); while(b.length%4) b+="=";
+  let bin; try{ bin=atob(b); }catch(e){ return false; }
+  const keys=allTickKeys(); if(bin.length!==Math.ceil(keys.length/8)) return false;
+  const t={}; keys.forEach((k,i)=>{ if(bin.charCodeAt(i>>3)&(1<<(i&7))) t[k]=true; });
+  state.ticks=t; saveStore(); return true;
+}
+
+/* ================= HELPERS ================= */
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function md(s){ return esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>"); }
+const STAT_KEYS = ["C","V","M","Ch","I"];
+function fmtStats(v){ return v.map((x,i)=>STAT_KEYS[i]+x).join(" "); }
+function radar(v){
+  if(!v) return "";
+  const cx=26, cy=27, R=19, n=5;
+  const pt=(i,r)=>{ const a=-Math.PI/2 + i*2*Math.PI/n; return [cx+r*Math.cos(a), cy+r*Math.sin(a)]; };
+  const f=p=>p.map(x=>x.toFixed(1)).join(",");
+  const ring=[0,1,2,3,4].map(i=>f(pt(i,R))).join(" ");
+  const half=[0,1,2,3,4].map(i=>f(pt(i,R/2))).join(" ");
+  const shape=v.map((x,i)=>f(pt(i, R*Math.max(.08, Math.min(x,10)/10)))).join(" ");
+  const axes=[0,1,2,3,4].map(i=>{ const p=pt(i,R); return '<line x1="'+cx+'" y1="'+cy+'" x2="'+p[0].toFixed(1)+'" y2="'+p[1].toFixed(1)+'"/>'; }).join("");
+  const lab=[0,1,2,3,4].map(i=>{ const p=pt(i,R+5.2); return '<text x="'+p[0].toFixed(1)+'" y="'+(p[1]+2).toFixed(1)+'" text-anchor="middle">'+STAT_KEYS[i]+'</text>'; }).join("");
+  return '<svg class="radar" viewBox="0 0 52 54" role="img" aria-label="Needs '+esc(fmtStats(v))+'"><polygon class="ring" points="'+ring+'"/><polygon class="ring" points="'+half+'"/><g class="axes">'+axes+'</g><polygon class="shape" points="'+shape+'"/>'+lab+'</svg>';
+}
+function tickBox(key, label){
+  const id = "k-" + key.replace(/[^a-zA-Z0-9]/g,"-");
+  const on = state.ticks[key] ? " checked" : "";
+  return '<label class="tick" for="'+id+'"><input type="checkbox" id="'+id+'" data-tick="'+esc(key)+'"'+on+'><span class="box"></span><span class="sr-only">'+esc(label)+'</span></label>';
+}
+function partChip(p){
+  const map={r1:["r1","Run 1"],r2:["r2","Run 2"],cl:["cl","Cleanup"],any:["any","Any run"],end:["cl","Last"]};
+  const m=map[p]||["any",p];
+  return '<span class="chip '+m[0]+'">'+m[1]+'</span>';
+}
+function viewLabel(v){
+  if(v==="start") return "Start"; if(v==="trophies") return "Trophies"; if(v==="hacks") return "Hacks"; if(v==="heroes") return "Heroes"; if(v==="cleanup") return "Cleanup"; if(v==="sources") return "Sources";
+  const e = EPISODES.find(x=>x.id===v); return e ? "Ep "+e.num : v;
+}
+function runNote(ctx){
+  const btn=(r,l)=>'<button type="button" id="run-'+ctx+'-'+r+'" data-run="'+r+'" aria-pressed="'+(state.run===r)+'">'+l+'</button>';
+  return '<div class="runnote"><span class="stripe"></span><span class="rn-text">Showing <strong>'+esc(RUN_LABEL[state.run])+'</strong></span><div class="seg" role="group" aria-label="Show choices for">'+btn("1","Run 1")+btn("2","Run 2")+btn("both","Both")+'</div></div>';
+}
+
+/* ================= RENDER ================= */
+const VIEWS = ["start","trophies"].concat(EPISODES.map(e=>e.id)).concat(["hacks","heroes","cleanup","sources"]);
+
+function renderTabs(){
+  const nav=document.getElementById("tabs");
+  nav.innerHTML = VIEWS.map(v=>{
+    const isEp = v.startsWith("ep");
+    const label = isEp ? "E"+v.slice(2) : viewLabel(v);
+    const title = isEp ? ' title="Episode '+v.slice(2)+'"' : '';
+    return '<a href="#'+v+'" data-view="'+v+'"'+(isEp?' class="ep"':'')+title+'>'+esc(label)+'</a>';
+  }).join("");
+}
+
+function renderStart(){
+  const o=OVERVIEW;
+  let h='<section class="hero"><h1>Two runs and a replay to the <em>platinum</em></h1>';
+  h+='<p class="lead">36 trophies, nothing permanently missable. Run 1 earns about 27 of them; a Scene Select replay and a Blazer run do the rest. Spoilers for the whole story.</p>';
+  h+='<div class="tiles">'+o.tiles.map(t=>'<div class="tile"><b>'+esc(t[0])+'</b><span>'+esc(t[1])+'</span></div>').join("")+'</div></section>';
+  h+='<section class="block"><div class="block-head"><h2>Roadmap</h2><span class="muted small">Color = which run</span></div><ol class="timeline">';
+  h+=ROADMAP.map(s=>'<li class="'+s.cls+'"><span class="node">'+s.n+'</span><div><h3>'+esc(s.t)+'<span class="slotchip">'+esc(s.slot)+'</span></h3><p>'+md(s.p)+'</p>'+(s.li?'<ul>'+s.li.map(x=>'<li>'+md(x)+'</li>').join("")+'</ul>':'')+'</div></li>').join("");
+  h+='</ol></section>';
+  h+='<section class="block"><h2>Episodes</h2><div class="epgrid">'+EPISODES.map(e=>'<a class="eptile" href="#'+e.id+'"><span class="n">'+e.num+'</span><span class="t">'+esc(e.title)+'</span><span class="k">'+esc(e.key)+'</span></a>').join("")+'</div></section>';
+  h+='<section class="block"><h2>Save slots</h2><div class="scroll-x"><table class="grid"><thead><tr><th>Slot</th><th>Holds</th><th>Use it for</th></tr></thead><tbody>'+SLOTS.map(r=>'<tr><td class="mono"><strong>'+esc(r[0])+'</strong></td><td>'+esc(r[1])+'</td><td>'+esc(r[2])+'</td></tr>').join("")+'</tbody></table></div></section>';
+  h+='<div class="two"><section class="block"><h2>How saves work</h2><ul class="plain">'+o.saves.map(x=>'<li>'+md(x)+'</li>').join("")+'</ul></section>';
+  h+='<section class="block"><h2>Golden rules</h2><ol class="plain">'+o.rules.map(x=>'<li>'+md(x)+'</li>').join("")+'</ol></section></div>';
+  h+='<section class="block panel"><dl class="facts">'+o.facts.map(f=>'<div><dt>'+esc(f[0])+'</dt><dd>'+md(f[1])+'</dd></div>').join("")+'</dl></section>';
+  return h;
+}
+
+function trophyKey(t){ return "t:"+t.n; }
+function renderTrophies(){
+  let h='<section class="block"><div class="block-head"><h2>Trophies</h2><button type="button" class="resetbtn" id="resetTicks">Reset all ticks</button></div>';
+  h+='<div class="progress"><div class="meter" aria-hidden="true"><i id="meterFill"></i></div><div class="counts" id="tCounts"></div></div>';
+  h+='<div class="filters" role="group" aria-label="Filter by status">'+[["all","All"],["todo","Still to get"],["done","Earned"]].map(f=>'<button type="button" data-f="status" data-v="'+f[0]+'" aria-pressed="'+(state.filter.status===f[0])+'">'+f[1]+'</button>').join("")+'</div>';
+  h+='<div class="filters" role="group" aria-label="Filter by grade">'+[["all","Any grade"],["P","Platinum"],["G","Gold"],["S","Silver"],["B","Bronze"]].map(f=>'<button type="button" data-f="grade" data-v="'+f[0]+'" aria-pressed="'+(state.filter.grade===f[0])+'">'+f[1]+'</button>').join("")+'</div>';
+  h+='<div class="filters" role="group" aria-label="Filter by part">'+[["all","Every part"],["r1","Run 1"],["r2","Run 2"],["cl","Cleanup"],["any","Any run"]].map(f=>'<button type="button" data-f="part" data-v="'+f[0]+'" aria-pressed="'+(state.filter.part===f[0])+'">'+f[1]+'</button>').join("")+'</div>';
+  h+='<ol class="calls" id="trophyList">';
+  h+=TROPHIES.map((t,i)=>{
+    const k=trophyKey(t); const done=!!state.ticks[k];
+    return '<li class="trophy'+(done?' done':'')+'" id="tr-'+i+'" data-grade="'+t.g+'" data-part="'+t.p+'">'+tickBox(k,"Earned "+t.n)+
+      '<div><div class="t-top"><span class="medal '+t.g+'" title="'+({P:"Platinum",G:"Gold",S:"Silver",B:"Bronze"})[t.g]+'"></span><span class="t-name">'+esc(t.n)+'</span></div>'+
+      '<p class="t-desc">'+esc(t.d)+'</p><p class="t-how">'+md(t.h)+'</p>'+
+      '<div class="t-meta">'+partChip(t.p)+'<span class="muted">'+esc(t.w)+'</span>'+(t.ep?'<a href="#'+t.ep+'">Go to '+esc(viewLabel(t.ep))+'</a>':'')+'</div></div></li>';
+  }).join("");
+  h+='</ol></section>';
+  h+='<section class="block panel transfer" id="transfer"><h2>Move your ticks to another device</h2><p class="muted small">Ticks are saved in each browser separately, so your iPhone and MacBook keep their own lists. Copy this code, open the guide on the other device, paste it below and tap Load. Loading replaces that device\'s ticks.</p>';
+  h+='<div class="row"><input id="xferOut" readonly aria-label="Your progress code" value=""><button type="button" class="btn" id="xferCopy">Copy code</button></div>';
+  h+='<div class="row"><input id="xferIn" placeholder="Paste a D1- code" aria-label="Paste a progress code" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button type="button" class="btn ghost" id="xferLoad">Load</button></div>';
+  h+='<p class="status" id="xferStatus" role="status"></p></section>';
+  return h;
+}
+
+function callKey(ep,si,ci){ return "c:"+ep+":"+si+":"+ci; }
+function renderCall(ep, si, ci, c){
+  const k=callKey(ep.id,si,ci); const done=!!state.ticks[k];
+  const id="c-"+ep.id+"-"+si+"-"+ci;
+  const cls=["call"]; if(c.r2) cls.push("has-r2"); if(done) cls.push("done");
+  let tags="";
+  if(c.x==="trap") tags+='<span class="badge trap">Auto-fail X</span>';
+  if(c.x==="bonus") tags+='<span class="badge bonus">Bonus line</span>';
+  (c.tags||[]).forEach(t=>{ const bc={trophy:"tb",hack:"hk",save:"save",train:"tr"}[t[0]]||"hk"; tags+='<span class="badge '+bc+'">'+esc(t[1])+'</span>'; });
+  if(c.only) tags+='<span class="chip r'+c.only+'">Run '+c.only+' only</span>';
+  let h='<li class="'+cls.join(" ")+'" id="'+id+'"'+(c.only?' data-only="'+c.only+'"':'')+'>'+tickBox(k,"Done: "+c.n);
+  h+='<div class="call-body"><div class="call-top"><span class="call-name">'+esc(c.n)+'</span>'+(c.s?'<span class="slots">'+c.s+' slot'+(c.s>1?'s':'')+'</span>':'')+tags+'</div>';
+  h+='<div class="line send send-r1"><span class="lbl">'+(c.r2?'Run 1':'Send')+'</span><span><strong>'+md(c.send)+'</strong></span></div>';
+  if(c.r2) h+='<div class="line send send-r2"><span class="lbl">Run 2</span><span><strong>'+md(c.r2)+'</strong></span></div>';
+  if(c.pick) h+='<div class="line"><span class="lbl">Pick</span><span>'+md(c.pick)+'</span></div>';
+  if(c.note) h+='<p class="note">'+md(c.note)+'</p>';
+  if(c.st || c.need) h+='<p class="need mono">'+(c.st?esc(fmtStats(c.st)):'')+(c.st&&c.need?' · ':'')+(c.need?esc(c.need):'')+'</p>';
+  h+='</div><div class="call-radar">'+radar(c.st)+'</div></li>';
+  return h;
+}
+
+function renderEpisode(ep){
+  let h='<section class="ep-head"><div class="ep-num"><small>Episode</small><b>'+ep.num+'</b></div><div><h1>'+esc(ep.title)+'</h1><p class="lead">'+md(ep.lead)+'</p></div></section>';
+  h+='<section class="block panel"><dl class="facts">'+ep.facts.map(f=>'<div><dt>'+esc(f[0])+'</dt><dd>'+md(f[1])+'</dd></div>').join("")+'</dl></section>';
+  h+=runNote(ep.id);
+  h+='<section class="block"><h2>Story choices</h2><ol class="choices">';
+  h+=ep.choices.map(c=>{
+    const flag = c.save ? '<span class="badge save">Save point</span> ' : (c.key ? '<span class="badge key">Key choice</span> ' : '');
+    return '<li class="choice'+(c.save?' save':'')+'"><div class="moment">'+flag+md(c.m)+'</div><div class="picks">'+
+      '<div class="pick pick-r1"><span class="chip r1">Run 1</span><strong>'+md(c.r1)+'</strong></div>'+
+      '<div class="pick pick-r2"><span class="chip r2">Run 2</span><strong>'+md(c.r2)+'</strong></div></div>'+
+      (c.why?'<p class="why">'+md(c.why)+'</p>':'')+'</li>';
+  }).join("");
+  h+='</ol></section>';
+  if(ep.notes0) h+='<section class="block panel"><ul class="plain notes">'+ep.notes0.map(n=>'<li>'+md(n)+'</li>').join("")+'</ul></section>';
+  if(ep.extraHtml==="sabotage"){
+    h+='<section class="block"><h2>How sabotage works</h2><p class="muted">Two heroes who aren\'t a synergy pair may sabotage each other; the victim gets a skill check and is injured if it fails. Synergy pairs never sabotage: <strong>Sonar + Malevola, Flambae + Prism, Invisigal + Golem, Punch Up + Coupé</strong>. Beach Clean Up, Undercover Drug Bust and Landslide always include one.</p>';
+    h+='<div class="scroll-x"><table class="grid"><thead><tr><th>Sabotaged hero</th><th>Pick</th><th>Check</th></tr></thead><tbody>'+SABOTAGE.map(r=>'<tr><td><strong>'+esc(r[0])+'</strong></td><td>'+esc(r[1])+'</td><td class="mono">'+esc(r[2])+'</td></tr>').join("")+'</tbody></table></div></section>';
+  }
+  ep.shifts.forEach((s,si)=>{
+    h+='<section class="block"><div class="shift-head"><h2>'+esc(s.t)+'</h2>'+(s.intro?'<p class="muted">'+md(s.intro)+'</p>':'')+'</div><ol class="calls">';
+    let lastG=null;
+    s.calls.forEach((c,ci)=>{
+      if(c.g && c.g!==lastG){ h+='<li class="grp" aria-hidden="false">'+esc(c.g)+'</li>'; lastG=c.g; }
+      h+=renderCall(ep,si,ci,c);
+    });
+    h+='</ol></section>';
+  });
+  if(ep.notes) h+='<section class="block panel"><ul class="plain notes">'+ep.notes.map(n=>'<li>'+md(n)+'</li>').join("")+'</ul></section>';
+  h+='<p class="srcs">Sources: '+ep.src.map(s=>'<a href="'+esc(s[1])+'">'+esc(s[0])+'</a>').join(" · ")+'</p>';
+  const i=EPISODES.indexOf(ep); const prev=EPISODES[i-1], next=EPISODES[i+1];
+  h+='<nav class="pager" aria-label="Episode pages">'+(prev?'<a href="#'+prev.id+'">← Ep '+prev.num+' '+esc(prev.title)+'</a>':'<a href="#start">← Start</a>')+(next?'<a href="#'+next.id+'">Ep '+next.num+' '+esc(next.title)+' →</a>':'<a href="#cleanup">Cleanup →</a>')+'</nav>';
+  return h;
+}
+
+function checklist(prefix, items){
+  return '<ul class="checks">'+items.map((it,i)=>{
+    const k=prefix+":"+i; const done=!!state.ticks[k];
+    return '<li class="'+(done?'done':'')+'" id="'+prefix+'-'+i+'">'+tickBox(k,"Done: "+it[1])+'<span class="txt"><span class="ep">'+esc(it[0])+'</span>'+md(it[1])+'</span></li>';
+  }).join("")+'</ul>';
+}
+
+function renderHeroes(){
+  let h='<section class="block"><h2>Dispatch rules that win calls</h2><ul class="plain notes">'+RULES.map(r=>'<li>'+md(r)+'</li>').join("")+'</ul></section>';
+  h+='<section class="block"><div class="block-head"><h2>Hero cheat sheet</h2><span class="muted small">Base stats C/V/M/Ch/I · \"Reveal\" = Getting to Know Yous</span></div><div class="heroes">';
+  h+=HEROES.map(x=>'<article class="herocard"><div><h3>'+esc(x.n)+(x.run?' <span class="chip r'+x.run+'">Run '+x.run+'</span>':'')+'</h3><p class="mono muted">'+esc(fmtStats(x.st))+(x.note?' · '+esc(x.note):'')+'</p></div>'+radar(x.st)+
+    '<dl><div><dt>Reveal</dt><dd>'+md(x.pw)+'</dd></div><div><dt>Train</dt><dd><strong>'+md(x.tr)+'</strong></dd></div><div><dt>Points</dt><dd>'+md(x.up)+'</dd></div></dl></article>').join("");
+  h+='</div></section>';
+  h+='<section class="block"><h2>Run 1 training order</h2><p class="muted">Power Trip pops at #4.</p><ol class="plain">'+TRAINING.map(t=>'<li><span class="mono muted">'+esc(t[0])+'</span> · <strong>'+esc(t[1])+'</strong></li>').join("")+'</ol>';
+  h+='<p class="panel"><strong>Min Max and From Zero To Hero:</strong> make Golem your project hero. Pair him with Invisigal (synergy, and Wolf Pack doubles his XP). Right after Found Himself (Ep 4 Shift 2), respec him to 10 Vigor for Min Max, then keep feeding him XP until he hits level 10.</p></section>';
+  h+='<p class="panel">Hacking routes, lock codes and videos are on the <a href="#hacks">Hacks tab</a>.</p>';
+  h+='<section class="block"><h2>Mentor score · Run 1</h2><p class="muted">You need 45+. Story picks top out around 36–42, so the rest comes from Invisigal\'s successful calls (+1 each, -1 per failure) and her Blazer training (+5).</p>'+checklist("m",MENTOR)+'</section>';
+  return h;
+}
+
+function hackKey(i){ return "hk:"+i; }
+const ARROW = {Up:"\u2191", Down:"\u2193", Left:"\u2190", Right:"\u2192"};
+function arrows(code){ return code.split(",").map(w=>ARROW[w.trim()]||"").join(""); }
+function renderHack(x,i){
+  const k=hackKey(i), done=!!state.ticks[k];
+  let h='<li class="hackcard'+(done?' done':'')+'" id="hk-'+i+'">'+tickBox(k,"Won: "+x.n);
+  h+='<div><div class="call-top"><span class="call-name">'+esc(x.n)+'</span>'+(x.miss?'<span class="badge trap">Missable</span>':'')+'</div>';
+  h+='<p class="hk-when">'+md(x.when)+'</p>';
+  if(x.codes.length) h+='<div class="codes">'+x.codes.map(c=>'<span class="code">'+esc(c)+'<span class="arrows" aria-hidden="true">'+arrows(c)+'</span></span>').join("")+'</div>';
+  h+='<ol class="hk-steps">'+x.steps.map(st=>'<li>'+md(st)+'</li>').join("")+'</ol>';
+  if(x.tip) h+='<p class="hk-tip">'+md(x.tip)+'</p>';
+  h+='<div class="hk-links">'+x.vids.map(v=>'<a class="vid" href="'+esc(v[1])+'" target="_blank" rel="noopener">'+esc(v[0])+'</a>').join("")+(x.guides||[]).map(g=>'<a href="'+esc(GD[g][1])+'" target="_blank" rel="noopener">'+esc(GD[g][0])+'</a>').join("")+'</div>';
+  return h+'</div></li>';
+}
+function renderHacks(){
+  const done=HACKS.filter((_,i)=>state.ticks[hackKey(i)]).length;
+  let h='<section class="hero"><h1>All 28 <em>hacks</em></h1><p class="lead">H4ck3d by R0b3rt needs every hacking puzzle won, including the optional ones that only appear if you pick the hack option. Each card has the lock codes, the route and a video. Tick a card when you win it.</p></section>';
+  h+='<section class="block"><h2>How hacking works</h2><ul class="plain notes">'+HACK_RULES.map(r=>'<li>'+md(r)+'</li>').join("")+'</ul></section>';
+  h+='<section class="block panel"><h2>Easy to miss</h2><p class="muted small">These only appear if you pick the hack option or trigger them on a call. Tap one to jump to it.</p><ul class="misslist">'+HACKS.map((x,i)=>x.miss?'<li><a href="#hacks" data-view="hacks" data-jump="hk-'+i+'"><span>EP '+x.ep+'</span>'+esc(x.n)+'</a></li>':'').join("")+'</ul></section>';
+  h+='<section class="block"><div class="block-head"><h2>Every hack, in order</h2><span class="mono" id="hackCount">'+done+'/28</span></div>';
+  h+='<p class="muted small">Routes and codes come from T-Pose Gaming (Ep 1–4), Into Indie Games (Ep 5–8) and Gamepressure. I found the videos by search and haven\'t watched them; timestamps come from the search listings. Whole-game compilations: '+YT_FULL.map(v=>'<a href="'+esc(v[1])+'" target="_blank" rel="noopener">'+esc(v[0])+'</a>').join(" · ")+'.</p>';
+  h+='<ol class="hacklist">';
+  let last=0;
+  HACKS.forEach((x,i)=>{ if(x.ep!==last){ h+='<li class="grp">Episode '+x.ep+' · '+HACKS.filter(y=>y.ep===x.ep).length+'</li>'; last=x.ep; } h+=renderHack(x,i); });
+  h+='</ol></section>';
+  h+='<nav class="pager" aria-label="Next page"><a href="#ep8">← Ep 8</a><a href="#heroes">Heroes →</a></nav>';
+  return h;
+}
+
+function renderCleanup(){
+  let h='<section class="block"><h2>Cleanup</h2><p class="lead">After Run 1, three things remain: the Shroud kill (Slot 1), the no-romance/villain replay (Slot 2), and the Blazer run (Slot 3). Anything else is one Scene Select away.</p></section>';
+  h+='<section class="block"><h2>Step A · Slot 2 · Ep 7 Scene 5</h2><p class="muted">No romance + villain Invisigal</p><ol class="plain">'+STEP_A.map(s=>'<li>'+md(s)+'</li>').join("")+'</ol></section>';
+  h+='<section class="block"><h2>Step B · Slot 3 · Run 2</h2><p class="muted">Blazer romance + every opposite choice. Use the Run 2 switch on each episode page.</p>'+checklist("b",STEP_B)+'</section>';
+  h+='<section class="block"><h2>Step C · anything still missing</h2><div class="scroll-x"><table class="grid"><thead><tr><th>Missing trophy</th><th>Scene Select</th><th>What to do</th></tr></thead><tbody>'+STEP_C.map(r=>'<tr><td><strong>'+esc(r[0])+'</strong></td><td>'+esc(r[1])+'</td><td>'+esc(r[2])+'</td></tr>').join("")+'</tbody></table></div><p class="muted">All 35 done means Dispatched pops immediately.</p></section>';
+  return h;
+}
+
+function renderSources(){
+  let h='<section class="block"><h2>Sources</h2><ul class="plain">'+SOURCES.map(s=>'<li><a href="'+esc(s[1])+'">'+esc(s[0])+'</a></li>').join("")+'</ul>';
+  h+='<p class="muted small">The PSNProfiles and PlayStationTrophies guides blocked access, so a few details come only from their search previews: the scene numbers (Ep 4 Scenes 7–8, Ep 7 Scene 5), the four save slots and the Phenomaman Snake Eyes tip. Confirm those on the in-game scene list.</p>';
+  h+='<p><a href="'+DOC_URL+'">Open the original doc version of this guide</a></p></section>';
+  return h;
+}
+
+function renderAll(){
+  const main=document.getElementById("main");
+  let html="";
+  html+='<div class="view" id="view-start">'+renderStart()+'</div>';
+  html+='<div class="view" id="view-trophies">'+renderTrophies()+'</div>';
+  EPISODES.forEach(ep=>{ html+='<div class="view" id="view-'+ep.id+'">'+renderEpisode(ep)+'</div>'; });
+  html+='<div class="view" id="view-hacks">'+renderHacks()+'</div>';
+  html+='<div class="view" id="view-heroes">'+renderHeroes()+'</div>';
+  html+='<div class="view" id="view-cleanup">'+renderCleanup()+'</div>';
+  html+='<div class="view" id="view-sources">'+renderSources()+'</div>';
+  main.innerHTML=html;
+  applyTrophyFilter(); updateCounts();
+}
+
+/* ================= BEHAVIOUR ================= */
+function currentView(){ const h=(location.hash||"").replace("#",""); return VIEWS.includes(h)?h:"start"; }
+function show(view, focusId){
+  document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on", v.id==="view-"+view));
+  document.querySelectorAll("#tabs a").forEach(a=>{ if(a.dataset.view===view){ a.setAttribute("aria-current","page"); a.scrollIntoView({block:"nearest",inline:"nearest"}); } else a.removeAttribute("aria-current"); });
+  if(focusId){ const el=document.getElementById(focusId); if(el){ el.scrollIntoView({block: el.offsetHeight > window.innerHeight*0.5 ? "start" : "center"}); el.style.outline="3px solid var(--accent)"; setTimeout(()=>{el.style.outline="";},1600); return; } }
+  window.scrollTo(0,0);
+}
+function setRun(r){
+  state.run=r; document.body.classList.remove("run-1","run-2","run-both"); document.body.classList.add("run-"+r);
+  document.querySelectorAll(".seg button[data-run]").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.run===r)));
+  document.querySelectorAll(".rn-text").forEach(s=>{ s.innerHTML='Showing <strong>'+esc(RUN_LABEL[r])+'</strong>'; });
+  saveStore();
+}
+function updateCounts(){
+  const got=TROPHIES.filter(t=>state.ticks[trophyKey(t)]);
+  const bc=document.getElementById("brandCount"); if(bc) bc.textContent="PS5 guide · "+got.length+"/36 trophies";
+  const mf=document.getElementById("meterFill"); if(mf) mf.style.width=(got.length/36*100).toFixed(1)+"%";
+  const tc=document.getElementById("tCounts");
+  if(tc){ const by=g=>TROPHIES.filter(t=>t.g===g); const n=g=>by(g).filter(t=>state.ticks[trophyKey(t)]).length;
+    tc.innerHTML='<span><b>'+got.length+'</b>/36 earned</span><span>Platinum <b>'+n("P")+'</b>/1</span><span>Gold <b>'+n("G")+'</b>/3</span><span>Silver <b>'+n("S")+'</b>/16</span><span>Bronze <b>'+n("B")+'</b>/16</span>'; }
+  const hc=document.getElementById("hackCount"); if(hc) hc.textContent=HACKS.filter((_,i)=>state.ticks[hackKey(i)]).length+"/28";
+  const xo=document.getElementById("xferOut"); if(xo) xo.value=exportCode();
+}
+function applyTrophyFilter(){
+  const f=state.filter;
+  document.querySelectorAll("#trophyList .trophy").forEach((li,i)=>{
+    const t=TROPHIES[i]; const done=!!state.ticks[trophyKey(t)];
+    let ok=true;
+    if(f.grade!=="all" && t.g!==f.grade) ok=false;
+    if(f.part!=="all" && t.p!==f.part) ok=false;
+    if(f.status==="todo" && done) ok=false;
+    if(f.status==="done" && !done) ok=false;
+    li.style.display = ok ? "" : "none";
+  });
+}
+
+/* Search index */
+let INDEX=[];
+function buildIndex(){
+  INDEX=[];
+  TROPHIES.forEach((t,i)=>INDEX.push({ctx:"Trophy", title:t.n, sub:t.d+" · "+t.w, view:"trophies", id:"tr-"+i, text:(t.n+" "+t.d+" "+t.h).toLowerCase()}));
+  EPISODES.forEach(ep=>{
+    ep.choices.forEach(c=>INDEX.push({ctx:"Ep "+ep.num, title:c.m, sub:"Run 1: "+c.r1+" · Run 2: "+c.r2, view:ep.id, id:null, text:(c.m+" "+c.r1+" "+c.r2+" "+(c.why||"")).toLowerCase()}));
+    ep.shifts.forEach((s,si)=>s.calls.forEach((c,ci)=>INDEX.push({ctx:"Ep "+ep.num, title:c.n, sub:"Send "+c.send+(c.r2?" · Run 2: "+c.r2:""), view:ep.id, id:"c-"+ep.id+"-"+si+"-"+ci, text:(c.n+" "+c.send+" "+(c.r2||"")+" "+(c.pick||"")+" "+(c.note||"")+" "+(c.need||"")).toLowerCase()})));
+  });
+  HACKS.forEach((x,i)=>INDEX.push({ctx:"Hack · Ep "+x.ep, title:x.n, sub:(x.codes.length?"Codes: "+x.codes.join(" / "):x.when), view:"hacks", id:"hk-"+i, text:(x.n+" "+x.when+" "+x.codes.join(" ")+" "+x.steps.join(" ")+" "+(x.tip||"")+" hack").toLowerCase()}));
+  HEROES.forEach(x=>INDEX.push({ctx:"Hero", title:x.n, sub:x.tr, view:"heroes", id:null, text:(x.n+" "+x.pw+" "+x.tr+" "+x.up).toLowerCase()}));
+}
+function norm(s){ return String(s).toLowerCase().replace(/[^\p{L}\p{N}\s]/gu," ").replace(/\s+/g," ").trim(); }
+function doSearch(q){
+  const out=document.getElementById("results");
+  q=norm(q);
+  if(q.length<2){ out.innerHTML=""; return; }
+  const words=q.split(" ");
+  /* Rank exact phrase hits in the title, then in the subtitle (lock codes live there), then everything else in page order. */
+  const hits=INDEX.filter(e=>words.every(w=>e.text.includes(w)))
+    .map((e,i)=>({e:e, i:i, s:(norm(e.title).includes(q)?4:0)+(norm(e.sub).includes(q)?2:0)}))
+    .sort((a,b)=>(b.s-a.s)||(a.i-b.i)).slice(0,40).map(x=>x.e);
+  out.innerHTML = hits.length ? hits.map((e,i)=>'<li><a href="#'+e.view+'" data-jump="'+(e.id||"")+'" data-view="'+e.view+'"><span class="ctx">'+esc(e.ctx)+'</span><span class="rt">'+esc(e.title)+'</span><span class="rs">'+esc(e.sub)+'</span></a></li>').join("") : '<li class="empty">No matches. Try a call name, hero or trophy.</li>';
+}
+
+function wire(){
+  document.addEventListener("change",e=>{
+    const inp=e.target.closest("input[data-tick]"); if(!inp) return;
+    const k=inp.dataset.tick; if(inp.checked) state.ticks[k]=true; else delete state.ticks[k];
+    const li=inp.closest("li"); if(li) li.classList.toggle("done", inp.checked);
+    saveStore(); updateCounts(); if(k.startsWith("t:")) applyTrophyFilter();
+  });
+  document.addEventListener("click",e=>{
+    const sb=e.target.closest(".seg button[data-run]");
+    if(sb){ setRun(sb.dataset.run); return; }
+    const fb=e.target.closest(".filters button");
+    if(fb){ state.filter[fb.dataset.f]=fb.dataset.v; fb.parentElement.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed", String(b===fb))); applyTrophyFilter(); return; }
+    const rb=e.target.closest("#resetTicks");
+    if(rb){ if(rb.classList.contains("armed")){ state.ticks={}; saveStore(); renderAll(); show(currentView()); } else { rb.classList.add("armed"); rb.textContent="Tap again to clear every tick"; setTimeout(()=>{ if(document.body.contains(rb)){ rb.classList.remove("armed"); rb.textContent="Reset all ticks"; } },4000); } return; }
+    const cp=e.target.closest("#xferCopy");
+    if(cp){ const out=document.getElementById("xferOut"), st=document.getElementById("xferStatus"); const code=exportCode(); out.value=code;
+      const fallback=()=>{ try{ out.focus(); out.select(); out.setSelectionRange(0,code.length); }catch(_){} st.textContent="Couldn't copy automatically. The code is selected: copy it from the box."; };
+      try{ if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(code).then(()=>{ st.textContent="Copied. Paste it into this guide on your other device."; }, fallback); } else fallback(); }catch(_){ fallback(); }
+      return; }
+    const ld=e.target.closest("#xferLoad");
+    if(ld){ const v=document.getElementById("xferIn").value;
+      if(importCode(v)){ renderAll(); show("trophies","transfer"); const st=document.getElementById("xferStatus"); if(st) st.textContent="Loaded. Your ticks now match the other device."; }
+      else document.getElementById("xferStatus").textContent="That code didn't load. Copy it again from the other device and paste the whole thing.";
+      return; }
+    const jump=e.target.closest("a[data-jump]");
+    if(jump){ e.preventDefault(); const v=jump.dataset.view, id=jump.dataset.jump||null; closeSearch(); if(location.hash!=="#"+v){ pendingFocus=id; location.hash=v; } else show(v,id); }
+  });
+  const tg=document.getElementById("searchToggle"), panel=document.getElementById("searchPanel"), q=document.getElementById("q");
+  tg.addEventListener("click",()=>{ const open=panel.hidden; panel.hidden=!open; tg.setAttribute("aria-expanded",String(open)); if(open){ q.focus(); } });
+  q.addEventListener("input",()=>doSearch(q.value));
+  q.addEventListener("keydown",e=>{ if(e.key==="Escape") closeSearch(); });
+  window.addEventListener("hashchange",()=>{ show(currentView(), pendingFocus); pendingFocus=null; });
+}
+let pendingFocus=null;
+function closeSearch(){ const panel=document.getElementById("searchPanel"); panel.hidden=true; document.getElementById("searchToggle").setAttribute("aria-expanded","false"); }
+
+function start(data){
+  loadStore(); migrateTicks();
+  if(data && data.run) state.run=data.run;
+  renderTabs(); renderAll(); buildIndex(); wire();
+  setRun(state.run);
+  show(currentView());
+}
+if(window.claude && window.claude.hot && window.claude.hot.snapshot){ try{ window.claude.hot.snapshot(()=>({run:state.run})); }catch(e){} }
+(window.claude && window.claude.hot && window.claude.hot.ready) ? window.claude.hot.ready(start) : start((window.claude && window.claude.hot && window.claude.hot.data) || {});
+</script>
+</body>
+</html>
