@@ -309,6 +309,8 @@ footer.foot{max-width:1040px;margin:0 auto;padding:0 16px 40px;color:var(--muted
 .hackcard,#transfer,.call,.trophy,.dlg,.ev,.tm,.review,details.shift,.checks li,#downtime,#levels{scroll-margin-top:150px}
 .hackcard.done .call-name{text-decoration:line-through;text-decoration-color:var(--muted)}
 .hk-when{font-size:.875rem;color:var(--muted);margin-top:4px}
+.hk-timer{font-size:.8125rem;font-weight:700;color:var(--accent-ink);margin-top:4px}
+.hk-timer.no{color:var(--muted);font-weight:600}
 .codes{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .code{font:700 .8125rem/1 var(--mono);padding:7px 9px;border-radius:7px;background:var(--ink);color:var(--surface);letter-spacing:.02em}
 .code .arrows{font-size:1rem;margin-left:6px;letter-spacing:.12em}
@@ -532,8 +534,8 @@ const TROPHIES = [
  {n:"Overkill", g:"B", d:"Covered the Entire Graph on a Single Call", h:"Ep 1 tutorial: fill all 4 slots of Chase El Diabolito with Pom Pom, Brickhouse, Equilibrium and Brainbook.", w:"Run 1 · Ep 1", p:"r1", ep:"ep1"},
  {n:"Modded", g:"B", d:"Reached all bonuses and successfully avoid all failures", h:"In one shift, clear every 2x-XP stat threshold and never trip an auto-fail threshold. Only the Ep 6, 7 and 8 shifts count. Ep 7 is the recommended shift.", w:"Run 1 · Ep 7", p:"r1", ep:"ep7"},
  {n:"Phoenixes Down", g:"B", d:"Healed the Same Hero Twice in a Shift", h:"Malevola heals the hero she's sent with. Get the same injured hero healed by her twice in one shift.", w:"Run 1 or 2", p:"any", ep:"cleanup"},
- {n:"Time's Running Out", g:"B", d:"Completed a Hacking Level With less than 5 Seconds Left", h:"On a timed hack, wait on the last move and finish with under 5 s left.", w:"Any", p:"any", ep:"hacks"},
- {n:"Burning Chrome", g:"B", d:"Completed a Hacking Level With at least a third of the Timer Left", h:"Finish a timed hack fast (Ep 2 Cray Cray Bidet or Museum Robbery).", w:"Any · Ep 2", p:"any", ep:"hacks"},
+ {n:"Time's Running Out", g:"B", d:"Completed a Hacking Level With less than 5 Seconds Left", h:"On a hack with a countdown, wait on the exit node and finish with 5 s or less left. Hacks without a countdown, like Cray Cray Bidet, can't count.", w:"Any", p:"any", ep:"hacks"},
+ {n:"Burning Chrome", g:"B", d:"Completed a Hacking Level With at least a third of the Timer Left", h:"Finish a hack that has a countdown with at least a third of it left. First chance: Ep 2's Museum Robbery (71 s: finish with 24 s or more left), then the Granny's Donuts sprinklers hack (85 s: 29 s left). Cray Cray Bidet has no countdown, so it can't count.", w:"Any · Ep 2", p:"any", ep:"hacks"},
  {n:"Min Max", g:"B", d:"Upgraded a Stat to 10", h:"Pour points into one stat until it hits 10. Golem's Found Himself respec makes this instant.", w:"Run 1 · Ep 4", p:"r1", ep:"ep4"},
  {n:"From Zero To Hero", g:"B", d:"Maxed Out a Hero", h:"Get one hero to the max level (10). With this guide's sends Invisigal gets there first, during Ep 5's blackout shift (Run 1); the level-up lines in the call lists show where.", w:"Run 1", p:"r1", ep:"heroes"}
 ];
@@ -558,21 +560,21 @@ const EPISODES = [
   src:[["Into Indie missions guide","https://intoindiegames.com/walkthroughs/tips-tricks/dispatch-complete-missions-guide/"],["Gamepressure Ep 1","https://www.gamepressure.com/newsroom/dispatch-episode-1-walkthrough-and-choices-guide/z6892c"],["T-Pose Gaming","https://tposegaming.com/dispatch-achievement-and-trophy-guide/"],["Steam missions guide","https://steamcommunity.com/sharedfiles/filedetails/?id=3591755863"]]
 },
 { id:"ep2", num:2, title:"Onboard", key:"Shift Was Lit · Nailed It · donut",
-  lead:"One shift (Scene 7) of 12 calls plus a hack. Clear it with zero failures for Shift Was Lit, Nailed It and Burning Chrome, and reveal half the heroes' powers.",
+  lead:"One shift (Scene 7) of 12 calls plus a hack. Clear it with zero failures for Shift Was Lit and Nailed It, get Burning Chrome on the Museum Robbery hack, and reveal half the heroes' powers.",
   facts:[["Run 1","Nailed It, Shift Was Lit, Burning Chrome, \"You gonna eat those twinks?\", donut trophy if your pick is least popular"],["Run 2","Snake Eyes"],["Hacks","Cray Cray Bidet, Museum Robbery, two Granny's Donuts hacks"]],
   shifts:[{t:"Shift 1 · Shift Was Lit", intro:"Send in this order as calls appear. If any call fails, quit to the main menu and restart the shift.", calls:[
     {n:"Lost Balloon", s:1, st:[1,1,3,2,1], send:"Flambae alone", r2:"Coupé alone (72%) for Snake Eyes. Reload until it fails", note:"100% = Nailed It. Also reveals Flambae's On Fire power. Before sending, drag Golem into the slot to reveal his power, then swap in Flambae: Golem is still out later when the guide used to do this.", tags:[["trophy","Nailed It"],["trophy","Snake Eyes (Run 2)"]]},
     {n:"VAND-GO Opening", s:1, st:[1,1,1,3,3], send:"Sonar (hybrid form)", note:"100%. He transforms on the way back, revealing his power."},
-    {n:"Cray Cray Bidet", send:"Hack", note:"Tutorial hack.", tags:[["hack","Hack"]]},
-    {n:"Fight at Crypto-Night", s:3, send:"Prism alone", pick:"Badass sounding names", note:"Her special option, auto-success."},
+    {n:"Cray Cray Bidet", send:"Hack", note:"Tutorial hack. It has no countdown, so it can't give Burning Chrome or Time's Running Out.", tags:[["hack","Hack"]]},
+    {n:"Fight at Crypto-Night", s:3, send:"Prism alone", pick:"Give them the idol makeover", note:"Prism's own option: it always succeeds. \"Suggest badass sounding names\" is a Charisma 3 check, not her option."},
     {n:"Retrieve Stolen Boat", s:1, st:[1,2,3,1,2], send:"Invisigal alone", note:"Reveals Lone Wolf. +1 mentor score."},
-    {n:"Museum Robbery", s:2, send:"Punch Up", pick:"Hack into the system", note:"Missable story hack: the hack decides the outcome, so the hero doesn't matter. Punch Up is the one hero with nothing else to do; Coupé must stay free for Apprehend Art Thieves. Finish with a third of the timer left for Burning Chrome.", tags:[["hack","Hack"],["trophy","Burning Chrome"]]},
-    {n:"Blaze in the Burbs", s:1, send:"Golem", pick:"Use your body to smother the flames", note:"Never Flambae. A failure spawns Bigger Blaze in the Burbs."},
+    {n:"Museum Robbery", s:2, send:"Punch Up", pick:"Hack into the system", note:"Missable story hack: the hack decides the outcome, so the hero doesn't matter. Punch Up is the one hero with nothing else to do; Coupé must stay free for Apprehend Art Thieves. Its hack has a 71 s countdown: finish with 24 s or more left for Burning Chrome.", tags:[["hack","Hack"],["trophy","Burning Chrome"]]},
+    {n:"Blaze in the Burbs", s:1, send:"Golem", pick:"Use your body to smother the flames", note:"A Vigor 4 check. Never Flambae: the game files set his own option to fail. A failure spawns Bigger Blaze in the Burbs."},
     {n:"In the Zone", s:1, st:[1,1,1,4,4], send:"Prism", note:"Charisma + Intellect. Prism is still on Crypto Night when this appears. It stays open 20 s and she's usually back in about 15 s, so wait for her."},
     {n:"Apprehend Art Thieves", s:2, st:[2,1,5,2,4], send:"Coupé + Flambae", note:"Covers the whole graph. Coupé in slot 1 or 2 reveals En Pointe. Invisigal is still out on the boat call here, so she can't go. Flambae gets back from Lost Balloon a few seconds after this appears: wait for him."},
-    {n:"Security call", s:1, send:"Sonar (pick \"Send Sonar As Security\")", pick:"Tell a story", note:"Sonar bonus XP."},
-    {n:"Juvenile Pickpocket At Large", s:1, send:"Malevola", pick:"Her special option", note:"Or Punch Up with \"Pep talk\"."},
-    {n:"Locate Stolen Art", s:2, send:"Invisigal", pick:"Take down the thieves, not the art", note:"Auto-success. Coupé is still on Art Thieves until after this closes. Invisigal is back from the boat call about 10 s after this appears and it stays open 20 s: wait for her."},
+    {n:"Security call", s:1, send:"Sonar (pick \"Send Sonar As Security\")", pick:"Make it relatable. Tell a story.", note:"Sonar bonus XP. A Charisma 1 check, so it always passes."},
+    {n:"Juvenile Pickpocket At Large", s:1, send:"Malevola", pick:"Scare the kid straight", note:"Malevola's own option (Sonar has it too): it always succeeds. Or Punch Up with \"Give him a pep talk\" (a Charisma 3 check)."},
+    {n:"Locate Stolen Art", s:2, send:"Invisigal", pick:"Get the paintings out — quietly", note:"Invisigal's own option: it always succeeds. \"Take down the thieves. Not the art.\" is Coupé's option. Coupé is still on Art Thieves until after this closes. Invisigal is back from the boat call about 10 s after this appears and it stays open 20 s: wait for her."},
     {n:"Granny's Donuts", send:"Invisigal (automatic)", note:"Donut pick + two hacks: see story choices.", tags:[["save","SAVE POINT"],["hack","2 hacks"]]}
   ]}],
   notes:[
@@ -601,8 +603,8 @@ const EPISODES = [
     ]},
     {t:"Shift 2", calls:[
       {n:"Personal Shopper", s:1, st:[4,4,2,1,2], send:"Golem", note:"Only available if you gave him the chair."},
-      {n:"Line Cutter", s:2, send:"Prism alone", pick:"Her special option", note:"Auto-win."},
-      {n:"Ritualistic Solicitation", s:2, send:"Sonar (hybrid) + Malevola", pick:"Free (Malevola's special)"},
+      {n:"Line Cutter", s:2, send:"Prism alone", pick:"Show her real star power", note:"Prism's own option: auto-win."},
+      {n:"Ritualistic Solicitation", s:2, send:"Sonar (hybrid) + Malevola", pick:"Persuade them to leave", note:"Malevola's own option: it always succeeds. \"Free their minds\" is a Charisma 5 check, not her option."},
       {n:"Underground Fighting Ring", s:3, st:[7,7,3,3,1], send:"Flambae (slot 1) + Prism (slot 2) + Punch Up", note:"Prism copies Flambae, which reveals Prism's power."},
       {n:"Personal Security", s:2, st:[5,5,1,2,1], send:"Sonar (bat) + Malevola", note:"Synergy."},
       {n:"Fight in the Tournament", s:1, send:"Punch Up", pick:"Tough it out (Vigor 5)", note:"200% XP. Skip Shut Down Tournament."},
@@ -611,7 +613,7 @@ const EPISODES = [
       {n:"Debate the Bone Zone", s:2, st:[2,1,1,7,5], send:"Sonar (hybrid) + Malevola", note:"Charisma 7 / Intellect 5."},
       {n:"Hero Training", s:1, send:"Invisigal → Wolf Pack", r2:"Flambae → Supernova", note:"Wolf Pack doubles XP on calls she's on, and Blazer's training is worth +5 mentor. Training #1 of 4 for Power Trip.", tags:[["train","Training #1"]]},
       {n:"Lightningstruck Strikes Again", s:4, st:[8,8,7,1,5], send:"Punch Up + Sonar (bat) + Prism (+ Flambae)", note:"Backup Overkill spot."},
-      {n:"Bank Robbery", s:3, send:"Golem", r2:"Golem + Coupé", pick:"The hack", note:"Locks: Right; Right ×3; Down, Right, Down, Right, Up, Right, Up.", tags:[["hack","Hack"]]}
+      {n:"Bank Robbery", s:3, send:"Golem", r2:"Golem + Coupé", pick:"Trap the robbers inside the vault (the hack)", note:"Locks: Right; Right ×3; Down, Right, Down, Right, Up, Right, Up. 85 s countdown: finish with 29 s or more left for Burning Chrome.", tags:[["hack","Hack"],["trophy","Burning Chrome"]]}
     ]}
   ],
   notes:["**Getting to Know Yous** should pop once Prism (Fighting Ring), Malevola (healing Coupé) and Punch Up (his first injury, usually from Beach Clean Up) are revealed. Coupé and Sonar must be revealed before the cut.","**Upgrades:** keep feeding Sonar's Charisma/Intellect, Punch Up's Vigor and Invisigal's Mobility. Give Golem Vigor."],
@@ -623,11 +625,11 @@ const EPISODES = [
   shifts:[
     {t:"Shift 1", intro:"The cut hero's friend storms off partway through: Punch Up in Run 1, Malevola in Run 2.", calls:[
       {n:"Moving Away", s:1, st:[1,4,4,2,2], send:"Flambae", note:"Vigor + Mobility."},
-      {n:"Send Malevola", s:2, only:1, send:"Sonar (hybrid) + Malevola", note:"Run 1 only. Auto-win with Sonar along."},
+      {n:"Send Malevola", s:2, only:1, send:"Sonar (hybrid) + Malevola", pick:"Review their tax documents", note:"Run 1 only. Sonar's own option, so it always succeeds."},
       {n:"Join the Cult", s:2, only:2, send:"Punch Up", pick:"Power (Vigor 6)", note:"Run 2 only."},
       {n:"Car Drives Off Cliff", s:3, send:"Flambae", pick:"Fly", note:"A flyer auto-wins."},
       {n:"Brawl at the Football Game", s:3, st:[8,8,4,2,3], send:"Invisigal + Punch Up + Golem", r2:"Coupé + Punch Up + Golem", note:"Run 1: +1 mentor."},
-      {n:"Nostalgically Yours", s:3, send:"Flambae", pick:"The Wolves Inside Us"},
+      {n:"Nostalgically Yours", s:3, send:"Flambae", pick:"The Wolves Inside Us, then Incinerate the bomb and the game", note:"The right title leads to the bomb, where Flambae's own option always succeeds."},
       {n:"Moving In", s:2, st:[1,4,6,2,2], send:"Sonar (bat) + Malevola", note:"Synergy, and the usual Work Spouse pop (Run 1).", tags:[["trophy","Work Spouse"]]},
       {n:"Substitute Teacher", s:3, st:[6,5,5,1,3], send:"Invisigal + Golem", note:"Synergy."},
       {n:"Demolition", s:3, st:[10,10,2,1,1], send:"Flambae (slot 1) + Prism (slot 2) + Golem", note:"Prism copies Flambae."},
@@ -645,7 +647,7 @@ const EPISODES = [
       {n:"Stop the Assassination", s:4, st:[10,6,10,1,3], send:"Fool's Luck: Waterboy alone (about 7%)", r2:"Flambae + Coupé + Golem + Phenomaman", note:"If he fails, quit to the main menu and restart Scene 8. The win also unlocks the Discern the Target hack. If you skip the farm, send Flambae + Invisigal + Golem + Waterboy.", tags:[["trophy","Fool's Luck"],["save","SAVE POINT"]]},
       {n:"Hero Training", s:1, send:"Golem → Found Himself", r2:"Prism → Perfect Copy", note:"Then respec Golem right away with 10 in one stat for Min Max. A Second Wind item takes him off rest.", tags:[["train","Training #3"],["trophy","Min Max"]]},
       {n:"Subscriber Recruitment Day", s:1, st:[1,1,1,5,2], send:"Prism", note:"Charisma 5."},
-      {n:"I Need A Hero", s:1, send:"Malevola", pick:"Her special option", note:"Auto-win."},
+      {n:"I Need A Hero", s:1, send:"Malevola", pick:"Pull tactics from previous seasons", note:"Malevola's own option: auto-win."},
       {n:"Mascot Match-Up", s:2, st:[4,4,2,4,1], send:"Flambae + Golem"},
       {n:"Discern the Target", send:"Hack", note:"Lock: Left, Left, Up, Right, Right, Down.", tags:[["hack","Hack"]]},
       {n:"Assassination Takedown", s:3, st:[9,4,4,1,7], send:"Flambae + Prism + Malevola", note:"100%."},
@@ -665,9 +667,9 @@ const EPISODES = [
   shifts:[
     {t:"Shift 1", calls:[
       {n:"Talent of Torrance", s:2, st:[1,3,2,6,3], send:"Prism + Malevola", note:"Charisma pair."},
-      {n:"Rescue Transit Workers", s:4, need:"Speed 5 / Survey 6", send:"Golem (or Punch Up)", pick:"His special option"},
+      {n:"Rescue Transit Workers", s:4, need:"Speed M9 / Survey I6", send:"Golem (or Punch Up)", pick:"Squeeze through, clear a path", note:"Golem's and Punch Up's own option: it always succeeds."},
       {n:"Talent of Torrance Throwdown", s:2, st:[1,3,2,10,3], send:"Prism + Malevola", note:"Your two best Charisma heroes."},
-      {n:"Aliens Among Us", s:1, need:"Improvise 4 / Enlighten 5", send:"Sonar (hybrid)", r2:"Phenomaman (auto-win)", pick:"Enlighten"},
+      {n:"Aliens Among Us", s:1, need:"Improvise C5 / Enlighten I5", send:"Sonar (hybrid)", r2:"Phenomaman: his own option, \"Tell them about Urgot-52dc\", auto-wins", pick:"Enlighten them about life on Planet 424", note:"An Intellect 5 check."},
       {n:"Hero Training", s:1, send:"Prism → Perfect Copy", r2:"Coupé → À la Seconde", note:"Her copies now get full stats.", tags:[["train","Training #4"],["trophy","Power Trip"]]},
       {n:"Stalker Stalking Film Shoot", s:2, need:"All stats", send:"Hack (delete his files)", note:"Locks: Left, Right, Right, then Right, Right, Left, Left. Three antiviruses: charge at an electric node and zap all three within 15 s.", tags:[["hack","Hack"],["trophy","Anti-Antivirus Club"]]},
       {n:"Anti-Bullying Seminar", s:3, st:[2,4,3,8,4], send:"Prism + Malevola + Punch Up", note:"Charisma heavy."},
@@ -680,15 +682,15 @@ const EPISODES = [
       {g:"Start", n:"Lost Pet", s:2, st:[1,1,6,5,3], send:"Invisigal + Malevola", r2:"Coupé + Malevola", note:"Run 1: +1 mentor."},
       {g:"Start", n:"3 substation hacks", send:"Hack", note:"Central lock: Up, Left, Right. The last one is an antivirus-zapping hack, another Anti-Antivirus Club chance.", tags:[["hack","3 hacks"]]},
       {g:"West", n:"Power Outage Looting", s:3, st:[8,8,6,1,1], send:"Flambae + Golem + Punch Up"},
-      {g:"West", n:"Missing Teens", s:2, need:"Cool 6 / Lecture 6", send:"Malevola", note:"Auto-win; search the beach."},
+      {g:"West", n:"Missing Teens", s:2, need:"Cool 6 / Lecture 6", send:"Malevola", note:"Pick \"Search the beach\": pass or fail, it leads to the lifeguard tower, where Malevola's own \"Shove them through a portal\" always succeeds."},
       {g:"West", n:"Multi-Car Pile-Up", s:3, st:[2,8,8,1,4], send:"Golem + Invisigal + Sonar (hybrid)", r2:"Golem + Coupé + Phenomaman"},
       {g:"West", n:"The Wheelies", s:2, need:"Mobility + Intellect", send:"Invisigal + Sonar (hybrid)", r2:"Coupé + Prism", note:"Bonus line on Mobility.", x:"bonus"},
       {g:"Central", n:"Evacuation Assistance", s:2, st:[1,1,6,6,3], send:"Prism + Invisigal", r2:"Prism + Coupé", note:"Intellect over 3 = double XP.", x:"bonus"},
       {g:"Central", n:"Thwart Graffiti Vandals", s:1, st:[2,1,6,1,2], send:"Invisigal alone", r2:"Coupé alone", note:"Run 1: Lone Wolf speed, +1 mentor."},
       {g:"Central", n:"Stabilize Experiment", s:4, need:"Combat under 5 or auto-fail · V6 M9 I10", send:"Sonar (hybrid) + Invisigal + Waterboy (+ Malevola)", r2:"Malevola + Prism (no Combat 5+)", note:"Nobody with Combat 5+. Very hard.", x:"trap"},
       {g:"Central", n:"Hero Training", s:1, send:"Flambae → Supernova", r2:"Phenomaman → Heavily Medicated", tags:[["train","Training #5"]]},
-      {g:"Central", n:"VANDLABS Robbery", s:4, send:"Sonar", r2:"Coupé or Phenomaman", note:"Auto-win."},
-      {g:"East", n:"Ground Team Rescue (not Air)", s:3, need:"Catch 10", send:"Malevola + Prism", pick:"Their special options"},
+      {g:"Central", n:"VANDLABS Robbery", s:4, send:"Sonar", r2:"Coupé or Phenomaman", pick:"Fly the serum into the ocean", note:"Sonar's own option (Coupé and Phenomaman have it too): auto-win."},
+      {g:"East", n:"Ground Team Rescue (not Air)", s:3, need:"Catch 10", send:"Malevola + Prism", pick:"Give them a light (Prism) or Open portal, force water landing (Malevola)", note:"Both are their own options and always succeed."},
       {g:"East", n:"Repairs Required", s:2, need:"Combat under 6 or auto-fail · V8 M9 I7", send:"Sonar (hybrid) + Invisigal", r2:"Malevola + Prism", x:"trap"},
       {g:"East", n:"Senior Home Check-Up", s:3, st:[1,2,6,6,8], send:"Sonar (hybrid) + Prism + Invisigal", r2:"Coupé + Prism + Malevola"},
       {g:"East", n:"Super Tantrum", s:2, need:"Combat 8+ = double XP · Vigor/Charisma", send:"Flambae + Prism", note:"Synergy.", x:"bonus"},
@@ -703,11 +705,11 @@ const EPISODES = [
   facts:[["Trophies","Anti-Antivirus Club if still missing (the safe hack is full of antiviruses)"],["Hacks","Cyberbully + the five heist hacks"],["Note","In Run 1, Flambae sits out this shift because you revealed you're Mecha Man"]],
   shifts:[{t:"The shift", calls:[
     {n:"On Standby", s:1, st:[1,1,4,3,1], send:"Sonar (hybrid) or Malevola", r2:"Malevola", note:"Easy."},
-    {n:"Cat Sitter Wanted", s:4, send:"Golem", note:"Auto-win."},
+    {n:"Cat Sitter Wanted", s:4, send:"Golem", pick:"Make a new friend", note:"Golem's own option: auto-win."},
     {n:"Housekeeping", s:1, st:[1,1,5,5,1], send:"Malevola", note:"Charisma over 5 = double XP.", x:"bonus"},
     {n:"Cyberbully", send:"Hack", note:"Lock: Up, Up, Down, Left, Right, Left. Lure the antivirus into a loop first.", tags:[["hack","Hack"]]},
     {n:"#1 Phenoma-Fan", s:3, st:[7,7,4,1,1], send:"Golem + Punch Up + Waterboy", r2:"Phenomaman + Golem + Punch Up"},
-    {n:"Haunting on Cravens Ave", s:2, send:"Malevola", note:"Auto-win."},
+    {n:"Haunting on Cravens Ave", s:2, send:"Malevola", pick:"Phone a friend", note:"Malevola's own option: auto-win."},
     {n:"Roast of Mayor Yao", s:2, need:"Charisma + Intellect", send:"Prism + Sonar (hybrid)", r2:"Prism + Coupé"},
     {n:"Red Alert", s:4, st:[10,10,8,1,7], send:"Golem + Punch Up + Invisigal + Sonar", r2:"Phenomaman + Golem + Punch Up + Coupé", note:"Intellect over 7 = double XP.", x:"bonus"},
     {n:"Hero Training", s:1, need:"All stats", send:"Malevola → Portal Ritual", tags:[["train","Training #6"]]},
@@ -715,7 +717,7 @@ const EPISODES = [
     {n:"Yachtie Afterparty", s:4, st:[7,8,8,1,4], send:"Golem + Punch Up + Invisigal + Sonar", r2:"Golem + Punch Up + Coupé + Phenomaman"},
     {n:"Delivery Bots", s:3, need:"Vigor + Mobility", send:"Golem + Invisigal + Waterboy", r2:"Golem + Coupé + Phenomaman"},
     {n:"Break the Ice / Melt the Ice", s:4, send:"Break the Ice: Golem + Punch Up + Sonar + Invisigal", r2:"Flambae alone on Melt the Ice (200% XP)"},
-    {n:"Sewer Surveyance", s:4, send:"Sonar", r2:"Prism", pick:"Run 2: Kindness", note:"Sonar auto-wins."},
+    {n:"Sewer Surveyance", s:4, send:"Sonar", r2:"Prism", pick:"Find common ground as hybrids (Run 2 with Prism: Win them over with kindness)", note:"Sonar's own option auto-wins. Kindness is a Charisma 8 check."},
     {n:"Shipment Down", s:3, st:[1,8,8,1,3], send:"Golem + Invisigal + Sonar (hybrid)", r2:"Golem + Coupé + Phenomaman", note:"Intellect over 3 = double XP.", x:"bonus"},
     {n:"Reprogram the Bots", s:2, need:"Combat under 4 or auto-fail · M6 I10", send:"Sonar (hybrid) + Waterboy", r2:"Malevola + Invisigal (if both Combat under 4)", note:"Nobody with Combat 4+. A failure spawns Destroy the Bots.", x:"trap"}
   ]}],
@@ -729,16 +731,16 @@ const EPISODES = [
   shifts:[{t:"The shift (Run 1 roster: Sonar kept, Waterboy recruited)", calls:[
     {n:"Beached Whales", s:3, st:[1,10,8,1,1], send:"Flambae + Golem", r2:"Phenomaman + Golem", note:"Hard Vigor/Mobility."},
     {n:"Land Slip'n'Slide", s:3, need:"Knock 5 / Endure 5 · Intellect 7+ bonus", send:"Invisigal + Sonar (hybrid) + Golem", r2:"Coupé + Prism + Golem", note:"The Intellect hero gets the bonus.", x:"bonus", tags:[["trophy","Modded"]]},
-    {n:"Up-Chuck", s:4, send:"Punch Up alone", note:"His special auto-wins. Golem's option often refuses."},
+    {n:"Up-Chuck", s:4, send:"Punch Up alone", pick:"I know this guy", note:"Punch Up's own option: auto-win. Golem's own option (\"Absorb the acid\") also always succeeds."},
     {n:"Runaway Car", send:"Hack", note:"Lock: Left, Right, Right, Left. Bait the 3 antiviruses near the coils.", tags:[["hack","Hack"]]},
     {n:"Self-Sabotage", s:3, st:[1,10,4,8,1], send:"Sonar + Flambae + Waterboy", r2:"Coupé + Flambae + Phenomaman", note:"If Golem goes he gets hurt; Malevola along heals him (a Phoenixes Down chance)."},
     {n:"Farmers Market Attack", s:2, st:[6,8,5,3,1], need:"Plus an auto-fail X (Into Indie puts it on Vigor, Gamepressure on Combat)", send:"Punch Up + Prism", note:"Don't let anyone cross the X.", x:"trap", tags:[["trophy","Modded"]]},
     {n:"Rescue Bone Zone", s:3, need:"Combat 8+ bonus · V8 M2 Ch4", send:"Malevola + Golem + Waterboy", r2:"Malevola + Golem + Phenomaman", note:"Add Flambae for the Combat bonus if Golem's Combat is under 8.", x:"bonus", tags:[["trophy","Modded"]]},
-    {n:"Polarizing Interview", s:1, need:"Facts 8 / Over-hype 8", send:"Sonar", r2:"Prism (Over-hype)", note:"Sonar auto-wins."},
+    {n:"Polarizing Interview", s:1, need:"Facts 8 / Over-hype 8", send:"Sonar", r2:"Prism (Over-hype)", pick:"Talk up the reformed villains", note:"Sonar's own option: auto-win."},
     {n:"Training", s:1, send:"Punch Up → Squeeze In", note:"He can add himself to any call with fewer than 4 slots.", tags:[["train","Training #7"]]},
     {n:"Running Late", s:2, need:"M10 · Charisma 7+ bonus", send:"Invisigal + Prism (or Malevola)", r2:"Coupé + Prism", note:"Charisma 7+ hero for the bonus.", x:"bonus", tags:[["trophy","Modded"]]},
     {n:"Go All Out (not Play It Safe)", s:4, need:"Combat 8+ bonus · V10 M10 Ch6", send:"Sonar (bat) + Flambae + Punch Up + Golem", r2:"Phenomaman + Flambae + Punch Up + Golem", note:"More XP than Play It Safe.", x:"bonus", tags:[["trophy","Modded"]]},
-    {n:"The Floodening", s:3, need:"Fetch M10 / Examine I8", send:"Invisigal + Sonar (hybrid)", r2:"Coupé + Prism", note:"Not Waterboy's special: it fails the call."},
+    {n:"The Floodening", s:3, need:"Fetch M10 / Examine I8", send:"Invisigal + Sonar (hybrid)", r2:"Coupé + Prism", note:"Not Waterboy's own option: the game files set it to fail the call."},
     {n:"Fire in the Rain", s:1, need:"V10 M10 · Charisma 7+ bonus", send:"Invisigal + Punch Up via Squeeze In", r2:"Phenomaman + Punch Up via Squeeze In", note:"Add a Charisma 7+ hero if a slot allows.", x:"bonus", tags:[["trophy","Modded"]]}
   ]}],
   notes:["**Run 2 roster** (Coupé kept, Phenomaman, Invisigal benched): Coupé replaces Sonar on Mobility/Intellect, Phenomaman takes Beached Whales, Go All Out and Fire in the Rain, and Sonar's auto-wins become normal stat checks."],
@@ -768,11 +770,11 @@ const EPISODES = [
     {g:"Phase 1 · Golem, Prism, Punch Up only", n:"First rescue", s:2, st:[1,3,8,1,1], send:"Flambae + Malevola", note:"The easier rescue."},
     {g:"Phase 1 · Golem, Prism, Punch Up only", n:"Second rescue", s:2, st:[1,6,9,1,1], send:"Flambae + the hero you just saved", note:"Invisigal joins after this if you defended her."},
     {g:"Phase 1 · Golem, Prism, Punch Up only", n:"Sewer Bomb #1", s:2, st:[1,5,1,1,8], send:"Sonar (hybrid)", r2:"Coupé + Prism"},
-    {g:"Phase 1 · Golem, Prism, Punch Up only", n:"Help Sweetalker", s:2, need:"8 in the stat you pick", send:"Sonar", r2:"Coupé (combat training)", pick:"Red Ring Roast"},
+    {g:"Phase 1 · Golem, Prism, Punch Up only", n:"Help Sweetalker", s:2, need:"Speech C8", send:"Sonar", r2:"Coupé (combat training)", pick:"Ease nerves with a Red Ring Roast", note:"Sonar's own option: auto-win. Coupé's combat training is hers."},
     {g:"Phase 2 · Phenomaman joins", n:"The Summoning", s:4, st:[8,9,10,1,1], send:"Sonar + Malevola + Invisigal + Golem", r2:"Phenomaman + Malevola + Golem + Flambae", note:"Synergy pair inside."},
     {g:"Phase 2 · Phenomaman joins", n:"Escape Artist", s:3, st:[2,8,6,3,3], send:"Flambae + Prism", note:"Synergy."},
     {g:"Phase 2 · Phenomaman joins", n:"Boom!", s:2, st:[1,8,6,1,3], send:"Golem + Waterboy", r2:"Golem + Coupé"},
-    {g:"Phase 2 · Phenomaman joins", n:"Witch Hunt", s:4, send:"Phenomaman", note:"His special auto-wins."},
+    {g:"Phase 2 · Phenomaman joins", n:"Witch Hunt", s:4, send:"Phenomaman", pick:"You know them right?", note:"Phenomaman's own option: auto-win."},
     {g:"Phase 2 · Phenomaman joins", n:"Return of the Kaiju", s:4, need:"10s across the board", send:"Golem + Punch Up + Phenomaman + Flambae", pick:"Attack (Combat) or Break the collar (Vigor)", note:"Golem gets an extra option if he adopted the baby kaiju."},
     {g:"Phase 2 · Phenomaman joins", n:"Lockdown", send:"Hack", note:"Electricity routing, 2 charges, no enemies.", tags:[["hack","Hack"]]},
     {g:"Phase 3 · boss attacks begin", n:"Attack Coupé #1", s:2, st:[8,7,10,7,8], send:"Phenomaman + Flambae", r2:"Attack Sonar #1: Phenomaman + Flambae", note:"Start chipping the boss bar.", tags:[["trophy","Protect LA"]]},
@@ -788,10 +790,10 @@ const EPISODES = [
     {g:"Phase 4 · the city opens up", n:"Attack Coupé #2–#4", s:2, need:"Charisma over 6 auto-fails · C8 V7 M10 I7", send:"Phenomaman + Flambae", r2:"Attack Sonar: Phenomaman + Flambae", note:"No Prism or Malevola.", x:"trap", tags:[["trophy","Protect LA"]]},
     {g:"Phase 4 · the city opens up", n:"Atomic Automatons", s:3, st:[8,8,7,1,1], send:"Golem + Punch Up + Flambae"},
     {g:"Phase 4 · the city opens up", n:"We Meet Again", s:2, st:[1,3,1,8,1], send:"Prism + Malevola"},
-    {g:"Phase 4 · the city opens up", n:"Entrapment", s:2, need:"Smart 8", send:"Sonar (hybrid)", r2:"Coupé"},
+    {g:"Phase 4 · the city opens up", n:"Entrapment", s:2, need:"Smart 8", send:"Sonar (hybrid)", r2:"Coupé", pick:"Get smart", note:"An Intellect 8 check."},
     {g:"Phase 4 · the city opens up", n:"Get to the Chopper", st:[1,7,10,7,6], send:"Invisigal + Prism + Sonar", r2:"Coupé + Prism + Malevola", note:"Vigor 8+ = 2x XP.", x:"bonus"},
     {g:"Phase 4 · the city opens up", n:"Help Equilibrium", s:4, st:[7,7,10,7,7], send:"Invisigal + Prism + Sonar + Golem", r2:"Coupé + Prism + Malevola + Golem"},
-    {g:"Phase 4 · the city opens up", n:"Sewer Bomb #3 (wires)", need:"Yellow = Intellect 3", send:"Sonar (hybrid)", r2:"Coupé", pick:"Yellow", note:"If it fails: Golem or Phenomaman auto-solve, or Run to the ocean (Mobility 8)."},
+    {g:"Phase 4 · the city opens up", n:"Sewer Bomb #3 (wires)", need:"Yellow = Intellect 1", send:"Sonar (hybrid)", r2:"Coupé", pick:"Yellow", note:"An Intellect 1 check, so any hero defuses it. Blue is the wrong wire: it opens a 10-second prompt where Phenomaman's or Golem's own option saves it, or Run it to the ocean (Mobility 8)."},
     {g:"Phase 4 · the city opens up", n:"Defeat Mindf*cker", send:"Hack", note:"Controls invert midway. Dodge the antivirus via the gap at the top right. Do this before the final Attack.", tags:[["hack","Last hack"]]},
     {g:"Phase 4 · the city opens up", n:"Hospital Takeover", s:3, st:[8,10,6,3,1], send:"Golem + Punch Up + Flambae", note:"Blazer joins after."},
     {g:"Phase 4 · the city opens up", n:"Return of the Delivery Bots", st:[7,7,5,1,8], send:"Sonar (hybrid) + Golem + Punch Up", r2:"Coupé + Golem + Punch Up", note:"Intellect 9+ = 2x XP.", x:"bonus"},
@@ -814,6 +816,7 @@ const RULES = [
   "**From Ep 5, check bonus and trap lines** before every send. Reach past a bonus line for 2x XP; never let a hero poke into an X.",
   "**Failed and missed calls both lower your career rank.** Keep failures near zero for Career Development. If a shift goes badly, quit to the main menu and replay it from its autosave.",
   "**Spend points** when a hero levels up: press the Touch Pad during a shift. Coffee and Second Wind items pull a hero off rest.",
+  "**Call choices** (read from the game files): an option tied to a hero needs that hero on the call and always succeeds, except Flambae's at Blaze in the Burbs and Waterboy's at The Floodening, which are set to fail. A stat option adds up that stat across every hero on the call and passes when the total reaches its number. There's no dice roll. Some failed checks open a second prompt instead of failing the call.",
   "**Slot tricks:** Prism copies the hero to her left into an empty slot. Coupé gets +1 Combat in slot 1 or +1 Mobility in slot 2. Golem shifts his stats on 2+ slot calls. With Squeeze In, Punch Up adds himself to any call with fewer than 4 slots."
 ];
 
@@ -859,152 +862,152 @@ const HACK_RULES = [
   "**Antivirus:** the red chaser. If it catches you, you lose an attempt. Bait it into loops, stay a node or two ahead, and trap it behind a toggled bridge.",
   "**Electricity (Ep 5 on):** pick up a charge (hold R2 on the node) and carry it to a lightbulb socket to power a path or reveal a code, or run it into an antivirus to destroy it. Charges can be moved and reused.",
   "**Attempts are limited** (2 before lockout in Ep 8). A lockout counts as a failed hack, so if it happens, quit to the main menu and reload the shift or scene. The hacking easy mode (unlimited lives) still counts toward H4ck3d in the current game files, but it switches off Burning Chrome and Time's Running Out, so leave it off.",
-  "**Burning Chrome:** finish any timed hack with at least a third of the timer left (Ep 2's short ones are ideal). **Time's Running Out:** on a timed hack you know well, wait on the final node and finish with 5 s or less left. The game reads the timer when the final node's button prompt completes; hacks without a real timer never count. **Anti-Antivirus Club:** kill three antiviruses yourself within any 15-second window (Ep 5 film shoot, Ep 5 East Torrance, Ep 6 safe). The antiviruses the game clears when a hack ends don't count."
+  "**Burning Chrome:** finish a hack that has a countdown with at least a third of it left. **Time's Running Out:** on a countdown hack you know well, wait on the exit node and finish with 5 s or less left. The game reads the countdown when the exit node's button prompt completes, so only hacks with both a countdown and an exit node count; each card below says which. Eleven hacks have no countdown, including Cray Cray Bidet, and Hack the Scammer and both Ep 8 tracker hacks end on the wave screen instead of an exit node. Ep 2's Museum Robbery is the first one that counts. **Anti-Antivirus Club:** kill three antiviruses yourself within any 15-second window (Ep 5 film shoot, Ep 5 East Torrance, Ep 6 safe). The antiviruses the game clears when a hack ends don't count."
 ];
 /* Each hack: ep, n, when, codes, steps, tip, vids [[label,url]], guides [GD keys], miss (missable trigger) */
 const HACKS = [
- {ep:1, n:"Shroud's hideout tablet", when:"Story, right after the hideout fight. Can't be missed.", codes:[], steps:[
+ {ep:1, tm:0, n:"Shroud's hideout tablet", when:"Story, right after the hideout fight. Can't be missed.", codes:[], steps:[
    "Activate the double-hammer node, go up, and download the spatial data from the node just off the path.",
    "Go back and re-activate the double-hammer node to open the lower branch. Download the spatial data there, then activate the single-hammer node at the end of that branch.",
    "Re-activate the double-hammer node once more, take the upper path, download the last spatial data, and step onto the final node."],
    tip:"No antivirus. This is where you learn the double-hammer toggle.", vids:[["Compilation 1 · 0:00",YT.comp+"&t=0s"]], guides:["tp1"]},
- {ep:2, n:"Cray Cray Bidet", when:"Ep 2 shift call (no hero needed).", codes:[], steps:[
+ {ep:2, tm:0, n:"Cray Cray Bidet", when:"Ep 2 shift call (no hero needed).", codes:[], steps:[
    "Activate the first hammer node and enter the arrows shown.",
    "At the double-hammer node, take the lower path and activate the bottom hammer node.",
    "Go back, re-activate the double-hammer node to finish the upper path, and activate the upper hammer node.",
    "Return to the double-hammer node without toggling it again and take the middle path to the exit."],
-   tip:"Short and safe: a good place for Burning Chrome.", vids:[["Compilation 1 · 1:00",YT.comp+"&t=60s"]], guides:["tp2"]},
- {ep:2, n:"Museum Robbery", when:"Ep 2 shift call: send Coupé or bat-form Sonar and pick \"Hack into the system\".", miss:true, codes:[], steps:[
+   vids:[["Compilation 1 · 1:00",YT.comp+"&t=60s"]], guides:["tp2"]},
+ {ep:2, tm:71, n:"Museum Robbery", when:"Ep 2 shift call: pick \"Hack into the system\" (any hero can).", miss:true, codes:[], steps:[
    "Go right at the crossroad and activate that node.",
    "Come back, take the left path down, and activate the double-hammer node.",
    "Go left and activate the node there.",
    "Return, re-activate the double-hammer node, and head right to the end."],
-   tip:"Finish fast for Burning Chrome.", vids:[["Compilation 1 · 1:44",YT.comp+"&t=104s"]], guides:["tp2"]},
- {ep:2, n:"Granny's Donuts: cameras", when:"Story call at the end of the Ep 2 shift, with Invisigal. Winning it raises the mentor score.", codes:["Up, Down, Left, Left"], steps:[
+   vids:[["Compilation 1 · 1:44",YT.comp+"&t=104s"]], guides:["tp2"]},
+ {ep:2, tm:0, n:"Granny's Donuts: cameras", when:"Story call at the end of the Ep 2 shift, with Invisigal. Winning it raises the mentor score.", codes:["Up, Down, Left, Left"], steps:[
    "Toggle the double-hammer node as you go: up to the first hammer node, back to toggle, down to the bottom hammer node, toggle again, then up and right.",
    "At the cluster of four nodes, activate the hammer node first, then the key node to see the code.",
    "Enter the code at the padlock node and go up to finish."],
    vids:[["Compilation 1 · 2:34",YT.comp+"&t=154s"]], guides:["tp2"]},
- {ep:2, n:"Granny's Donuts: sprinklers", when:"Straight after the cameras hack.", codes:["Up, Down, Left, Up"], steps:[
+ {ep:2, tm:85, n:"Granny's Donuts: sprinklers", when:"Straight after the cameras hack.", codes:["Up, Down, Left, Up"], steps:[
    "Go down at the crossroad, activate the double-hammer node, and visit the upper key node for the first half of the code.",
    "Toggle the double-hammer node and visit the lower key node for the second half.",
    "Toggle once more, go back to the first crossroad, enter both halves at the padlock, and finish."],
    vids:[["Compilation 1 · 2:34",YT.comp+"&t=154s"]], guides:["tp2"]},
- {ep:3, n:"Flambae's water tank", when:"Ep 3 Shift 1: send Flambae with any hero except Prism (Beach Clean Up always has a sabotage). When he's trapped, pick \"Unlock the tank\".", miss:true, codes:["Left, Down, Down"], steps:[
+ {ep:3, tm:0, n:"Flambae's water tank", when:"Ep 3 Shift 1: send Flambae with any hero except Prism (Beach Clean Up always has a sabotage). When he's trapped, pick \"Unlock the tank\".", miss:true, codes:["Left, Down, Down"], steps:[
    "Work through the single- and double-hammer nodes, toggling the double-hammer node to open each branch in turn.",
    "Reach the final padlock node and enter the code."],
    tip:"If Flambae never gets sabotaged, this hack never appears. It's the most commonly missed one.", vids:[["Compilation 1 · 3:38",YT.comp+"&t=218s"],["Ep 3 video",YT.e3]], guides:["tp3"]},
- {ep:3, n:"Hack the Scammer", when:"Ep 3 Shift 1: pick it instead of Investigate Tip.", miss:true, codes:[], steps:[
+ {ep:3, tm:105, wave:1, n:"Hack the Scammer", when:"Ep 3 Shift 1: pick it instead of Investigate Tip.", miss:true, codes:[], steps:[
    "Activate the hammer node, then the location marker to enter the node network.",
    "Watch the two waves at the bottom of the screen: they line up as you get closer.",
    "From the entry point, go down one node and left four to reach the scammer."],
    vids:[["Ep 3 video",YT.e3]], guides:["tp3"]},
- {ep:3, n:"Bank Robbery", when:"Ep 3 Shift 2 call: pick the hacking option.", miss:true, codes:["Down, Right, Right, Up","Right, Right, Up, Right","Down, Right, Down, Right, Up, Right, Up"], steps:[
+ {ep:3, tm:85, n:"Bank Robbery", when:"Ep 3 Shift 2 call: pick the hacking option.", miss:true, codes:["Down, Right, Right, Up","Right, Right, Up, Right","Down, Right, Down, Right, Up, Right, Up"], steps:[
    "Activate the first node, then enter the three sequences at the three hammer nodes in order. They're also shown on screen.",
    "Continue to the finish node."],
    tip:"No antivirus.", vids:[["Ep 3 video",YT.e3]], guides:["tp3"]},
- {ep:3, n:"Jewelry store: camera 1", when:"Story, end of Ep 3, with Invisigal. No mentor points for this one (cameras 2 and the master light are worth ±2).", codes:[], steps:[
+ {ep:3, tm:0, n:"Jewelry store: camera 1", when:"Story, end of Ep 3, with Invisigal. No mentor points for this one (cameras 2 and the master light are worth ±2).", codes:[], steps:[
    "Activate the first hammer node.",
    "The antivirus starts chasing once you activate the second hammer node: keep moving down the path without stopping.",
    "Activate one more hammer node just before the finish."],
    vids:[["Ep 3 video",YT.e3]], guides:["tp3"]},
- {ep:3, n:"Jewelry store: camera 2", when:"Straight after camera 1.", codes:[], steps:[
+ {ep:3, tm:0, n:"Jewelry store: camera 2", when:"Straight after camera 1.", codes:[], steps:[
    "Activate the lower hammer node, then the upper one.",
    "Let the antivirus see you, back off, and circle so it follows you around the loop. Don't go so fast that it turns back to meet you.",
    "When it's on the far side of the loop, sprint to the hammer node and activate it to get clear, then hit the last hammer node."],
    vids:[["Ep 3 video",YT.e3]], guides:["tp3"]},
- {ep:3, n:"Jewelry store: master light", when:"Straight after camera 2.", codes:[], steps:[
+ {ep:3, tm:0, n:"Jewelry store: master light", when:"Straight after camera 2.", codes:[], steps:[
    "Go as far down as you can and activate the first hammer node.",
    "Wait at the bottom of the loop until the slow antivirus is one or two nodes away.",
    "Circle around the other side and re-activate the hammer node to trap it.",
    "Head to the upper right and activate the final hammer node."],
    vids:[["Ep 3 video",YT.e3]], guides:["tp3"]},
- {ep:4, n:"Superhero Squabble in Aisle 9", when:"Ep 4 Shift 1 call: send Prism and pick the 4th option, \"Activate Sprinkler System\". Timed.", miss:true, codes:[], steps:[
+ {ep:4, tm:140, n:"Superhero Squabble in Aisle 9", when:"Ep 4 Shift 1 call: send Prism and pick the 4th option, \"Activate Sprinkler System\". Timed.", miss:true, codes:[], steps:[
    "Go up and right to the right double-hammer node. As the antivirus steps onto the right-hand nodes, re-toggle it to trap it there.",
    "Go left, use the other double-hammer node, and activate the first sprinkler.",
    "Re-trap the antivirus with the right double-hammer node (toggle when it's on the middle node, then again on the right nodes) and grab sprinkler 2.",
    "For the last sprinkler, trap it on the left side instead, then take the left path to sprinkler 3. The exit appears after the third."],
    tip:"It's all timing: watch the antivirus and toggle as it steps onto the nodes you want closed.", vids:[["Ep 4 video · 0:00",YT.e4+"&t=0s"]], guides:["tp4"]},
- {ep:4, n:"Discern the Target", when:"Ep 4 Shift 2: only appears if Stop the Assassination succeeds.", miss:true, codes:["Left, Left, Up, Right, Right, Down"], steps:[
+ {ep:4, tm:155, n:"Discern the Target", when:"Ep 4 Shift 2: only appears if Stop the Assassination succeeds.", miss:true, codes:["Left, Left, Up, Right, Right, Down"], steps:[
    "Go to the padlock node and enter the code.",
    "Back on the main path, go to its far left, then up and right.",
    "Activate the double-hammer node and continue to the finish."],
    tip:"No antivirus.", vids:[["Ep 4 video · 2:39",YT.e4+"&t=159s"]], guides:["tp4"]},
- {ep:5, n:"Stalker Stalking Film Shoot", when:"Ep 5 Shift 1 call: pick \"Delete all of his files\".", miss:true, codes:["Left, Right, Right","Right, Right, Left, Left"], steps:[
+ {ep:5, tm:152, n:"Stalker Stalking Film Shoot", when:"Ep 5 Shift 1 call: pick \"Delete all of his files\".", miss:true, codes:["Left, Right, Right","Right, Right, Left, Left"], steps:[
    "Two padlocks use the codes above, and three antiviruses patrol the board.",
    "Pick up an electric charge and zap the antiviruses as they come. Three kills within 15 s gives Anti-Antivirus Club."],
    tip:"The written guides don't break this one down step by step, so watch the Ep 5 video first.", vids:[["Ep 5 video",YT.e5]], guides:["ii5"]},
- {ep:5, n:"West Torrance substation", when:"Ep 5 Shift 2, after Lost Pet. No timer: rest your heroes before starting.", codes:[], steps:[
+ {ep:5, tm:0, n:"West Torrance substation", when:"Ep 5 Shift 2, after Lost Pet. No timer: rest your heroes before starting.", codes:[], steps:[
    "Go right then up to the electricity and carry it down to the lightbulb to open a route.",
    "Follow it down to the build spot, build toward the next electric spot, and carry that charge right to the top-right lightbulb.",
    "Take the second charge to the bottom lightbulb, then move the top-right charge along the new lower path into the bottom lightbulb and exit."],
    vids:[["Ep 5 video",YT.e5]], guides:["ii5"]},
- {ep:5, n:"Central Torrance substation", when:"Ep 5 Shift 2.", codes:["Up, Left, Right"], steps:[
+ {ep:5, tm:0, n:"Central Torrance substation", when:"Ep 5 Shift 2.", codes:["Up, Left, Right"], steps:[
    "Go right and down to the bottom electricity and carry it to the top-left lightbulb to reveal the code.",
    "Move that charge to the bottom-right lightbulb to open a path.",
    "Put the second charge in the double lightbulb, then bring the first charge back from the bottom-right bulb to complete it.",
    "Enter the code at the padlock and exit."],
    vids:[["Ep 5 video",YT.e5]], guides:["ii5"]},
- {ep:5, n:"East Torrance substation", when:"Ep 5 Shift 2.", codes:[], steps:[
+ {ep:5, tm:0, n:"East Torrance substation", when:"Ep 5 Shift 2.", codes:[], steps:[
    "Grab the first charge and zap the first antivirus. Build forward and use the next charge below on the second antivirus.",
    "Go to the top section for another charge and take out the third antivirus. Chain all three quickly for Anti-Antivirus Club.",
    "Build the route right, put one charge in the top lightbulb and the other in the bottom-right lightbulb, then exit."],
    vids:[["Ep 5 video",YT.e5]], guides:["ii5"]},
- {ep:6, n:"Cyberbully", when:"Ep 6 shift call.", codes:["Up, Up, Down, Left, Right, Left"], steps:[
+ {ep:6, tm:150, n:"Cyberbully", when:"Ep 6 shift call.", codes:["Up, Up, Down, Left, Right, Left"], steps:[
    "Clear the two opening sequences (down then left; right then down).",
    "Lure the antivirus toward you, circle it, and break an electric current.",
    "Grab a current and read the first half of the code (Up, Up, Down). Put it in the double lightbulb, fetch the current above to complete it, and read the second half (Left, Right, Left).",
    "Carry a current to the top lightbulb, enter the full code, and finish."],
    tip:"Don't chase the antivirus too far around the loop, or it catches you.", vids:[["Ep 6 video",YT.e6]], guides:["ii6","gp6"]},
- {ep:6, n:"Heist 1: find the Astral Pulse", when:"Ep 6 story, at Robert's apartment. No mentor points for this one (the later heist hacks have them).", codes:["Up, Up, Right"], steps:[
+ {ep:6, tm:0, n:"Heist 1: find the Astral Pulse", when:"Ep 6 story, at Robert's apartment. No mentor points for this one (the later heist hacks have them).", codes:["Up, Up, Right"], steps:[
    "Go right and use the map space to reveal the board.",
    "Get the code from the top-left corner and enter it at the bottom-right build path.",
    "Work through the bottom, middle and left to find the frequency."],
    vids:[["Ep 6 video",YT.e6]], guides:["ii6","gp6"]},
- {ep:6, n:"Heist 2: locked door", when:"Ep 6 heist.", codes:["Left, Left, Up, Right"], steps:[
+ {ep:6, tm:65, n:"Heist 2: locked door", when:"Ep 6 heist.", codes:["Left, Left, Up, Right"], steps:[
    "Go up and around to the first build path, then on to the top-right one for an electric charge.",
    "Put the charge in the lightbulb to reveal the code, then enter it at the top lock to open the exit."],
    vids:[["Ep 6 video",YT.e6]], guides:["ii6","gp6"]},
- {ep:6, n:"Heist 3: speaker tower", when:"Ep 6 heist.", codes:[], steps:[
+ {ep:6, tm:70, n:"Heist 3: speaker tower", when:"Ep 6 heist.", codes:[], steps:[
    "Go right then down to the first build path and take the charge.",
    "Carry it to the top-right lightbulb to open the next build path.",
    "Take the same charge to the bottom-left lightbulb to open the exit."],
    tip:"Charges can be reused.", vids:[["Ep 6 video",YT.e6]], guides:["ii6","gp6"]},
- {ep:6, n:"Heist 4: crane", when:"Ep 6 heist.", codes:["Left, Left, Left, Right"], steps:[
+ {ep:6, tm:130, n:"Heist 4: crane", when:"Ep 6 heist.", codes:["Left, Left, Left, Right"], steps:[
    "Go around the right side and build forward.",
    "Stay low, destroy the first of two antiviruses, then read the code.",
    "Dodge the second antivirus at the bottom and build to a charge. Lead it around the top and destroy it.",
    "Enter the code at the lock and exit."],
    vids:[["Ep 6 video",YT.e6]], guides:["ii6","gp6"]},
- {ep:6, n:"Heist 5: the safe", when:"Ep 6 heist, last part.", codes:[], steps:[
+ {ep:6, tm:200, n:"Heist 5: the safe", when:"Ep 6 heist, last part.", codes:[], steps:[
    "Complete the first encryption on the right to reveal a board full of antiviruses.",
    "Go left and down to the first electric point and zap one. Use the second point on the right, then the top point through the middle, for two more.",
    "Grab the right-side encryption, using a nearby point on another antivirus. The bottom one won't notice you unless you get close.",
    "Lure the last antivirus down to the bottom electric point, destroy it, and collect the final encryption."],
    tip:"Gamepressure calls this the hardest hack in the game. All those antiviruses make it another Anti-Antivirus Club chance.", vids:[["Ep 6 video",YT.e6]], guides:["ii6","gp6"]},
- {ep:7, n:"Runaway Car", when:"Ep 7 shift call. Timed.", codes:["Left, Right, Right, Left"], steps:[
+ {ep:7, tm:160, n:"Runaway Car", when:"Ep 7 shift call. Timed.", codes:["Left, Right, Right, Left"], steps:[
    "Go up until the first antivirus comes, then retreat behind the electric pylon to destroy it.",
    "Build the route up and right, then down and right. Retreat behind the pylon again for the second antivirus.",
    "Read the code ahead, then go back to the top-left and enter it.",
    "Lead the last antivirus to the final pylon, then use the top-left build spot to exit."],
    vids:[["Ep 7 video",YT.e7]], guides:["ii7"]},
- {ep:8, n:"Locate the Tracker", when:"Ep 8, early in the shift. The hack itself is timed, but the call can wait while your heroes rest.", codes:[], steps:[
+ {ep:8, tm:105, wave:1, n:"Locate the Tracker", when:"Ep 8, early in the shift. The hack itself is timed, but the call can wait while your heroes rest.", codes:[], steps:[
    "Drop to the lower build path and head right toward the antivirus. Lure it away and use the build path behind it.",
    "Go to the top area, quickly activate the second build path, grab the electricity and destroy the antivirus.",
    "Continue through the third build path to the tracker, then calibrate the two spots (middle-right, then top-right)."],
    vids:[["Ep 8 video",YT.e8]], guides:["ii8"]},
- {ep:8, n:"Locate Hero Tracker", when:"Ep 8, after Shopping Spree. Pick either hero: the other is rescued later anyway.", codes:[], steps:[
+ {ep:8, tm:105, wave:1, n:"Locate Hero Tracker", when:"Ep 8, after Shopping Spree. Pick either hero: the other is rescued later anyway.", codes:[], steps:[
    "Go up to the tracker spot to start.",
    "The first frequency is top-left (safe). The second is top-right, reached by a build path.",
    "This antivirus can't be destroyed: use the left build path to lure it, the bottom build path to trap it, then the left path again to reach the frequency."],
    vids:[["Ep 8 video",YT.e8]], guides:["ii8"]},
- {ep:8, n:"Lockdown", when:"Ep 8, after The Summoning and before The Torrance Terrors.", codes:["Left, Left, Right, Up"], steps:[
+ {ep:8, tm:135, n:"Lockdown", when:"Ep 8, after The Summoning and before The Torrance Terrors.", codes:["Left, Left, Right, Up"], steps:[
    "Go around the center to the top-right build path and open the way to the code.",
    "Enter it at the locked spot, take the electricity, and carry it to the top-left to open the next build path.",
    "Bring the second charge down-right toward the center and build downward.",
    "Fill the center double lightbulb with two charges (one from the right, one from the top-right) to open the exit."],
    tip:"No antivirus.", vids:[["Ep 8 video",YT.e8]], guides:["ii8"]},
- {ep:8, n:"Defeat Mindf*cker", when:"Ep 8, late in the shift (around Get to the Chopper). It only appears while the cut hero's boss bar still has some left, so hold the final Attack call until this is done.", miss:true, codes:[], steps:[
+ {ep:8, tm:105, n:"Defeat Mindf*cker", when:"Ep 8, late in the shift (around Get to the Chopper). It only appears while the cut hero's boss bar still has some left, so hold the final Attack call until this is done.", miss:true, codes:[], steps:[
    "Go right into a dead end, then left to another dead end, then right again to the build path. The \"dead ends\" are invisible paths.",
    "Cross the invisible section past the antivirus, go above it, continue right, and cross another invisible section.",
    "From here the controls are inverted (Up acts as Down, Left as Right). Into Indie lists the build-spot codes as: top-right Up, Left, Left, Right; bottom-right Left, Right, Up, Up; final Right, Left, Up, Up, Down, Right. It doesn't say whether those already allow for the inversion, so if one won't take, enter the mirrored arrows. Then reach the exit."],
@@ -1092,8 +1095,8 @@ const FILE_RULES = [
  ["ACH_SCEN_MAX","Shown chance 100%, two or more heroes, and all five combined stats above 9.4 (in practice, all five at 10)."],
  ["ACH_SCEN_MODS","Checked only at the end of Shift 6, 7, 8a, 8b or 8c. Every reported call with a 2x XP zone must reach it, and every call with an X zone must avoid it."],
  ["ACH_HEAL_TWICE","One hero's injuries cleared twice in the same shift. Healing from Malevola, Waterboy or Coupé counts, and so do the Patch Up and Phoenix Up items."],
- ["ACH_HACK_SLOW","Timed hack finished with 5.0 s or less left, read when the final node's prompt completes. Blocked by easy mode and on untimed hacks."],
- ["ACH_HACK_FAST","Timed hack finished with at least a third of its timer left, read at the same moment. Same exclusions."],
+ ["ACH_HACK_SLOW","Hack finished with 5.0 s or less on its countdown, read when the exit node's prompt completes. Only levels with a fail-timer actor have a countdown (see the Countdown column of the hack level table), and the wave-screen hacks (Hack the Scammer, the Ep 8 trackers) have no exit node, so they never check it. Blocked by easy mode."],
+ ["ACH_HACK_FAST","Hack finished with at least a third of its countdown left, read at the same moment. Same exclusions, so Cray Cray Bidet (no countdown) can't give it."],
  ["ACH_STAT_MAX","Any hero stat reaches 10, whether by upgrade or respec."],
  ["ACH_HERO_MAX","A hero reaches the level cap (MaxLevel = 10), checked in the Hero Database."]
 ];
@@ -1143,25 +1146,25 @@ const MENTOR_EXACT = [
 ];
 
 const HACK_LEVELS = [
-  ["1","Shroud's hideout tablet","LV_Hacking_101"],
-  ["2","Cray Cray Bidet","LV_HackingShift02_Bidet"],
-  ["2","Museum Robbery","LV_HackingShift02_Museum"],
-  ["2","Granny's Donuts: cameras, sprinklers","LV_Hacking_102_Part_1, _Part_2"],
-  ["3","Flambae's water tank","LV_HackingShift03a_SabotageFlambae"],
-  ["3","Hack the Scammer","LV_HackingShift03a_Scammer"],
-  ["3","Bank Robbery","LV_HackingShift03b"],
-  ["3","Jewelry store 1, 2, 3","LV_Hacking_103_Part_1, _2, _3"],
-  ["4","Superhero Squabble in Aisle 9","LV_Hacking_Shift4a"],
-  ["4","Discern the Target","LV_Hacking_Shift4b"],
-  ["5","Stalker Stalking Film Shoot","LV_Hacking_Shift5a"],
-  ["5","Torrance substations (3)","LV_Hacking_Shift5b_Blackout_Part_1, _2, _3"],
-  ["6","Cyberbully","LV_Hacking_Shift6"],
-  ["6","Heist 1 (Astral Pulse), Heist 5 (safe)","LV_Hacking_106_Part_1, _Part_3"],
-  ["6","Heist 2 door, 3 speaker, 4 crane","LV_Hacking_106_Part_2 sections 1, 2, 3"],
-  ["7","Runaway Car","LV_Hacking_Shift7"],
-  ["8","Locate Hero Tracker (one hero per run)","LV_Hacking_Shift8_MES_Coupe, _Sonar, _PMan, _Waterboy, _Flambae"],
-  ["8","Lockdown","LV_Hacking_Shift8_School"],
-  ["8","Defeat Mindf*cker","LV_Hacking_Shift8_Brain"]
+  ["1","Shroud's hideout tablet","LV_Hacking_101","None"],
+  ["2","Cray Cray Bidet","LV_HackingShift02_Bidet","None"],
+  ["2","Museum Robbery","LV_HackingShift02_Museum","71 s"],
+  ["2","Granny's Donuts: cameras, sprinklers","LV_Hacking_102_Part_1, _Part_2","None · 85 s"],
+  ["3","Flambae's water tank","LV_HackingShift03a_SabotageFlambae","None"],
+  ["3","Hack the Scammer","LV_HackingShift03a_Scammer","105 s, ends on the wave screen (doesn't count)"],
+  ["3","Bank Robbery","LV_HackingShift03b","85 s"],
+  ["3","Jewelry store 1, 2, 3","LV_Hacking_103_Part_1, _2, _3","None"],
+  ["4","Superhero Squabble in Aisle 9","LV_Hacking_Shift4a","140 s"],
+  ["4","Discern the Target","LV_Hacking_Shift4b","155 s"],
+  ["5","Stalker Stalking Film Shoot","LV_Hacking_Shift5a","152 s"],
+  ["5","Torrance substations (3)","LV_Hacking_Shift5b_Blackout_Part_1, _2, _3","None"],
+  ["6","Cyberbully","LV_Hacking_Shift6","150 s"],
+  ["6","Heist 1 (Astral Pulse), Heist 5 (safe)","LV_Hacking_106_Part_1, _Part_3","None · 200 s"],
+  ["6","Heist 2 door, 3 speaker, 4 crane","LV_Hacking_106_Part_2 sections 1, 2, 3","65 s · 70 s · 130 s"],
+  ["7","Runaway Car","LV_Hacking_Shift7","160 s"],
+  ["8","Locate Hero Tracker (one hero per run)","LV_Hacking_Shift8_MES_Coupe, _Sonar, _PMan, _Waterboy, _Flambae","105 s Coupé, 135 s Sonar/Phenomaman/Waterboy, 180 s Flambae; ends on the wave screen (doesn't count)"],
+  ["8","Lockdown","LV_Hacking_Shift8_School","135 s"],
+  ["8","Defeat Mindf*cker","LV_Hacking_Shift8_Brain","105 s"]
 ];
 
 const CAREER = [
@@ -1231,13 +1234,13 @@ const SOURCES = [
 const LINKS = {
   "ep1:0:8":[{t:"Overkill",auto:1}],
   "ep2:0:0":[{t:"Nailed It",run:1,auto:1},{t:"Snake Eyes",run:2,auto:1},{k:"b:0",run:2,auto:1}],
-  "ep2:0:2":[{h:1,auto:1},{t:"Burning Chrome"}],
+  "ep2:0:2":[{h:1,auto:1}],
   "ep2:0:5":[{h:2,auto:1},{t:"Burning Chrome"}],
   "ep3:0:0":[{h:5}],
   "ep3:0:7":[{h:6,auto:1}],
   "ep3:1:3":[{t:"Getting to Know"}],
   "ep3:1:9":[{k:"m:2",run:1,auto:1}],
-  "ep3:1:11":[{h:7,auto:1}],
+  "ep3:1:11":[{h:7,auto:1},{t:"Burning Chrome"}],
   "ep4:0:6":[{t:"Work Spouse",run:1}],
   "ep4:0:12":[{h:11,auto:1},{t:"Time's Running"}],
   "ep4:1:0":[{t:"Fool's Luck",run:1,auto:1}],
@@ -1254,6 +1257,7 @@ const LINKS = {
   "ep8:0:18":[{h:26,auto:1}],
   "ep8:0:36":[{h:27,auto:1}],
   "ep8:0:39":[{t:"All gas",auto:1}],
+  "ev:ep2:14":[{t:"Burning Chrome"}],
   "ev:ep6:17":[{t:"Anti-Antivirus"}],
   "E1-SQ0070-0070x":[{t:"Did I drool",auto:1}],
   "E2-SQ0060-0010x":[{t:"Love 'em"}],
@@ -1763,11 +1767,18 @@ function renderHeroes(){
 function hackKey(i){ return "hk:"+i; }
 const ARROW = {Up:"\u2191", Down:"\u2193", Left:"\u2190", Right:"\u2192"};
 function arrows(code){ return code.split(",").map(w=>ARROW[w.trim()]||"").join(""); }
+/* Burning Chrome needs a third of the countdown left; both timer trophies are read at the exit node. */
+function hackTimerText(x){
+  if(!x.tm) return "No countdown, so it can't give Burning Chrome or Time's Running Out.";
+  if(x.wave) return x.tm+" s countdown, but it ends on the wave screen with no exit node, so it can't give Burning Chrome or Time's Running Out.";
+  return x.tm+" s countdown. Burning Chrome: finish with "+Math.ceil(x.tm/3)+" s or more left. Time's Running Out: 5 s or less.";
+}
 function renderHack(x,i){
   const k=hackKey(i), done=!!state.ticks[k];
   let h='<li class="hackcard'+(done?' done':'')+'" id="hk-'+i+'" data-k="'+k+'">'+tickBox(k,"Won: "+x.n);
   h+='<div><div class="call-top"><span class="call-name">'+esc(x.n)+'</span>'+(x.miss?'<span class="badge trap">Missable</span>':'')+'</div>';
   h+='<p class="hk-when">'+md(x.when)+'</p>';
+  h+='<p class="hk-timer'+(x.tm&&!x.wave?'':' no')+'">'+esc(hackTimerText(x))+'</p>';
   if(x.codes.length) h+='<div class="codes">'+x.codes.map(c=>'<span class="code">'+esc(c)+'<span class="arrows" aria-hidden="true">'+arrows(c)+'</span></span>').join("")+'</div>';
   h+='<ol class="hk-steps">'+x.steps.map(st=>'<li>'+md(st)+'</li>').join("")+'</ol>';
   if(x.tip) h+='<p class="hk-tip">'+md(x.tip)+'</p>';
@@ -1803,7 +1814,7 @@ function renderFiles(){
   h+='<section class="block"><h2>What changes your plan</h2><ul class="keylist">'+FILE_KEY.map(x=>'<li>'+md(x)+'</li>').join("")+'</ul></section>';
   h+='<section class="block"><h2>Exact rule for every trophy</h2>'+tbl(["Trophy","Rule in the game files","ID"],TROPHIES.map((t,i)=>[t.n,FILE_RULES[i][1],FILE_RULES[i][0]]),2)+'</section>';
   h+='<section class="block"><h2>Invisigal mentor score, point by point</h2><p class="muted">The good ending needs <strong>45 or more</strong> by the Ep 8 check. Hacks marked ± give the plus value on a win and the minus value on a failure. Episode 1 has no mentor points.</p>'+tbl(["When","Moment","Points"],MENTOR_EXACT,2)+'</section>';
-  h+='<section class="block"><h2>H4ck3d by R0b3rt: the 26-level count</h2><p class="muted">Each win adds its level to the list once. Replaying a level you\'ve already won adds nothing, and losing one never removes it. One run reaches about 27 levels. The Ep 8 Locate Hero Tracker hack has a separate level for each hero, so tracking a different hero in Run 2 adds another. Early Ep 8\'s Locate the Tracker has no level of its own in the files, so don\'t count on it. If you quit mid-shift right after a shift hack, replay it, because the shift writes the list when it saves.</p>'+tbl(["Ep","Hack","Level file"],HACK_LEVELS)+'</section>';
+  h+='<section class="block"><h2>H4ck3d by R0b3rt: the 26-level count</h2><p class="muted">Each win adds its level to the list once. Replaying a level you\'ve already won adds nothing, and losing one never removes it. One run reaches about 27 levels. The Ep 8 Locate Hero Tracker hack has a separate level for each hero, so tracking a different hero in Run 2 adds another. Early Ep 8\'s Locate the Tracker has no level of its own in the files, so don\'t count on it. If you quit mid-shift right after a shift hack, replay it, because the shift writes the list when it saves.</p>'+tbl(["Ep","Hack","Level file","Countdown"],HACK_LEVELS)+'</section>';
   h+='<section class="block"><h2>Career Development math</h2><p class="muted">Each end-of-shift review scores <strong>+2 per successful call, -1 per failed call, -2 per missed call</strong>, then fills the current rank bar. The trophy pops when you rank up to Dispatcher.</p>'+tbl(["Rank","Points for the bar","Rank-up reward"],CAREER,1)+'</section>';
   h+='<section class="block panel"><h2>Other exact numbers</h2><ul class="plain notes">'+[
     "**Work Spouse:** synergy level 1 comes on a pair\'s first successful call together. After that the pair levels up on every 2nd call together, as long as that call succeeds. A failed deciding call just pushes the level to their next win. Level 3 = trophy.",
