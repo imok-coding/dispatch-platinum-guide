@@ -2,11 +2,13 @@
 
 A one-page, phone-friendly walkthrough for the Dispatch platinum:
 
-- **Start:** the roadmap (Run 1, the Shroud replay, the Slot 2 cleanup, Run 2) and how the four save slots are used
+- **Progress bar** in the header for the whole platinum (Run 1, the Shroud replay, the Slot 2 cleanup, Run 2) with a link to your next step, plus a per-episode breakdown on the Start page
+- **Start:** the roadmap and how the four save slots are used
 - **Trophies:** all 36 with filters, tick boxes and a progress code for moving ticks between devices
-- **E1 to E8:** every dialogue choice in the game (127, read from the story files) in story order, with the pick for each run, what each option changes, and a tick box per run. Plus who to send on every dispatch call, in the order calls appear, with who is still out at each call and what to do if your pick isn't back yet
+- **E1 to E8:** one walkthrough per episode in story order. It has every dialogue choice in the game (127, read from the story files) with the pick for each run, the story trophies where they pop, the hacks, and each shift as a dropdown at the point it starts. Inside each shift are who to send on every call (in spawn order, with who is still out), where each hero should level up and which stat the point goes in, and an end-of-shift box where you record the stat a rank-up wheel lands on so the guide re-plans every point after it. Ticking a step ticks the trophies, hacks and checklist items it earns.
 - **Hacks:** all 28 hacking puzzles with lock codes, routes and video links
-- **Heroes, Cleanup**
+- **Heroes:** dispatch rules, hero downtime, the XP and level rules, a level-up planner per hero, and the mentor checklist
+- **Cleanup**
 - **Game Files:** exact unlock rules read from the game's own files (PC build of Sep 28, 2026). It covers every trophy's condition, every Invisigal mentor-score change, the 26-level H4ck3d count and the career-rank math.
 - **Sources**
 
