@@ -531,7 +531,7 @@ const TROPHIES = [
  {n:"Fool's Luck", g:"B", d:"Succeeded a Call with <15% of Success", h:"Ep 4 Shift 2: send Waterboy alone to Stop the Assassination (7%). Reload until it works.", w:"Run 1 · Ep 4", p:"r1", ep:"ep4"},
  {n:"Snake Eyes", g:"B", d:"Failed a Call with >70% of Success", h:"Ep 2: send Coupé alone to Lost Balloon (72%). Reload until it fails. Not in Run 1's Ep 2, because a failure there breaks Shift Was Lit.", w:"Run 2 · Ep 2", p:"r2", ep:"ep2"},
  {n:"Nailed It", g:"B", d:"Achieved a Perfect Dispatch With Only One Hero", h:"Ep 2: send Flambae alone to Lost Balloon (100%).", w:"Run 1 · Ep 2", p:"r1", ep:"ep2"},
- {n:"Overkill", g:"B", d:"Covered the Entire Graph on a Single Call", h:"Ep 1 tutorial: fill all 4 slots of Chase El Diabolito with Pom Pom, Brickhouse, Equilibrium and Brainbook.", w:"Run 1 · Ep 1", p:"r1", ep:"ep1"},
+ {n:"Overkill", g:"B", d:"Covered the Entire Graph on a Single Call", h:"Not in the Ep 1 tutorial: the game skips call trophies in that shift. Send 2 or more heroes whose combined stats reach 10 in all five, on a call with no choice or hack (the shown chance is then 100%). Ep 6's Red Alert, Yachtie Afterparty and Break the Ice all use Golem + Punch Up + Invisigal + Sonar, which does it with the planned points; failing that, the guide's team at Ep 8's The Summoning.", w:"Run 1 · Ep 6 or 8", p:"r1", ep:"ep6"},
  {n:"Modded", g:"B", d:"Reached all bonuses and successfully avoid all failures", h:"In one shift, clear every 2x-XP stat threshold and never trip an auto-fail threshold. Only the Ep 6, 7 and 8 shifts count. Ep 7 is the recommended shift.", w:"Run 1 · Ep 7", p:"r1", ep:"ep7"},
  {n:"Phoenixes Down", g:"B", d:"Healed the Same Hero Twice in a Shift", h:"Malevola heals the hero she's sent with. Get the same injured hero healed by her twice in one shift.", w:"Run 1 or 2", p:"any", ep:"cleanup"},
  {n:"Time's Running Out", g:"B", d:"Completed a Hacking Level With less than 5 Seconds Left", h:"On a hack with a countdown, wait on the exit node and finish with 5 s or less left. Hacks without a countdown, like Cray Cray Bidet, can't count.", w:"Any", p:"any", ep:"hacks"},
@@ -542,9 +542,9 @@ const TROPHIES = [
 
 /* Call fields: n name, s slots, st [C,V,M,Ch,I], need text, send (Run 1), r2 (Run 2 swap), pick, note, only (1|2), tags [[type,label]] */
 const EPISODES = [
-{ id:"ep1", num:1, title:"Pivot", key:"Overkill · first hack · Blazer kiss fork",
-  lead:"Episode 1 is the tutorial. Here you split the two runs (kiss Blazer or not), win the first hack, and earn Overkill on the last tutorial call.",
-  facts:[["Trophies","Overkill, \"Did I drool on you?\" (end of episode)"],["Hacks","The tablet hack (1 of 19)"]],
+{ id:"ep1", num:1, title:"Pivot", key:"First hack · Blazer kiss fork",
+  lead:"Episode 1 is the tutorial. Here you split the two runs (kiss Blazer or not) and win the first hack. The game gives no call trophies in the tutorial shift, so Overkill waits until Ep 6.",
+  facts:[["Trophies","\"Did I drool on you?\" (right after Blazer's job offer)"],["Hacks","The tablet hack"]],
   shifts:[{t:"Tutorial dispatch", intro:"Call order can shift slightly. Send by name.", calls:[
     {n:"Assault on Criminal Hideout!", s:2, st:[6,4,3,1,1], send:"Phenomaman", note:"Forced tutorial pick."},
     {n:"Investigate the Dorm Room!", s:2, st:[1,2,2,4,8], send:"Brainbook + anyone except Brickhouse", note:"Intellect test. Let the team fully rest afterward."},
@@ -554,9 +554,9 @@ const EPISODES = [
     {n:"Attack on the Hospital!", s:2, send:"Pom Pom", note:"Every hero has an auto-success option; take Pom Pom's."},
     {n:"Help Grandma Cross the Road!", s:1, st:[1,2,5,1,1], send:"Pom Pom or Brainbook", note:"Mostly Mobility."},
     {n:"Negotiate with Hostage Takers!", s:3, st:[2,4,2,8,5], send:"Sweetalker + Phenomaman", note:"Mostly Charisma."},
-    {n:"Chase El Diabolito!", s:4, st:[6,9,9,2,2], send:"Pom Pom + Brickhouse + Equilibrium + Brainbook", note:"Fill all four slots so their shapes cover the whole graph. If it doesn't pop, retry this call with Scene Select.", tags:[["trophy","Overkill"]]}
+    {n:"Chase El Diabolito!", s:4, st:[6,9,9,2,2], send:"Pom Pom + Brickhouse + Equilibrium + Brainbook", note:"No trophy here: the game skips call trophies in the tutorial shift, so Overkill can't pop even though this team fills the graph."}
   ]}],
-  notes:["Backup for Overkill: Ep 3 Shift 2's 4-slot Lightningstruck Strikes Again with Sonar, Coupé, Flambae and Punch Up."],
+  notes:["Pom Pom is the tutorial hero the game files call Speedster. No call trophy (Overkill, Nailed It, Snake Eyes, Fool's Luck) can pop in this shift: the game skips those checks in the tutorial."],
   src:[["Into Indie missions guide","https://intoindiegames.com/walkthroughs/tips-tricks/dispatch-complete-missions-guide/"],["Gamepressure Ep 1","https://www.gamepressure.com/newsroom/dispatch-episode-1-walkthrough-and-choices-guide/z6892c"],["T-Pose Gaming","https://tposegaming.com/dispatch-achievement-and-trophy-guide/"],["Steam missions guide","https://steamcommunity.com/sharedfiles/filedetails/?id=3591755863"]]
 },
 { id:"ep2", num:2, title:"Onboard", key:"Shift Was Lit · Nailed It · donut",
@@ -612,7 +612,7 @@ const EPISODES = [
       {n:"Personal Security II: The Ride", s:2, st:[5,5,4,2,2], ch:1, send:"Invisigal", pick:"Disarm", note:"Auto-win, +1 mentor."},
       {n:"Debate the Bone Zone", s:2, st:[2,1,1,7,5], send:"Sonar (hybrid) + Malevola", note:"Charisma 7 / Intellect 5."},
       {n:"Hero Training", s:1, send:"Invisigal → Wolf Pack", r2:"Flambae → Supernova", note:"Wolf Pack doubles XP on calls she's on, and Blazer's training is worth +5 mentor. Training #1 of 4 for Power Trip.", tags:[["train","Training #1"]]},
-      {n:"Lightningstruck Strikes Again", s:4, st:[8,8,7,1,5], send:"Punch Up + Sonar (bat) + Prism (+ Flambae)", note:"Backup Overkill spot."},
+      {n:"Lightningstruck Strikes Again", s:4, st:[8,8,7,1,5], send:"Punch Up + Sonar (bat) + Prism (+ Flambae)"},
       {n:"Bank Robbery", s:3, st:[7,3,7,2,3], ch:1, send:"Golem", r2:"Golem + Coupé", pick:"Trap the robbers inside the vault (the hack)", note:"Locks: Right; Right ×3; Down, Right, Down, Right, Up, Right, Up. 85 s countdown: finish with 29 s or more left for Burning Chrome.", tags:[["hack","Hack"],["trophy","Burning Chrome"]]}
     ]}
   ],
@@ -1053,7 +1053,7 @@ const STEP_C = [
   ["Fool's Luck","Ep 4, Scene 8 (Waterboy save)","Waterboy alone on Stop the Assassination; reload until it works"],
   ["Snake Eyes","Ep 2, Scene 7","Coupé alone on Lost Balloon; reload until it fails"],
   ["Shift Was Lit / Nailed It","Ep 2, Scene 7","Follow the Episode 2 call list"],
-  ["Overkill","Ep 1 final tutorial call","Fill all 4 slots"],
+  ["Overkill","Ep 6 or Ep 8 shift","Send 2+ heroes whose combined stats are 10 in all five, on a call with no choice or hack (not in the Ep 1 tutorial)"],
   ["Modded","Ep 7 shift","Hit every bonus line and avoid every X"],
   ["Protected Los Angeles","Ep 8 shift","Easier on a save where Invisigal was cut (full-strength team)"],
   ["Phoenixes Down","Any shift","Send a hero to a call they'll fail so they come back hurt, heal them with Malevola, repeat in the same shift"],
@@ -1092,7 +1092,7 @@ const FILE_RULES = [
  ["ACH_SCEN_SUCCESS","A call succeeds with a shown chance of 15% or less (the check is 15.4%). Hacking calls and choice-only calls are skipped."],
  ["ACH_SCEN_FAIL","A call fails with a shown chance of 70–99%."],
  ["ACH_SCEN_PERFECT","Shown chance 100% with exactly one hero on the call."],
- ["ACH_SCEN_MAX","Shown chance 100%, two or more heroes, and all five combined stats above 9.4 (in practice, all five at 10)."],
+ ["ACH_SCEN_MAX","Shown chance 100%, two or more heroes, and all five combined stats above 9.4 (in practice, all five at 10), counting only revealed stats. Calls decided by a choice or a hack are skipped, and the result popup skips every call trophy in the Ep 1 tutorial shift."],
  ["ACH_SCEN_MODS","Checked only at the end of Shift 6, 7, 8a, 8b or 8c. Every reported call with a 2x XP zone must reach it, and every call with an X zone must avoid it."],
  ["ACH_HEAL_TWICE","One hero's injuries cleared twice in the same shift. Healing from Malevola, Waterboy or Coupé counts, and so do the Patch Up and Phoenix Up items."],
  ["ACH_HACK_SLOW","Hack finished with 5.0 s or less on its countdown, read when the exit node's prompt completes. Only levels with a fail-timer actor have a countdown (see the Countdown column of the hack level table), and the wave-screen hacks (Hack the Scammer, the Ep 8 trackers) have no exit node, so they never check it. Blocked by easy mode."],
@@ -1107,7 +1107,7 @@ const FILE_KEY = [
   "**Modded only counts in the Ep 6, 7 and 8 shifts** (Shift 6, 7, 8a, 8b, 8c). Earlier shifts are never checked.",
   "**Shift Was Lit works in any shift.** Zero failed and zero missed calls is the whole rule.",
   "**The mentor ending is exactly 45 points.** \"I'm Robert\" in Ep 5 costs 5 and \"I'm Mecha Man\" gives 5. Each Invisigal training gives +5, and her calls give +1 on a success and -1 on a failure.",
-  "**Thresholds are on the displayed %.** Fool's Luck is 15% or less, Snake Eyes is 70–99%, Nailed It and Overkill need 100%. Overkill also needs all five combined stats at 10.",
+  "**Thresholds are on the displayed %.** Fool's Luck is 15% or less, Snake Eyes is 70–99%, Nailed It and Overkill need 100%. Overkill also needs all five combined stats at 10. None of these four can pop in the Ep 1 tutorial shift: the result popup skips them there.",
   "**Work Spouse needs at least 5 calls** with the same synergy pair: level 1 on the first success, then one level every second call together, if that call succeeds.",
   "**Career Development is math.** +2 per success, -1 per failure, -2 per miss. Rank bars need 12, 32, 34 and 36 points.",
   "**Romance endings check only three things:** the Ep 4 date (and the dinner kiss or Ep 5 \"pump the brakes\"), the Ep 7 Lean In, and the mentor score. The Ep 1 kiss, the Ep 6 dance and every other flirty line change dialogue only. Lean In needs her hidden bond score at 10+.",
@@ -1232,7 +1232,6 @@ const SOURCES = [
    t = trophy (start of its name), h = hack card, k = another tick. run 1/2 = only that run's tick counts (default: either).
    auto = ticking the step ticks this too; without it the box is just shown there so you can tick it on the spot. */
 const LINKS = {
-  "ep1:0:8":[{t:"Overkill",auto:1}],
   "ep2:0:0":[{t:"Nailed It",run:1,auto:1},{t:"Snake Eyes",run:2,auto:1},{k:"b:0",run:2,auto:1}],
   "ep2:0:2":[{h:1,auto:1}],
   "ep2:0:5":[{h:2,auto:1},{t:"Burning Chrome"}],
@@ -1250,10 +1249,15 @@ const LINKS = {
   "ep5:0:5":[{h:13,auto:1},{t:"Anti-Antivirus"}],
   "ep5:1:1":[{h:14,auto:1},{h:15,auto:1},{h:16,auto:1},{t:"Anti-Antivirus"}],
   "ep6:0:3":[{h:17,auto:1}],
+  "ep6:0:7":[{t:"Overkill",run:1}],
+  "ep6:0:10":[{t:"Overkill",run:1}],
+  "ep6:0:12":[{t:"Overkill",run:1}],
+  "ep7:0:1":[{t:"Overkill",run:2}],
   "ep7:0:3":[{h:23,auto:1},{t:"Time's Running"}],
   "ep7:0:4":[{t:"Phoenixes Down"}],
   "ep8:0:4":[{h:24,auto:1}],
   "ep8:0:8":[{h:25,auto:1}],
+  "ep8:0:13":[{t:"Overkill",run:1}],
   "ep8:0:18":[{h:26,auto:1}],
   "ep8:0:36":[{h:27,auto:1}],
   "ep8:0:39":[{t:"All gas",auto:1}],
@@ -2246,6 +2250,8 @@ function start(data){
   buildRules(); buildSteps();
   /* First visit since auto-ticks existed: tick everything your existing ticks already earned. */
   if(state.v<3){ applyRules(TICK_RULES.map(()=>false)); rankTrophy(); state.v=3; saveStore(); }
+  /* Overkill can't pop in the Ep 1 tutorial: drop a tick the old Ep 1 link made. */
+  if(state.v<4){ const before=TICK_RULES.map(holds); if((state.auto["t:Overkill"]||"").indexOf("ep1:0:8")>=0){ delete state.ticks["t:Overkill"]; delete state.auto["t:Overkill"]; applyRules(before); } state.v=4; saveStore(); }
   if(migrateLvl()) saveStore();
   NEXT_SHIFT=(whereAmI().next||{}).sh||null;
   renderTabs(); renderAll(); buildIndex(); wire();
