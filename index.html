@@ -435,6 +435,49 @@ details.shift[open] > summary{border-bottom:1px solid var(--line);border-radius:
 .lv-list .mono{color:var(--accent-ink)}
 .herocard .lv-all{grid-column:1/-1}
 .rk-h3{margin-top:8px}
+.lvl-slot:empty{display:none}
+.lvl-moved{color:var(--muted)}
+/* Fail marks: one toggle per run on the send line; a marked call gets a red edge and a note */
+.failbtn{font:700 .6875rem/1 var(--mono);text-transform:uppercase;letter-spacing:.04em;min-height:28px;padding:0 10px;margin-left:8px;border-radius:999px;border:1px dashed var(--muted);background:transparent;color:var(--muted);cursor:pointer;vertical-align:1px;white-space:nowrap}
+.failbtn:hover{border-color:var(--bad);color:var(--bad)}
+.failbtn[aria-pressed="true"]{background:var(--bad);border:1px solid var(--bad);color:#fff}
+.run-1 .fb-r2,.run-2 .fb-r1{display:none}
+.run-both .failbtn.fb-r1::before{content:"Run 1 · "}
+.run-both .failbtn.fb-r2::before{content:"Run 2 · "}
+.fail-note{display:none;font-size:.875rem;padding:6px 10px;border-radius:8px;border-left:3px solid var(--bad);background:var(--bg)}
+.run-1 .call.failed-1 .fn-r1,.run-2 .call.failed-2 .fn-r2,.run-both .call.failed-1 .fn-r1,.run-both .call.failed-2 .fn-r2{display:block}
+.run-1 .call.failed-1,.run-2 .call.failed-2,.run-both .call.failed-1,.run-both .call.failed-2{border-color:var(--bad)}
+/* Levels panel: docked on the right on wide screens, over the page below that */
+.lvp{position:fixed;top:0;right:0;bottom:0;z-index:40;width:360px;max-width:100vw;background:var(--surface);border-left:1px solid var(--line);box-shadow:-10px 0 30px rgba(0,0,0,.16);overflow-y:auto;overscroll-behavior:contain;padding:0 16px 28px;display:grid;align-content:start;gap:10px}
+.lvp[hidden]{display:none}
+@media (min-width:1420px){body.lvp-open{padding-right:360px}.lvp{box-shadow:none}}
+@media (max-width:480px){.lvp{width:100vw;border-left:0}}
+.lvp-head{position:sticky;top:0;z-index:1;display:flex;align-items:center;gap:8px;padding:12px 0 8px;background:var(--surface);border-bottom:1px solid var(--line)}
+.lvp-head h2{font-size:1.375rem;margin-right:auto}
+.lvp-asof,.lvp-note{font-size:.8125rem;color:var(--muted)}
+.lvp-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.lvp-h{display:grid;gap:4px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.lvp-h.set{border-color:var(--accent-ink)}
+.lvp-h.off{opacity:.6}
+.lvp-top{display:flex;align-items:center;gap:8px}
+.lvp-n{font:800 1.0625rem/1.1 var(--display);text-transform:uppercase;letter-spacing:.02em;margin-right:auto;min-width:0}
+.lvp-tag{font:700 .5625rem/1 var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--accent-ink);border:1px solid var(--accent-ink);border-radius:4px;padding:2px 4px}
+.lvp-lv{font:700 .875rem/1 var(--mono);min-width:3.4em;text-align:right}
+.lvp-btns{display:inline-flex;gap:4px}
+.lvp-btns button{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:700 1.125rem/1 var(--body);cursor:pointer}
+.lvp-btns button:hover:not(:disabled){border-color:var(--ink)}
+.lvp-btns button:disabled{opacity:.35;cursor:default}
+.lvp-bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.lvp-bar i{display:block;height:100%;background:var(--good)}
+.lvp-next{font-size:.8125rem;color:var(--muted)}
+.lvp-pt{font-size:.8125rem}
+.lvp-h3{font-size:1rem;margin-top:6px}
+.lvp-marks{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:.875rem}
+.lvp-marks li{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.lvp-undo{font:700 .75rem/1 var(--body);padding:7px 10px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;flex:0 0 auto}
+.lvp-warn{font-size:.875rem;padding:8px 10px;border-radius:8px;border-left:3px solid var(--bad);background:var(--bg)}
+.seg button[data-lvr="1"][aria-pressed="true"]{background:var(--r1)}
+.seg button[data-lvr="2"][aria-pressed="true"]{background:var(--r2)}
 </style>
 </head>
 <body class="run-1">
@@ -450,6 +493,7 @@ details.shift[open] > summary{border-bottom:1px solid var(--line);border-radius:
         <button type="button" id="run2Btn" data-run="2" aria-pressed="false">Run 2</button>
         <button type="button" id="runBothBtn" data-run="both" aria-pressed="false">Both</button>
       </div>
+      <button type="button" class="icon-btn" id="lvToggle" aria-expanded="false" aria-controls="lvPanel">Levels</button>
       <button type="button" class="icon-btn" id="searchToggle" aria-expanded="false" aria-controls="searchPanel">Search</button>
     </div>
   </div>
@@ -461,6 +505,7 @@ details.shift[open] > summary{border-bottom:1px solid var(--line);border-radius:
     <ol class="results" id="results"></ol>
   </div>
 </header>
+<aside class="lvp" id="lvPanel" aria-label="Hero levels" hidden></aside>
 <main id="main"></main>
 <footer class="foot">
   Built from your Dispatch platinum doc. Spoilers for the whole story. Ticks are saved in this browser only; the code on the Trophies tab moves them to another device. On iPhone, open the guide in Safari and use Share → Add to Home Screen to launch it like an app.
@@ -1210,11 +1255,12 @@ const DIALOGUE = {"ep1":[{"id":"E1-SQ0010-0010x","sc":"Opening","q":["Soothing V
    out = plan heroes still away then, w = wait for [heroes, seconds, close call], s = backup [busy, send instead, back in],
    k = usually nobody free, l = special hero usually still out [heroes, back in]. */
 const SHIFT_PLAN = {"ep2:0:0":{"t":2.0,"o":20},"ep2:0:1":{"t":8.5,"o":20,"out":["Flambae"]},"ep2:0:2":{"t":14.1,"o":10,"out":["Flambae","Sonar"]},"ep2:0:3":{"t":17.5,"o":35,"out":["Flambae","Sonar"]},"ep2:0:4":{"t":22.0,"o":20,"out":["Flambae","Prism","Sonar"]},"ep2:0:6":{"t":61.8,"o":25,"out":["Coupé","Flambae","Invisigal","Malevola","Prism","Punch Up","Sonar"]},"ep2:0:5":{"t":37.6,"o":20,"out":["Flambae","Invisigal","Prism","Sonar"]},"ep2:0:7":{"t":41.0,"o":20,"out":["Flambae","Golem","Invisigal","Prism","Sonar"],"w":[["Prism"],8,0]},"ep2:0:8":{"t":48.9,"o":20,"out":["Flambae","Golem","Invisigal","Prism"]},"ep2:0:9":{"t":49.6,"o":25,"out":["Coupé","Flambae","Golem","Invisigal","Prism","Punch Up"]},"ep2:0:10":{"t":60.6,"o":16,"out":["Coupé","Flambae","Invisigal","Prism","Punch Up","Sonar"]},"ep2:0:11":{"t":70.4,"o":20,"out":["Coupé","Flambae","Golem","Invisigal","Malevola","Prism","Punch Up","Sonar"],"w":[["Invisigal"],4,0]},"ep2:0:12":{"t":94.7},"ep3:0:0":{"t":7.3,"o":20,"out":["Sonar"]},"ep3:0:1":{"t":10.3,"o":15,"out":["Flambae","Golem","Sonar"]},"ep3:0:3":{"t":23.8,"o":18,"out":["Coupé","Flambae","Golem","Punch Up"]},"ep3:0:2":{"t":34.5,"o":20,"out":["Coupé","Flambae","Golem","Malevola","Prism","Punch Up"],"k":1},"ep3:0:4":{"t":30.3,"o":40,"out":["Coupé","Flambae","Golem","Malevola","Punch Up"]},"ep3:0:5":{"t":58.1,"o":20,"out":["Malevola","Prism","Punch Up"]},"ep3:0:6":{"t":48.9,"o":25,"out":["Coupé","Flambae","Golem","Malevola","Prism","Punch Up"],"w":[["Punch Up"],9,0]},"ep3:0:7":{"t":59.8,"o":12,"out":["Coupé","Malevola","Prism","Punch Up","Sonar"]},"ep3:0:9":{"t":60.1,"o":16,"out":["Coupé","Malevola","Prism","Punch Up","Sonar"],"w":[["Prism"],8,0]},"ep3:0:10":{"t":93.6},"ep3:0:8":{"t":61.8,"o":17,"out":["Coupé","Flambae","Malevola","Prism","Punch Up","Sonar"]},"ep3:1:0":{"t":12.2,"o":20},"ep3:1:1":{"t":28.7,"o":20,"out":["Golem"]},"ep3:1:2":{"t":45.7,"o":30,"out":["Coupé","Golem","Malevola"],"w":[["Coupé"],17,0]},"ep3:1:3":{"t":61.4,"o":16,"out":["Coupé","Malevola"]},"ep3:1:4":{"t":70.5,"o":30,"out":["Coupé","Flambae","Prism","Punch Up"]},"ep3:1:5":{"t":72.3,"o":45,"out":["Coupé","Flambae","Golem","Invisigal","Prism","Punch Up"],"w":[["Punch Up"],37,0]},"ep3:1:6":{"t":80.6,"out":["Coupé","Flambae","Golem","Invisigal","Prism","Punch Up"]},"ep3:1:7":{"t":87.6,"o":20,"out":["Coupé","Flambae","Golem","Invisigal","Prism","Punch Up"],"w":[["Invisigal"],14,1]},"ep3:1:8":{"t":95.2,"o":10,"out":["Flambae","Golem","Invisigal","Prism","Punch Up"]},"ep3:1:9":{"t":107.8,"out":["Flambae","Invisigal","Prism","Punch Up","Sonar"]},"ep3:1:10":{"t":112.1,"o":20,"out":["Flambae","Golem","Invisigal","Punch Up","Sonar"]},"ep3:1:11":{"t":117.3,"o":10,"out":["Coupé","Flambae","Golem","Invisigal","Malevola","Punch Up","Sonar"]},"ep4:0:0":{"t":1.4,"o":22},"ep4:0:1":{"t":2.5,"o":15,"out":["Flambae"]},"ep4:0:3":{"t":4.6,"o":18,"out":["Flambae","Malevola","Sonar"]},"ep4:0:4":{"t":7.9,"o":20,"out":["Flambae","Golem","Malevola","Sonar"],"k":1},"ep4:0:5":{"t":10.2,"o":26,"out":["Flambae","Golem","Malevola","Sonar"]},"ep4:0:6":{"t":22.9,"o":20,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Sonar"],"w":[["Malevola"],12,0]},"ep4:0:7":{"t":16.3,"o":28,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Sonar"],"k":1},"ep4:0:8":{"t":16.3,"o":26,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Sonar"],"k":1},"ep4:0:9":{"t":20.8,"o":16,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Sonar"],"w":[["Prism"],12,1]},"ep4:0:11":{"t":33.7,"o":22,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Punch Up","Sonar"],"w":[["Golem"],16,1]},"ep4:0:12":{"t":24.3,"o":24,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Sonar"],"w":[["Invisigal"],12,0]},"ep4:0:14":{"t":25.1,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Sonar"]},"ep4:0:13":{"t":26.3,"o":22,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Sonar"]},"ep4:0:15":{"t":66.5,"o":21,"out":["Flambae","Golem","Invisigal","Malevola","Prism"]},"ep4:0:16":{"t":33.8,"o":22,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Punch Up","Sonar"],"w":[["Flambae"],8,0]},"ep4:0:17":{"t":56.7,"o":20,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Sonar"],"w":[["Invisigal"],17,1]},"ep4:1:0":{"t":2.1,"o":20},"ep4:1:1":{"t":4.0,"out":["Waterboy"]},"ep4:1:2":{"t":6.2,"o":55,"out":["Invisigal"]},"ep4:1:6":{"t":23.3,"o":20,"out":["Flambae","Golem","Invisigal","Prism","Punch Up"],"w":[["Invisigal"],3,0]},"ep4:1:3":{"t":10.9,"o":45,"out":["Invisigal","Prism"]},"ep4:1:9":{"t":49.1,"o":20,"out":["Flambae","Golem","Invisigal","Malevola","Punch Up","Sonar"],"w":[["Flambae"],3,0]},"ep4:1:4":{"t":16.7,"o":35,"out":["Flambae","Invisigal","Prism"]},"ep4:1:5":{"t":23.3,"o":20,"out":["Flambae","Golem","Invisigal","Prism","Punch Up"]},"ep4:1:7":{"t":24.8,"o":35,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Punch Up","Sonar"],"w":[["Golem"],24,0]},"ep4:1:8":{"t":42.3,"o":40,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Punch Up","Sonar"],"w":[["Malevola","Punch Up"],28,0]},"ep5:0:0":{"t":6.4,"o":25},"ep5:0:1":{"t":15.1,"o":22,"out":["Flambae","Sonar"]},"ep5:0:2":{"t":30.9,"o":16,"out":["Flambae","Invisigal","Punch Up","Sonar"]},"ep5:0:3":{"t":33.9,"o":22,"out":["Flambae","Golem","Invisigal","Prism","Punch Up","Sonar"]},"ep5:0:4":{"t":37.2,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Punch Up","Sonar"]},"ep5:0:5":{"t":43.8,"o":22,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Punch Up","Sonar"]},"ep5:0:6":{"t":55.4,"o":15,"out":["Golem","Malevola","Prism","Sonar"]},"ep5:0:7":{"t":59.4,"o":20,"out":["Flambae","Golem","Malevola","Prism","Punch Up","Sonar","Waterboy"]},"ep5:0:8":{"t":76.1,"o":20,"out":["Flambae","Golem","Malevola","Prism","Punch Up","Sonar","Waterboy"],"w":[["Golem"],4,0]},"ep5:0:9":{"t":84.7,"o":20,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Punch Up","Sonar","Waterboy"],"w":[["Prism"],14,1]},"ep5:0:10":{"t":89.0,"o":20,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Punch Up","Sonar","Waterboy"],"w":[["Flambae","Sonar","Waterboy"],15,1]},"ep5:1:6":{"t":1.1,"o":10},"ep5:1:7":{"t":1.1,"o":10,"out":["Invisigal","Prism"]},"ep5:1:2":{"t":1.5,"o":10},"ep5:1:0":{"t":2.4,"o":10},"ep5:1:1":{"t":11.0,"out":["Invisigal","Malevola"]},"ep5:1:8":{"t":5.5,"o":20,"out":["Invisigal","Prism","Sonar"]},"ep5:1:3":{"t":6.7,"o":20,"out":["Flambae","Punch Up"]},"ep5:1:11":{"t":9.1,"o":33},"ep5:1:10":{"t":24.3,"o":20,"out":["Flambae","Invisigal","Prism","Sonar","Waterboy"],"w":[["Invisigal"],13,0]},"ep5:1:4":{"t":10.8,"o":10,"out":["Flambae","Punch Up","Sonar"]},"ep5:1:9":{"t":12.1,"out":["Flambae","Invisigal","Prism","Sonar","Waterboy"]},"ep5:1:13":{"t":13.3,"o":20,"out":["Prism"]},"ep5:1:5":{"t":14.8,"o":20,"out":["Flambae","Golem","Malevola","Punch Up","Sonar","Waterboy"]},"ep5:1:12":{"t":18.0,"o":20,"out":["Prism","Sonar"]},"ep5:1:14":{"t":23.6,"o":20,"out":["Golem","Invisigal","Prism","Sonar"]},"ep5:1:15":{"t":33.7,"o":18,"out":["Golem","Invisigal","Malevola","Prism","Sonar","Waterboy"]},"ep6:0:0":{"t":0.1,"o":20,"out":["Malevola"]},"ep6:0:1":{"t":0.1,"o":35,"out":["Malevola","Waterboy"]},"ep6:0:3":{"t":1.3,"o":10,"out":["Malevola","Sonar","Waterboy"]},"ep6:0:2":{"t":1.6,"o":26,"out":["Malevola","Sonar","Waterboy"],"k":1},"ep6:0:4":{"t":3.2,"o":20,"out":["Malevola","Sonar","Waterboy"]},"ep6:0:5":{"t":6.2,"o":23,"out":["Golem","Malevola","Sonar","Waterboy"]},"ep6:0:6":{"t":7.5,"o":26,"out":["Golem","Malevola","Prism","Sonar","Waterboy"],"k":1},"ep6:0:7":{"t":10.6,"o":25,"out":["Golem","Malevola","Prism","Sonar","Waterboy"]},"ep6:0:8":{"t":13.3,"out":["Golem","Invisigal","Malevola","Prism","Punch Up","Sonar","Waterboy"]},"ep6:0:9":{"t":17.5,"o":30,"out":["Golem","Invisigal","Malevola","Prism","Punch Up","Sonar","Waterboy"],"w":[["Sonar"],23,0]},"ep6:0:10":{"t":33.5,"o":22,"out":["Golem","Invisigal","Malevola","Prism","Punch Up","Sonar"],"k":1},"ep6:0:11":{"t":26.3,"o":23,"out":["Golem","Invisigal","Malevola","Prism","Punch Up","Sonar","Waterboy"],"w":[["Golem"],20,1]},"ep6:0:12":{"t":45.3,"o":30,"out":["Golem","Invisigal","Malevola","Prism","Punch Up","Sonar"],"w":[["Invisigal","Malevola","Prism"],17,0]},"ep6:0:14":{"t":51.3,"o":24,"out":["Golem","Invisigal","Malevola","Prism","Sonar","Waterboy"],"k":1},"ep6:0:15":{"t":68.3,"o":23,"out":["Golem","Invisigal","Malevola","Prism","Punch Up","Sonar","Waterboy"]},"ep6:0:13":{"t":55.2,"o":28,"out":["Golem","Invisigal","Malevola","Prism","Sonar","Waterboy"]},"ep7:0:0":{"t":9.5,"o":20},"ep7:0:1":{"t":17.7,"o":15},"ep7:0:2":{"t":18.7,"o":20,"out":["Flambae","Sonar"]},"ep7:0:3":{"t":23.2,"o":20,"out":["Flambae","Prism","Sonar"]},"ep7:0:4":{"t":129.9,"o":22},"ep7:0:5":{"t":32.7,"o":16,"out":["Flambae","Prism","Sonar"]},"ep7:0:6":{"t":44.3,"o":30,"out":["Flambae","Prism","Sonar","Waterboy"]},"ep7:0:7":{"t":49.6,"o":25,"out":["Flambae","Prism","Punch Up","Sonar","Waterboy"],"k":1},"ep7:0:8":{"t":52.8,"out":["Flambae","Prism","Punch Up","Sonar","Waterboy"]},"ep7:0:9":{"t":56.4,"o":14,"out":["Flambae","Prism","Punch Up","Sonar","Waterboy"],"w":[["Flambae"],2,0]},"ep7:0:10":{"t":67.1,"o":23,"out":["Flambae","Malevola","Prism","Punch Up","Waterboy"],"w":[["Waterboy"],6,0]},"ep7:0:11":{"t":67.2,"o":14,"out":["Flambae","Malevola","Prism","Punch Up","Sonar","Waterboy"],"k":1},"ep7:0:12":{"t":85.3,"o":16,"out":["Flambae","Malevola","Punch Up","Sonar","Waterboy"],"w":[["Flambae","Malevola"],12,1]},"ep8:0:0":{"t":7.2,"o":45,"out":["Malevola"],"w":[["Malevola"],8,0]},"ep8:0:1":{"t":7.2,"o":48,"out":["Malevola","Prism"],"w":[["Malevola"],36,0]},"ep8:0:2":{"t":7.2,"o":46,"out":["Malevola","Prism"]},"ep8:0:3":{"t":7.2,"o":44,"out":["Malevola","Prism","Punch Up"],"k":1},"ep8:0:4":{"t":15.0,"o":20,"out":["Malevola","Prism","Punch Up"]},"ep8:0:8":{"t":30.5,"o":14,"out":["Flambae","Golem","Malevola","Prism","Punch Up"]},"ep8:0:9":{"t":34.9,"o":30,"out":["Flambae","Golem","Malevola","Prism","Punch Up"],"w":[["Flambae"],24,0]},"ep8:0:10":{"t":43.1,"o":24,"out":["Flambae","Golem","Malevola","Punch Up","Waterboy"],"w":[["Golem"],18,0]},"ep8:0:5":{"t":19.5,"o":18,"out":["Malevola","Prism","Punch Up"]},"ep8:0:6":{"t":53.8,"o":22,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Punch Up","Sonar","Waterboy"],"w":[["Malevola"],16,0]},"ep8:0:7":{"t":28.0,"o":20,"out":["Flambae","Golem","Malevola","Prism","Punch Up"],"w":[["Punch Up"],5,0]},"ep8:0:11":{"t":34.0,"o":19,"out":["Flambae","Golem","Malevola","Prism","Punch Up"],"k":1},"ep8:0:12":{"t":46.1,"o":15,"out":["Flambae","Golem","Invisigal","Malevola","Punch Up","Sonar","Waterboy"]},"ep8:0:13":{"t":3.6,"o":36},"ep8:0:14":{"t":3.6,"o":26,"out":["Invisigal","Punch Up","Sonar"]},"ep8:0:15":{"t":3.6,"o":30,"out":["Flambae","Invisigal","Punch Up","Sonar","Waterboy"],"w":[["Invisigal","Punch Up"],26,1]},"ep8:0:16":{"t":3.6,"o":30,"out":["Flambae","Invisigal","Punch Up","Sonar","Waterboy"]},"ep8:0:17":{"t":3.6,"o":35,"out":["Flambae","Invisigal","Prism","Punch Up","Sonar","Waterboy"]},"ep8:0:18":{"t":19.2,"o":25,"out":["Flambae","Golem","Invisigal","Prism","Punch Up","Sonar","Waterboy"]},"ep8:0:19":{"t":19.2,"out":["Flambae","Golem","Invisigal","Prism","Punch Up","Sonar","Waterboy"]},"ep8:0:20":{"t":27.7,"o":35,"out":["Flambae","Golem","Invisigal","Malevola","Phenomaman","Prism","Punch Up","Sonar","Waterboy"],"w":[["Golem","Prism"],25,0]},"ep8:0:21":{"t":28.8,"o":30,"out":["Flambae","Golem","Invisigal","Malevola","Phenomaman","Prism","Punch Up","Sonar","Waterboy"],"w":[["Waterboy"],8,0]},"ep8:0:22":{"t":69.1,"o":32,"out":["Flambae","Golem","Invisigal","Malevola","Phenomaman","Prism","Punch Up","Sonar","Waterboy"],"w":[["Golem","Prism"],20,0]},"ep8:0:23":{"t":38.3,"o":32,"out":["Golem","Invisigal","Malevola","Phenomaman","Prism","Punch Up","Waterboy"]},"ep8:0:24":{"t":41.4,"o":29,"out":["Flambae","Golem","Invisigal","Malevola","Phenomaman","Prism","Punch Up","Sonar","Waterboy"],"k":1},"ep8:0:25":{"t":44.5,"o":35,"out":["Flambae","Golem","Invisigal","Malevola","Phenomaman","Prism","Punch Up","Sonar","Waterboy"],"w":[["Invisigal","Punch Up"],15,0]},"ep8:0:28":{"t":114.6,"o":30,"out":["Flambae","Golem","Malevola","Phenomaman","Prism","Waterboy"],"w":[["Flambae","Waterboy"],15,0]},"ep8:0:26":{"t":52.0,"o":28,"out":["Flambae","Golem","Invisigal","Malevola","Phenomaman","Prism","Punch Up","Sonar","Waterboy"],"k":1},"ep8:0:27":{"t":66.8,"o":33,"out":["Flambae","Golem","Invisigal","Malevola","Phenomaman","Prism","Punch Up","Sonar","Waterboy"],"w":[["Flambae"],25,0]},"ep8:0:29":{"t":3.0},"ep8:0:30":{"t":4.2,"o":18,"out":["Golem","Malevola"]},"ep8:0:31":{"t":17.4,"o":20,"out":["Golem","Invisigal","Malevola","Phenomaman"]},"ep8:0:32":{"t":28.7,"o":20,"out":["Golem","Invisigal","Malevola","Phenomaman","Sonar"]},"ep8:0:33":{"t":75.2,"o":16,"out":["Flambae","Invisigal","Malevola","Phenomaman","Prism","Punch Up","Sonar"],"w":[["Sonar"],3,0]},"ep8:0:34":{"t":112.6,"o":16,"out":["Flambae","Golem","Invisigal","Malevola","Phenomaman","Prism","Punch Up","Sonar","Waterboy"],"w":[["Invisigal","Malevola"],4,0]},"ep8:0:35":{"t":115.7,"o":16,"out":["Flambae","Golem","Invisigal","Malevola","Phenomaman","Prism","Sonar","Waterboy"]},"ep8:0:36":{"t":125.8,"o":15,"out":["Flambae","Golem","Malevola","Prism","Punch Up","Sonar","Waterboy"]},"ep8:0:37":{"t":150.3,"o":22,"out":["Flambae","Malevola","Prism","Punch Up"],"w":[["Punch Up"],7,0]},"ep8:0:38":{"t":150.3,"o":20,"out":["Flambae","Malevola","Prism","Punch Up","Waterboy"],"w":[["Flambae","Prism"],9,0]},"ep8:0:39":{"t":150.5,"out":["Flambae","Malevola","Prism","Punch Up","Waterboy"]},"ep8:0:42":{"t":52.0,"o":36,"out":["Flambae","Golem","Invisigal","Malevola","Phenomaman","Prism","Punch Up","Sonar","Waterboy"],"w":[["Phenomaman"],29,0]},"ep8:0:43":{"t":75.2,"o":28,"out":["Flambae","Golem","Invisigal","Malevola","Phenomaman","Prism","Punch Up","Sonar","Waterboy"],"w":[["Malevola"],7,0]},"ep8:0:40":{"t":32.0,"o":30,"out":["Golem","Invisigal","Malevola","Phenomaman","Sonar","Waterboy"]},"ep8:0:41":{"t":47.2,"o":30,"out":["Flambae","Golem","Invisigal","Malevola","Phenomaman","Prism","Sonar","Waterboy"],"w":[["Invisigal"],8,0]},"ep4:0:2":{"t":2.5,"o":15},"ep4:0:10":{"t":20.8,"o":16,"k":1},"ep5:0:11":{"t":44.4,"out":["Flambae","Golem","Invisigal","Malevola","Prism","Punch Up","Sonar"]},"ep7:0:14":{"t":81.2,"o":15,"out":["Flambae","Malevola","Prism","Punch Up","Sonar","Waterboy"],"k":1},"ep7:0:13":{"t":28.2},"ep7:0:15":{"t":46.7}};
-/* Level-ups along each run's call plan, from the hero XP rules (XP per call = the call's total stat need x its XP per point,
-   plus a low-odds bonus unless a choice wins the call, x2 for a 2x zone or Wolf Pack, split between the heroes sent, x1.33 for
-   the hero whose own option is picked; each level costs 300 XP more than the last). [call, hero, new level]. RANK_PLAN: the shifts whose review should rank you up (+2 per success, bars 12/32/34/36). */
-const LEVEL_PLAN = {"1":[["ep2:0:3","Prism",2],["ep2:0:7","Prism",3],["ep2:0:9","Sonar",2],["ep2:0:6","Golem",2],["ep2:0:11","Invisigal",2],["ep2:0:11","Invisigal",3],["ep3:0:0","Golem",3],["ep3:0:3","Malevola",2],["ep3:0:6","Punch Up",2],["ep3:0:5","Sonar",3],["ep3:1:0","Golem",4],["ep3:1:1","Coupé",2],["ep3:1:1","Malevola",3],["ep3:1:2","Coupé",3],["ep3:1:3","Flambae",2],["ep3:1:3","Prism",4],["ep3:1:3","Punch Up",3],["ep3:1:5","Punch Up",4],["ep3:1:5","Punch Up",5],["ep3:1:7","Invisigal",4],["ep4:0:1","Malevola",4],["ep4:0:1","Sonar",4],["ep4:0:3","Golem",5],["ep4:0:5","Invisigal",5],["ep4:0:5","Prism",5],["ep4:0:16","Flambae",3],["ep4:0:17","Invisigal",6],["ep4:1:0","Waterboy",2],["ep4:1:0","Waterboy",3],["ep4:1:3","Flambae",4],["ep4:1:4","Punch Up",6],["ep4:1:6","Invisigal",7],["ep4:1:6","Malevola",5],["ep4:1:6","Sonar",5],["ep4:1:7","Golem",6],["ep4:1:9","Prism",6],["ep5:0:0","Flambae",5],["ep5:0:1","Punch Up",7],["ep5:0:6","Waterboy",4],["ep5:0:7","Malevola",6],["ep5:0:8","Golem",7],["ep5:0:8","Invisigal",8],["ep5:0:9","Prism",7],["ep5:0:10","Flambae",6],["ep5:0:10","Sonar",6],["ep5:0:10","Waterboy",5],["ep5:1:0","Invisigal",9],["ep5:1:4","Golem",8],["ep5:1:4","Malevola",7],["ep5:1:8","Waterboy",6],["ep5:1:10","Invisigal",10],["ep5:1:11","Prism",8],["ep5:1:13","Sonar",7],["ep5:1:12","Golem",9],["ep5:1:15","Flambae",7],["ep5:1:15","Punch Up",8],["ep6:0:0","Waterboy",7],["ep6:0:1","Sonar",8],["ep6:0:11","Golem",10],["ep6:0:12","Malevola",8],["ep6:0:12","Prism",9],["ep6:0:12","Sonar",9],["ep6:0:12","Punch Up",9],["ep7:0:1","Sonar",10],["ep7:0:2","Prism",10],["ep7:0:5","Waterboy",8],["ep7:0:6","Punch Up",10],["ep7:0:10","Waterboy",9],["ep7:0:12","Flambae",8],["ep7:0:12","Malevola",9],["ep8:0:6","Malevola",10],["ep8:0:27","Flambae",9],["ep8:0:28","Waterboy",10],["ep8:0:40","Flambae",10]],"2":[["ep2:0:3","Prism",2],["ep2:0:7","Prism",3],["ep2:0:9","Sonar",2],["ep2:0:10","Punch Up",2],["ep2:0:11","Golem",2],["ep3:0:0","Golem",3],["ep3:0:3","Malevola",2],["ep3:0:4","Coupé",2],["ep3:0:5","Sonar",3],["ep3:0:8","Punch Up",3],["ep3:1:0","Golem",4],["ep3:1:1","Flambae",2],["ep3:1:2","Malevola",3],["ep3:1:5","Punch Up",4],["ep3:1:5","Punch Up",5],["ep3:1:7","Sonar",4],["ep3:1:8","Prism",4],["ep3:1:10","Flambae",3],["ep3:1:11","Coupé",3],["ep4:0:2","Punch Up",6],["ep4:0:2","Golem",5],["ep4:0:3","Malevola",4],["ep4:0:5","Coupé",4],["ep4:0:12","Prism",5],["ep4:0:16","Flambae",4],["ep4:1:0","Flambae",5],["ep4:1:0","Punch Up",7],["ep4:1:2","Malevola",5],["ep4:1:3","Coupé",5],["ep4:1:7","Golem",6],["ep4:1:8","Golem",7],["ep5:0:2","Prism",6],["ep5:0:6","Golem",8],["ep5:0:7","Malevola",6],["ep5:0:8","Punch Up",8],["ep5:0:8","Invisigal",2],["ep5:0:8","Flambae",6],["ep5:1:0","Coupé",6],["ep5:1:3","Prism",7],["ep5:1:8","Flambae",7],["ep5:1:10","Golem",9],["ep5:1:13","Malevola",7],["ep5:1:14","Flambae",8],["ep6:0:1","Golem",10],["ep6:0:5","Prism",8],["ep6:0:7","Coupé",7],["ep6:0:7","Punch Up",9],["ep6:0:12","Flambae",9],["ep7:0:0","Coupé",8],["ep7:0:1","Flambae",10],["ep7:0:1","Malevola",8],["ep7:0:2","Prism",9],["ep7:0:7","Prism",10],["ep7:0:10","Sonar",5],["ep7:0:10","Waterboy",2],["ep7:0:10","Waterboy",3],["ep7:0:10","Punch Up",10],["ep7:0:10","Phenomaman",2],["ep7:0:10","Invisigal",3],["ep8:0:1","Malevola",9],["ep8:0:16","Waterboy",4],["ep8:0:16","Waterboy",5],["ep8:0:21","Malevola",10],["ep8:0:23","Coupé",9],["ep8:0:27","Waterboy",6],["ep8:0:38","Coupé",10],["ep8:0:39","Waterboy",7]]};
-const RANK_PLAN = {"1":["ep2:0","ep3:0","ep4:0","ep5:0"],"2":["ep2:0","ep3:0","ep4:0","ep5:0"]};
+/* Hero XP along each run's call plan, from the hero XP rules: a call pays its total stat need x its XP per point, plus a
+   low-odds bonus unless a choice wins it, x2 for a 2x zone or Wolf Pack, split between the heroes sent (x1.33 for the hero
+   whose own option is picked; a team-wide call also pays the rest of the roster). Only a success pays anything: the hero's
+   GiveXpScenarioOutcome skips a failed call. XP_DATA[run][call] = [career weight (0: the guide lets it go), {hero: XP},
+   1 if team-wide]. The page counts level-ups and rank-ups from it, leaving out the calls you mark failed. */
+const XP_DATA = {"1":{"ep2:0:0":[1,{"Flambae":520}],"ep2:0:1":[1,{"Sonar":585}],"ep2:0:2":[1,{}],"ep2:0:3":[1,{"Prism":1729}],"ep2:0:4":[1,{"Invisigal":675}],"ep2:0:5":[1,{"Golem":910}],"ep2:0:7":[1,{"Prism":740}],"ep2:0:8":[1,{"Coupé":467.5,"Punch Up":467.5}],"ep2:0:9":[1,{"Sonar":1200}],"ep2:0:10":[1,{"Malevola":778.1}],"ep2:0:6":[1,{"Golem":845}],"ep2:0:11":[1,{"Invisigal":1210.3}],"ep2:0:12":[1,{"Invisigal":25}],"ep3:0:0":[1,{"Golem":865}],"ep3:0:1":[1,{"Coupé":432.5,"Punch Up":432.5}],"ep3:0:3":[1,{"Malevola":1065}],"ep3:0:4":[1,{"Prism":925}],"ep3:0:2":[0,{}],"ep3:0:6":[1,{"Punch Up":1000}],"ep3:0:5":[1,{"Sonar":805}],"ep3:0:7":[1,{}],"ep3:0:9":[1,{"Flambae":435,"Prism":435}],"ep3:0:8":[1,{"Golem":492.5,"Invisigal":492.5}],"ep3:0:10":[1,{"Malevola":325}],"ep3:1:0":[1,{"Golem":805}],"ep3:1:1":[1,{"Coupé":638.4,"Malevola":480}],"ep3:1:2":[1,{"Coupé":960}],"ep3:1:3":[1,{"Flambae":428.3,"Prism":428.3,"Punch Up":428.3}],"ep3:1:4":[1,{"Golem":432.5,"Invisigal":432.5}],"ep3:1:5":[1,{"Punch Up":3840}],"ep3:1:6":[1,{}],"ep3:1:7":[1,{"Invisigal":1436.4}],"ep3:1:8":[1,{"Sonar":985}],"ep3:1:9":[1,{}],"ep3:1:10":[1,{"Coupé":882.5,"Malevola":882.5}],"ep3:1:11":[1,{"Prism":1320}],"ep4:0:0":[1,{"Flambae":805}],"ep4:0:1":[1,{"Malevola":650,"Sonar":864.5}],"ep4:0:3":[1,{"Golem":1560}],"ep4:0:4":[0,{}],"ep4:0:5":[1,{"Invisigal":600,"Prism":600}],"ep4:0:7":[0,{}],"ep4:0:8":[0,{}],"ep4:0:9":[1,{"Prism":985}],"ep4:0:6":[1,{"Malevola":925}],"ep4:0:12":[1,{"Invisigal":1020}],"ep4:0:14":[1,{}],"ep4:0:13":[1,{"Punch Up":1440}],"ep4:0:11":[1,{"Golem":1105}],"ep4:0:16":[1,{"Flambae":925}],"ep4:0:17":[1,{"Invisigal":1995}],"ep4:0:15":[1,{"Sonar":625}],"ep4:1:0":[1,{"Waterboy":1800}],"ep4:1:1":[1,{}],"ep4:1:2":[1,{"Prism":625}],"ep4:1:3":[1,{"Flambae":1835.4}],"ep4:1:4":[1,{"Golem":462.5,"Punch Up":462.5}],"ep4:1:5":[1,{}],"ep4:1:6":[1,{"Invisigal":1016.7,"Malevola":1016.7,"Sonar":1016.7}],"ep4:1:7":[1,{"Golem":2100}],"ep4:1:8":[1,{"Malevola":522.5,"Punch Up":522.5}],"ep4:1:9":[1,{"Flambae":492.5,"Prism":492.5}],"ep4:1:10":[1,{}],"ep5:0:0":[1,{"Flambae":462.5,"Sonar":462.5}],"ep5:0:1":[1,{"Invisigal":1680,"Punch Up":2234.4}],"ep5:0:2":[1,{"Golem":582.5,"Prism":582.5}],"ep5:0:3":[1,{"Malevola":900}],"ep5:0:4":[1,{}],"ep5:0:5":[1,{}],"ep5:0:11":[1,{}],"ep5:0:6":[1,{"Flambae":428.3,"Punch Up":428.3,"Waterboy":428.3}],"ep5:0:7":[1,{"Malevola":745}],"ep5:0:8":[1,{"Golem":2875,"Invisigal":2875,"Malevola":958.3,"Prism":958.3,"Flambae":958.3,"Punch Up":958.3,"Waterboy":958.3,"Sonar":958.3},1],"ep5:0:9":[1,{"Prism":1045}],"ep5:0:10":[1,{"Flambae":768.3,"Sonar":768.3,"Waterboy":768.3}],"ep5:1:0":[1,{"Invisigal":985,"Malevola":985}],"ep5:1:1":[3,{}],"ep5:1:2":[1,{"Flambae":732.5,"Punch Up":732.5}],"ep5:1:3":[1,{"Sonar":1380}],"ep5:1:4":[1,{"Golem":468.3,"Malevola":468.3,"Waterboy":468.3}],"ep5:1:5":[1,{"Invisigal":1105,"Prism":1105}],"ep5:1:6":[1,{"Invisigal":1045,"Prism":1045}],"ep5:1:7":[1,{"Sonar":745}],"ep5:1:8":[1,{"Flambae":822.5,"Waterboy":822.5}],"ep5:1:9":[1,{}],"ep5:1:10":[1,{"Golem":2280,"Invisigal":2280}],"ep5:1:11":[1,{"Prism":1835.4}],"ep5:1:13":[1,{"Sonar":1405}],"ep5:1:12":[1,{"Golem":1585,"Invisigal":1585}],"ep5:1:14":[1,{"Malevola":1585,"Waterboy":1585}],"ep5:1:15":[1,{"Flambae":942.5,"Punch Up":942.5}],"ep6:0:0":[1,{"Waterboy":625}],"ep6:0:1":[1,{"Sonar":2280}],"ep6:0:3":[1,{}],"ep6:0:2":[0,{}],"ep6:0:4":[1,{"Golem":1225}],"ep6:0:5":[1,{"Prism":1020}],"ep6:0:6":[0,{}],"ep6:0:7":[1,{"Invisigal":1825,"Punch Up":1825}],"ep6:0:8":[1,{}],"ep6:0:9":[1,{"Sonar":1740}],"ep6:0:11":[1,{"Golem":2450}],"ep6:0:10":[0,{}],"ep6:0:12":[1,{"Invisigal":1412.5,"Malevola":1412.5,"Prism":1412.5,"Waterboy":1412.5,"Sonar":1883.3,"Punch Up":1883.3,"Golem":1883.3},1],"ep6:0:14":[0,{}],"ep6:0:13":[1,{"Punch Up":2160}],"ep6:0:15":[1,{"Sonar":1165}],"ep7:0:0":[0,{}],"ep7:0:1":[1,{"Flambae":1225,"Sonar":1225}],"ep7:0:2":[1,{"Prism":2793}],"ep7:0:3":[1,{}],"ep7:0:13":[1,{"Malevola":805}],"ep7:0:5":[1,{"Waterboy":985}],"ep7:0:6":[1,{"Prism":1585,"Punch Up":1585}],"ep7:0:15":[1,{}],"ep7:0:7":[0,{}],"ep7:0:8":[1,{}],"ep7:0:9":[1,{"Flambae":865,"Malevola":865}],"ep7:0:10":[1,{"Sonar":1885,"Waterboy":1885,"Malevola":628.3,"Golem":628.3,"Prism":628.3,"Flambae":628.3,"Punch Up":628.3,"Invisigal":628.3},1],"ep7:0:11":[0,{}],"ep7:0:14":[0,{}],"ep7:0:12":[1,{"Flambae":1016.7,"Malevola":1016.7,"Prism":1016.7}],"ep7:0:4":[1,{"Prism":488.3,"Punch Up":488.3,"Waterboy":488.3}],"ep8:0:0":[1,{"Malevola":492.5,"Prism":492.5}],"ep8:0:1":[1,{"Malevola":1730}],"ep8:0:2":[1,{"Punch Up":1105}],"ep8:0:3":[0,{}],"ep8:0:4":[1,{}],"ep8:0:5":[1,{"Golem":1165}],"ep8:0:7":[1,{"Punch Up":2690}],"ep8:0:8":[1,{}],"ep8:0:11":[0,{}],"ep8:0:9":[1,{}],"ep8:0:10":[1,{}],"ep8:0:12":[1,{"Prism":720}],"ep8:0:6":[1,{"Malevola":745}],"ep8:0:13":[1,{"Invisigal":1176.7,"Punch Up":1176.7,"Sonar":1176.7}],"ep8:0:14":[1,{"Flambae":672.5,"Waterboy":672.5}],"ep8:0:15":[1,{"Invisigal":1165,"Punch Up":1165}],"ep8:0:16":[1,{"Prism":1740}],"ep8:0:17":[1,{"Golem":1920}],"ep8:0:18":[1,{}],"ep8:0:19":[1,{"Malevola":1212.5,"Phenomaman":1212.5}],"ep8:0:20":[1,{"Golem":582.5,"Prism":582.5}],"ep8:0:21":[1,{"Waterboy":1045}],"ep8:0:23":[1,{"Flambae":852.5,"Sonar":852.5}],"ep8:0:24":[0,{}],"ep8:0:25":[1,{"Invisigal":1345,"Punch Up":1345}],"ep8:0:26":[0,{}],"ep8:0:42":[1,{"Phenomaman":985}],"ep8:0:27":[1,{"Flambae":2005}],"ep8:0:22":[1,{"Golem":582.5,"Prism":582.5}],"ep8:0:43":[1,{"Malevola":1500}],"ep8:0:28":[1,{"Flambae":528.3,"Sonar":528.3,"Waterboy":528.3}],"ep8:0:29":[3,{"Golem":1212.5,"Malevola":2425,"Phenomaman":1212.5,"Flambae":1212.5,"Prism":1212.5}],"ep8:0:30":[1,{"Invisigal":1525,"Phenomaman":1525}],"ep8:0:31":[1,{"Sonar":865}],"ep8:0:32":[1,{"Waterboy":1276.8}],"ep8:0:40":[1,{"Flambae":642.5,"Prism":642.5}],"ep8:0:41":[1,{"Invisigal":1225,"Punch Up":1225}],"ep8:0:33":[1,{"Golem":508.3,"Sonar":508.3,"Waterboy":508.3}],"ep8:0:34":[1,{"Invisigal":2305,"Malevola":2305}],"ep8:0:35":[1,{"Punch Up":720}],"ep8:0:36":[1,{}],"ep8:0:37":[1,{"Punch Up":1525,"Waterboy":1525}],"ep8:0:38":[1,{"Flambae":1705,"Prism":1705}],"ep8:0:39":[1,{"Golem":1008.3,"Phenomaman":1008.3,"Sonar":1008.3}]},"2":{"ep2:0:0":[1,{"Coupé":520}],"ep2:0:1":[1,{"Sonar":585}],"ep2:0:2":[1,{}],"ep2:0:3":[1,{"Prism":1729}],"ep2:0:4":[1,{"Malevola":675}],"ep2:0:5":[1,{"Punch Up":910}],"ep2:0:7":[1,{"Prism":740}],"ep2:0:8":[1,{"Coupé":467.5,"Flambae":467.5}],"ep2:0:9":[1,{"Sonar":1200}],"ep2:0:10":[1,{"Punch Up":585}],"ep2:0:6":[1,{"Golem":845}],"ep2:0:11":[1,{"Golem":910}],"ep2:0:12":[1,{"Invisigal":25}],"ep3:0:0":[1,{"Golem":865}],"ep3:0:1":[1,{"Prism":865}],"ep3:0:3":[1,{"Malevola":1065}],"ep3:0:4":[1,{"Coupé":462.5,"Punch Up":462.5}],"ep3:0:2":[0,{}],"ep3:0:6":[1,{"Golem":1000}],"ep3:0:5":[1,{"Sonar":805}],"ep3:0:7":[1,{}],"ep3:0:9":[1,{"Flambae":435,"Prism":435}],"ep3:0:8":[1,{"Punch Up":985}],"ep3:0:10":[1,{"Malevola":325}],"ep3:1:0":[1,{"Golem":805}],"ep3:1:1":[1,{"Flambae":960}],"ep3:1:2":[1,{"Malevola":960}],"ep3:1:3":[1,{"Coupé":642.5,"Punch Up":642.5}],"ep3:1:4":[1,{"Golem":432.5,"Sonar":432.5}],"ep3:1:5":[1,{"Punch Up":3840}],"ep3:1:6":[1,{}],"ep3:1:7":[1,{"Sonar":1080}],"ep3:1:8":[1,{"Malevola":492.5,"Prism":492.5}],"ep3:1:9":[1,{}],"ep3:1:10":[1,{"Flambae":882.5,"Golem":882.5}],"ep3:1:11":[1,{"Coupé":1320}],"ep4:0:0":[1,{"Flambae":805}],"ep4:0:2":[1,{"Punch Up":1600,"Malevola":266.7,"Golem":266.7,"Coupé":266.7,"Prism":266.7,"Flambae":266.7,"Invisigal":266.7},1],"ep4:0:3":[1,{"Malevola":1560}],"ep4:0:4":[0,{}],"ep4:0:5":[1,{"Coupé":600,"Prism":600}],"ep4:0:7":[1,{"Golem":1225}],"ep4:0:8":[0,{}],"ep4:0:10":[0,{}],"ep4:0:6":[1,{"Coupé":925}],"ep4:0:12":[1,{"Prism":1020}],"ep4:0:14":[1,{}],"ep4:0:13":[1,{"Punch Up":1440}],"ep4:0:11":[0,{}],"ep4:0:16":[1,{"Flambae":925}],"ep4:0:17":[1,{"Flambae":750,"Golem":750}],"ep4:0:15":[1,{"Prism":625}],"ep4:1:0":[1,{"Flambae":600,"Phenomaman":600,"Punch Up":600}],"ep4:1:1":[1,{}],"ep4:1:2":[1,{"Malevola":625}],"ep4:1:3":[1,{"Coupé":1380}],"ep4:1:4":[1,{"Malevola":462.5,"Punch Up":462.5}],"ep4:1:5":[1,{}],"ep4:1:6":[1,{"Flambae":762.5,"Prism":762.5}],"ep4:1:7":[1,{"Golem":2100}],"ep4:1:8":[1,{"Golem":522.5,"Punch Up":522.5}],"ep4:1:9":[1,{"Coupé":492.5,"Malevola":492.5}],"ep4:1:10":[1,{}],"ep5:0:0":[1,{"Flambae":462.5,"Malevola":462.5}],"ep5:0:1":[1,{"Golem":2234.4}],"ep5:0:2":[1,{"Prism":582.5,"Punch Up":582.5}],"ep5:0:3":[1,{"Phenomaman":900}],"ep5:0:4":[1,{}],"ep5:0:5":[1,{}],"ep5:0:11":[1,{}],"ep5:0:6":[1,{"Flambae":642.5,"Golem":642.5}],"ep5:0:7":[1,{"Malevola":745}],"ep5:0:8":[1,{"Phenomaman":1437.5,"Punch Up":1437.5,"Malevola":479.2,"Golem":479.2,"Coupé":479.2,"Prism":479.2,"Flambae":479.2,"Invisigal":479.2},1],"ep5:0:9":[1,{"Prism":1045}],"ep5:0:10":[1,{"Flambae":1152.5,"Golem":1152.5}],"ep5:1:0":[1,{"Coupé":492.5,"Malevola":492.5}],"ep5:1:1":[3,{}],"ep5:1:2":[1,{"Flambae":732.5,"Golem":732.5}],"ep5:1:3":[1,{"Prism":1380}],"ep5:1:4":[1,{"Coupé":702.5,"Punch Up":702.5}],"ep5:1:5":[1,{"Malevola":552.5,"Phenomaman":552.5}],"ep5:1:6":[1,{"Malevola":522.5,"Phenomaman":522.5}],"ep5:1:7":[1,{"Coupé":745}],"ep5:1:8":[1,{"Flambae":1645}],"ep5:1:9":[1,{}],"ep5:1:10":[1,{"Golem":2280}],"ep5:1:11":[1,{"Golem":1380}],"ep5:1:13":[1,{"Coupé":702.5,"Malevola":702.5}],"ep5:1:12":[0,{}],"ep5:1:14":[1,{"Flambae":1585,"Prism":1585}],"ep5:1:15":[1,{"Phenomaman":942.5,"Punch Up":942.5}],"ep6:0:0":[1,{"Flambae":625}],"ep6:0:1":[1,{"Golem":3032.4}],"ep6:0:3":[1,{}],"ep6:0:2":[0,{}],"ep6:0:4":[1,{"Phenomaman":1225}],"ep6:0:5":[1,{"Prism":1020}],"ep6:0:6":[0,{}],"ep6:0:7":[1,{"Coupé":1825,"Punch Up":1825}],"ep6:0:8":[1,{}],"ep6:0:9":[1,{"Flambae":1740}],"ep6:0:11":[1,{"Phenomaman":2450}],"ep6:0:10":[1,{"Golem":1705}],"ep6:0:12":[1,{"Flambae":2825,"Malevola":403.6,"Phenomaman":403.6,"Golem":403.6,"Coupé":403.6,"Prism":403.6,"Punch Up":403.6,"Invisigal":403.6},1],"ep6:0:14":[1,{"Coupé":642.5,"Punch Up":642.5}],"ep6:0:13":[1,{"Prism":2160}],"ep6:0:15":[1,{"Malevola":1165}],"ep7:0:0":[1,{"Coupé":642.5,"Punch Up":642.5}],"ep7:0:1":[1,{"Flambae":1225,"Malevola":1225}],"ep7:0:2":[1,{"Prism":2793}],"ep7:0:3":[1,{}],"ep7:0:13":[1,{"Prism":805}],"ep7:0:5":[1,{"Phenomaman":985}],"ep7:0:6":[0,{}],"ep7:0:15":[1,{}],"ep7:0:7":[1,{"Prism":1140}],"ep7:0:8":[1,{}],"ep7:0:9":[1,{"Flambae":1730}],"ep7:0:10":[1,{"Sonar":1885,"Waterboy":1885,"Malevola":628.3,"Phenomaman":628.3,"Golem":628.3,"Coupé":628.3,"Prism":628.3,"Flambae":628.3,"Punch Up":628.3,"Invisigal":628.3},1],"ep7:0:11":[1,{"Coupé":780,"Malevola":780}],"ep7:0:12":[1,{"Flambae":1525,"Phenomaman":1525}],"ep7:0:4":[1,{"Flambae":488.3,"Malevola":488.3,"Phenomaman":488.3}],"ep8:0:0":[1,{"Malevola":492.5,"Prism":492.5}],"ep8:0:1":[1,{"Malevola":1730}],"ep8:0:2":[1,{"Punch Up":1105}],"ep8:0:3":[0,{}],"ep8:0:4":[1,{}],"ep8:0:5":[1,{"Golem":1165}],"ep8:0:7":[0,{}],"ep8:0:8":[1,{}],"ep8:0:11":[0,{}],"ep8:0:9":[1,{}],"ep8:0:10":[1,{}],"ep8:0:12":[1,{"Prism":720}],"ep8:0:6":[1,{"Malevola":745}],"ep8:0:13":[1,{"Coupé":588.3,"Malevola":588.3,"Punch Up":588.3}],"ep8:0:14":[1,{"Phenomaman":672.5,"Prism":672.5}],"ep8:0:15":[1,{"Flambae":1165}],"ep8:0:16":[1,{"Waterboy":2314.2}],"ep8:0:17":[1,{"Golem":1920}],"ep8:0:18":[1,{}],"ep8:0:19":[1,{"Flambae":1212.5,"Prism":1212.5}],"ep8:0:20":[1,{"Golem":582.5,"Waterboy":582.5}],"ep8:0:21":[1,{"Malevola":1045}],"ep8:0:23":[1,{"Coupé":852.5,"Punch Up":852.5}],"ep8:0:24":[0,{}],"ep8:0:25":[1,{"Phenomaman":2690}],"ep8:0:26":[0,{}],"ep8:0:42":[0,{}],"ep8:0:27":[1,{"Coupé":501.2,"Golem":501.2,"Punch Up":501.2,"Waterboy":501.2}],"ep8:0:22":[1,{"Flambae":582.5,"Phenomaman":582.5}],"ep8:0:43":[1,{"Prism":1500}],"ep8:0:28":[1,{"Golem":792.5,"Waterboy":792.5}],"ep8:0:29":[3,{"Phenomaman":1212.5,"Prism":2425,"Coupé":1212.5,"Punch Up":1212.5,"Flambae":1212.5}],"ep8:0:30":[1,{"Coupé":762.5,"Punch Up":762.5}],"ep8:0:31":[1,{"Malevola":865}],"ep8:0:32":[1,{"Flambae":1276.8}],"ep8:0:40":[1,{"Golem":642.5,"Waterboy":642.5}],"ep8:0:41":[1,{"Flambae":1225}],"ep8:0:33":[1,{"Malevola":762.5,"Phenomaman":762.5}],"ep8:0:34":[1,{"Golem":2305}],"ep8:0:35":[1,{"Coupé":720}],"ep8:0:36":[1,{}],"ep8:0:37":[1,{"Flambae":1525,"Prism":1525}],"ep8:0:38":[1,{"Coupé":1705,"Punch Up":1705}],"ep8:0:39":[1,{"Malevola":1008.3,"Phenomaman":1008.3,"Waterboy":1008.3}]}};
 const SOURCES = [
   ["Dispatch game files, PC/Steam build of Sep 28, 2026 (achievement blueprints, story assets and config read directly; see the Game Files tab)","#files"],
   ["Dispatch PS5 trophy list (vgtimes)","https://vgtimes.ru/games/dispatch/achievements-and-trophies/ps5/"],
@@ -1368,14 +1414,17 @@ const DOC_URL = "https://claude.ai/artifact/CM57vLVqBC5AwYzGmRMrNy";
 /* ================= STATE ================= */
 const STORE_KEY = "dispatch-plat-v1";
 /* auto: which rule ticked a key (so unticking the step unticks it again); lvl: level-up points spent off-plan
-   {run: {"call|hero|level": stat}}; rk: rank-up wheel results {run: {review: {s: stat, h: hero}}}; open: shift dropdowns. */
-const state = { run:"1", ticks:{}, auto:{}, lvl:{}, rk:{}, open:{}, v:0, filter:{grade:"all", status:"all", part:"all"} };
+   {run: {"call|hero|level": stat}}; rk: rank-up wheel results {run: {review: {s: stat, h: hero}}}; fail: calls you marked
+   failed {run: {call: 1}}; lva: hero levels you set in the Levels panel {run: [[step id, hero, level]]}; lvp: the panel is
+   open; lvr: the run it shows while the page shows both; open: shift dropdowns. */
+const state = { run:"1", ticks:{}, auto:{}, lvl:{}, rk:{}, fail:{}, lva:{}, lvp:false, lvr:"1", open:{}, v:0, filter:{grade:"all", status:"all", part:"all"} };
 function loadStore(){
   try{ const raw = localStorage.getItem(STORE_KEY); if(raw){ const o = JSON.parse(raw); if(o && typeof o === "object"){ state.ticks = o.ticks || {}; if(o.run) state.run = o.run;
-    state.auto = o.auto || {}; state.lvl = o.lvl || {}; state.rk = o.rk || {}; state.open = o.open || {}; state.v = o.v || 0; } } }catch(e){}
+    state.auto = o.auto || {}; state.lvl = o.lvl || {}; state.rk = o.rk || {}; state.fail = o.fail || {}; state.lva = o.lva || {}; state.lvp = !!o.lvp; state.lvr = o.lvr==="2" ? "2" : "1";
+    state.open = o.open || {}; state.v = o.v || 0; } } }catch(e){}
 }
 function saveStore(){
-  try{ localStorage.setItem(STORE_KEY, JSON.stringify({ticks:state.ticks, run:state.run, auto:state.auto, lvl:state.lvl, rk:state.rk, open:state.open, v:state.v})); }catch(e){}
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify({ticks:state.ticks, run:state.run, auto:state.auto, lvl:state.lvl, rk:state.rk, fail:state.fail, lva:state.lva, lvp:state.lvp, lvr:state.lvr, open:state.open, v:state.v})); }catch(e){}
 }
 /* The first version had 19 hack rows ("h:N"); map them onto the 28 cards. */
 const OLD_HACK_MAP=[[0],[1],[2],[3,4],[5],[6],[7],[8,9,10],[11],[12],[13],[14,15,16],[17],[18,19,20,21,22],[23],[24],[25],[26],[27]];
@@ -1386,7 +1435,8 @@ function migrateTicks(){
 }
 /* Progress code: one bit per tick, in a fixed order, base64url with a version prefix.
    D1 codes (before the dialogue checklist) had 10 Run 2 steps and no dialogue ticks; D2 codes had no Run 2 call ticks
-   or cleanup steps. Both still load. D3 adds those, plus ".<base64 JSON>" with the level-up and rank-up picks. */
+   or cleanup steps. Both still load. D3 adds those, plus ".<base64 JSON>" with the level-up and rank-up picks, the calls
+   marked failed and the levels set in the Levels panel. */
 function allTickKeys(version){
   const keys=[];
   TROPHIES.forEach(t=>keys.push("t:"+t.n));
@@ -1407,7 +1457,8 @@ function exportCode(){
   const keys=allTickKeys(3); const bytes=new Array(Math.ceil(keys.length/8)).fill(0);
   keys.forEach((k,i)=>{ if(state.ticks[k]) bytes[i>>3]|=1<<(i&7); });
   let bin=""; bytes.forEach(b=>{ bin+=String.fromCharCode(b); });
-  const picks=(Object.keys(state.lvl).some(r=>Object.keys(state.lvl[r]).length)||Object.keys(state.rk).some(r=>Object.keys(state.rk[r]).length))?"."+b64u(unescape(encodeURIComponent(JSON.stringify({l:state.lvl,r:state.rk})))):"";
+  const has=o=>Object.keys(o||{}).some(r=>{ const v=o[r]; return Array.isArray(v) ? v.length>0 : Object.keys(v||{}).length>0; });
+  const picks=(has(state.lvl)||has(state.rk)||has(state.fail)||has(state.lva))?"."+b64u(unescape(encodeURIComponent(JSON.stringify({l:state.lvl,r:state.rk,f:state.fail,a:state.lva})))):"";
   return "D3-"+b64u(bin)+picks;
 }
 function importCode(code){
@@ -1417,7 +1468,7 @@ function importCode(code){
   let bin, picks=null; try{ bin=unb64u(parts[0]); if(parts[1]) picks=JSON.parse(decodeURIComponent(escape(unb64u(parts[1])))); }catch(e){ return false; }
   const keys=allTickKeys(ver); if(bin.length!==Math.ceil(keys.length/8)) return false;
   const t={}; keys.forEach((k,i)=>{ if(bin.charCodeAt(i>>3)&(1<<(i&7))) t[k]=true; });
-  state.ticks=t; state.auto={}; state.lvl=(picks&&picks.l)||{}; state.rk=(picks&&picks.r)||{}; saveStore(); return true;
+  state.ticks=t; state.auto={}; state.lvl=(picks&&picks.l)||{}; state.rk=(picks&&picks.r)||{}; state.fail=(picks&&picks.f)||{}; state.lva=(picks&&picks.a)||{}; saveStore(); return true;
 }
 
 /* ================= HELPERS ================= */
@@ -1505,7 +1556,7 @@ function renderTrophies(){
       '<div class="t-meta">'+partChip(t.p)+'<span class="muted">'+esc(t.w)+'</span>'+(t.ep?'<a href="#'+t.ep+'">Go to '+esc(viewLabel(t.ep))+'</a>':'')+'</div></div></li>';
   }).join("");
   h+='</ol></section>';
-  h+='<section class="block panel transfer" id="transfer"><h2>Move your ticks to another device</h2><p class="muted small">Ticks are saved in each browser separately, so your iPhone and MacBook keep their own lists. Copy this code, open the guide on the other device, paste it below and tap Load. Loading replaces that device\'s ticks.</p>';
+  h+='<section class="block panel transfer" id="transfer"><h2>Move your ticks to another device</h2><p class="muted small">Ticks are saved in each browser separately, so your iPhone and MacBook keep their own lists. Copy this code (it also carries your stat picks, failed calls and set levels), open the guide on the other device, paste it below and tap Load. Loading replaces that device\'s ticks.</p>';
   h+='<div class="row"><input id="xferOut" readonly aria-label="Your progress code" value=""><button type="button" class="btn" id="xferCopy">Copy code</button></div>';
   h+='<div class="row"><input id="xferIn" placeholder="Paste a D3- code" aria-label="Paste a progress code" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button type="button" class="btn ghost" id="xferLoad">Load</button></div>';
   h+='<p class="status" id="xferStatus" role="status"></p></section>';
@@ -1558,7 +1609,8 @@ const LEVELLING = [
   "**Double XP:** reaching a call's 2x XP line, or Invisigal's Wolf Pack training on any call she's on. A few calls (Send Literally Anyone Else, Join the Cult, Humor the Brainteaser, Sewage Spill, Break the Ice, Go All Out) also pay a share to every hero you didn't send.",
   "**Spend points mid-shift.** When a hero levels up the game shows a notification; press the Touch Pad to open the upgrade screen. Each level-up line in the call lists says where the point goes and why.",
   "**The random stat point** comes with each of your 4 career rank-ups (bars of 12, 32, 34 and 36 points: +2 per successful call, -1 per failure, -2 per miss). The end-of-shift screen spins a wheel that lands on one of the five stats with equal odds, then you choose which hero gets +1. Tap the stat it landed on in that shift's end-of-shift box and the guide names the hero and re-plans every point after it.",
-  "**Predictions assume every call succeeds with the guide's send.** A level can arrive a call early or late. When the game says a hero levelled up, use that hero's next point: it's the same whichever call it lands on."
+  "**Predictions assume every call succeeds with the guide's send, unless you mark it failed.** A failed call pays no XP to anyone (the game checks the outcome before it hands out XP), so tap **Mark failed** on it and every level-up after it is recounted. The **Levels** button at the top opens a panel with each hero's level and XP as of your last tick; if the game shows a different level, set it there with − and +.",
+  "**A level can still arrive a call early or late.** When the game says a hero levelled up, use that hero's next point: it's the same whichever call it lands on."
 ];
 function availLines(p, c){
   if(!p) return "";
@@ -1595,18 +1647,23 @@ function renderCall(ep, si, ci, c){
     const bc={trophy:"tb",hack:"hk",save:"save",train:"tr"}[t[0]]||"hk"; tags+='<span class="badge '+bc+'">'+esc(t[1])+'</span>';
   });
   if(c.only) tags+='<span class="chip r'+c.only+'">Run '+c.only+' only</span>';
-  let h='<li class="'+cls.join(" ")+'" id="'+id+'"'+(c.only?' data-only="'+c.only+'"':'')+' data-k1="'+esc(k1)+'" data-k2="'+esc(k2)+'">';
+  let h='<li class="'+cls.join(" ")+'" id="'+id+'" data-src="'+src+'"'+(c.only?' data-only="'+c.only+'"':'')+' data-k1="'+esc(k1)+'" data-k2="'+esc(k2)+'">';
   h+='<div class="ticks">'+runs.map(r=>'<span class="t-r'+r+'" title="Run '+r+'">'+tickBox(callTick(ep.id,si,ci,c,r),"Done in Run "+r+": "+c.n)+'</span>').join("")+'</div>';
   h+='<div class="call-body"><div class="call-top"><span class="call-name">'+esc(c.n)+'</span>'+(c.s?'<span class="slots">'+c.s+' slot'+(c.s>1?'s':'')+'</span>':'')+tags+'</div>';
   /* ls: [Run 1 %, Run 2 %] when the best team free is a long shot (under 60%), 0 otherwise; lsx: what a fail costs there */
   const lsb=r=>{ const p=c.ls&&c.ls[r-1]; return p?'<span class="badge ls ls-r'+r+'">Long shot ~'+p+'%</span>':''; };
-  h+='<div class="line send send-r1"><span class="lbl">'+(c.r2?'Run 1':'Send')+'</span><span><strong>'+md(c.send)+'</strong>'+lsb(1)+(c.r2?'':lsb(2))+'</span></div>';
-  if(c.r2) h+='<div class="line send send-r2"><span class="lbl">Run 2</span><span><strong>'+md(c.r2)+'</strong>'+lsb(2)+'</span></div>';
+  /* Mark failed: per run, on every call the guide sends a team on. A failed call pays no XP, so the level-ups after it move. */
+  const fok=r=>runs.includes(r) && canFail(r,src,c);
+  const fbt=r=>{ if(!fok(r)) return ''; const on=isFailed(r,src); return '<button type="button" class="failbtn fb-r'+r+'" data-fail="'+r+'|'+src+'" aria-pressed="'+on+'" title="Did it fail in Run '+r+'? Tap so the guide recounts the level-ups after it without its XP.">'+(on?'Failed':'Mark failed')+'</button>'; };
+  h+='<div class="line send send-r1"><span class="lbl">'+(c.r2?'Run 1':'Send')+'</span><span><strong>'+md(c.send)+'</strong>'+lsb(1)+(c.r2?'':lsb(2))+fbt("1")+(c.r2?'':fbt("2"))+'</span></div>';
+  if(c.r2) h+='<div class="line send send-r2"><span class="lbl">Run 2</span><span><strong>'+md(c.r2)+'</strong>'+lsb(2)+fbt("2")+'</span></div>';
+  ["1","2"].forEach(r=>{ if(!fok(r)) return; const d=XP_DATA[r][src], inv=r==="1" && !d[2] && d[1] && d[1].Invisigal;
+    h+='<p class="fail-note fn-r'+r+'">Failed in Run '+r+': no one gets XP from it, so every level-up after it is recounted, and it scores -1 career point instead of +2.'+(inv?' Invisigal\'s mentor score drops 1 too (a win adds 1).':'')+'</p>'; });
   if(c.pick) h+='<div class="line"><span class="lbl">Pick</span><span>'+md(c.pick)+'</span></div>';
   if(c.note) h+='<p class="note">'+md(c.note)+'</p>';
-  if(c.ls) [1,2].forEach(r=>{ const p=c.ls[r-1]; if(p) h+='<p class="tip ls-r'+r+'">Long shot: this team wins about '+p+'% of the time, so expect it to fail often. A fail is fine and needs no restart: a win pays extra XP, and a fail costs less than letting it go.'+(c.lsx&&c.lsx[r-1]?' '+esc(c.lsx[r-1]):'')+'</p>'; });
+  if(c.ls) [1,2].forEach(r=>{ const p=c.ls[r-1]; if(p) h+='<p class="tip ls-r'+r+'">Long shot: this team wins about '+p+'% of the time, so expect it to fail often. A fail is fine and needs no restart: a win pays extra XP, and a fail costs less than letting it go.'+(c.lsx&&c.lsx[r-1]?' '+esc(c.lsx[r-1]):'')+' If it fails, tap <strong>Mark failed</strong> so the level-ups after it are recounted.</p>'; });
   h+=linkChips(src, ep.id);
-  ["1","2"].forEach(r=>{ if(LV_AT[r].has(src)) h+='<div class="lvl-slot lvl-r'+r+'" data-lv="'+r+'|'+src+'"></div>'; });
+  runs.forEach(r=>{ h+='<div class="lvl-slot lvl-r'+r+'" data-lv="'+r+'|'+src+'"></div>'; });
   h+=availLines(SHIFT_PLAN[ep.id+":"+si+":"+ci], c);
   /* zn: zones from the game files [kind ("X" auto-fail, "2x" double XP), stat, team total that triggers it].
      ch: a choice pops on this call, and the option you pick decides it rather than the graph. */
@@ -1714,12 +1771,12 @@ function epStrip(ep){
   TROPHIES.forEach(t=>{ if(t.ep===ep.id) add(t, runOf(t)); });
   const srcs=new Set(); epFlow(ep).forEach(f=>{ if(f.type==="dlg") srcs.add(f.x.id); if(f.type==="hack") srcs.add("ev:"+ep.id+":"+f.i); if(f.type==="moment") add(trophyByName(f.m.t), f.m.run||0); if(f.type==="shift") f.b.calls.forEach(o=>srcs.add(ep.id+":"+f.b.si+":"+o.ci)); });
   srcs.forEach(s=>(LINKS[s]||[]).forEach(l=>{ if(l.t) add(trophyByName(l.t), l.run||0); }));
-  ["1","2"].forEach(r=>{ const e=(LEVEL_PLAN[r]||[]).find(e=>e[2]===10); if(e && e[0].startsWith(ep.id+":")) add(trophyByName("From Zero"), +r); if(RANK_PLAN[r][3] && RANK_PLAN[r][3].startsWith(ep.id+":")) add(trophyByName("Career Development"), +r); });
+  ["1","2"].forEach(r=>{ const X=XPS[r]; if(!X) return; const e=X.evs.find(e=>e.lv===10), s=e && SEQ[r][e.p]; if(s && s.ep===ep.id) add(trophyByName("From Zero"), +r); if(X.ranks[3] && X.ranks[3].startsWith("rv:"+ep.id+":")) add(trophyByName("Career Development"), +r); });
   if(ep.id==="ep2") add(trophyByName("Shift Was Lit"),1);
   if(ep.id==="ep8") add(trophyByName("H4ck3d"),0);
   const list=TROPHIES.filter(t=>got.has(trophyKey(t)));
   const hk=HACKS.map((x,i)=>({x,i})).filter(o=>o.x.ep===ep.num);
-  let h='<section class="block panel estrip"><div class="block-head"><h2>Trophies in this episode</h2><span class="muted small" id="hkc-'+ep.id+'">'+hackCountText(ep)+'</span></div>';
+  let h='<section class="block panel estrip" data-ep="'+ep.id+'"><div class="block-head"><h2>Trophies in this episode</h2><span class="muted small" id="hkc-'+ep.id+'">'+hackCountText(ep)+'</span></div>';
   h+='<p class="muted small">Tick them here or on the step that earns them; every copy of a box stays in sync. Boxes marked auto tick themselves when you tick that step.</p>';
   h+='<div class="links">'+list.map(t=>{ const k=trophyKey(t), run=got.get(k), auto=TICK_RULES.some(r=>r.k===k); return chip({t:t.n, run, auto}); }).join("")+'</div></section>';
   return h;
@@ -1871,6 +1928,7 @@ function renderSources(){
 }
 
 function renderAll(){
+  recalc(); STRIP_SIG=stripSig();
   const main=document.getElementById("main");
   let html="";
   html+='<div class="view" id="view-start">'+renderStart()+'</div>';
@@ -1886,8 +1944,8 @@ function renderAll(){
 }
 
 /* ================= AUTO-TICKS, LEVEL-UPS, PROGRESS ================= */
-const LV_AT = {"1":new Set((LEVEL_PLAN["1"]||[]).map(e=>e[0])), "2":new Set((LEVEL_PLAN["2"]||[]).map(e=>e[0]))};
-let SEQ={}, POS={}, TICK_RULES=[], PHASES=[], PLAN={}, NEXT_SHIFT=null;
+/* XPS: each run's level-ups and rank-ups, recounted from your fail marks and set levels; BASE: the guide's own plan. */
+let SEQ={}, POS={}, STEP_IX={}, TICK_RULES=[], PHASES=[], PLAN={}, XPS={}, BASE={}, BASE_AT={}, STRIP_SIG="", NEXT_SHIFT=null;
 
 /* Rules: k ticks itself once n of the keys in "of" are ticked. id stays stable so a saved "who ticked this" still matches. */
 function buildRules(){
@@ -1965,7 +2023,8 @@ function buildSeq(run){
   return out;
 }
 function buildSteps(){
-  ["1","2"].forEach(r=>{ SEQ[r]=buildSeq(r); POS[r]={}; SEQ[r].forEach((s,i)=>{ if(s.src) POS[r][s.src]=i; if(s.rv) POS[r][s.rv]=i; }); });
+  ["1","2"].forEach(r=>{ SEQ[r]=buildSeq(r); POS[r]={}; STEP_IX[r]={}; SEQ[r].forEach((s,i)=>{ if(s.src) POS[r][s.src]=i; if(s.rv) POS[r][s.rv]=i; STEP_IX[r][s.id]=i; }); });
+  ["1","2"].forEach(r=>{ BASE[r]=walkXp(r,-1,true); BASE_AT[r]={}; BASE[r].evs.forEach(e=>{ BASE_AT[r][e.hero+"|"+e.lv]=e; }); });
   const steps=r=>SEQ[r].filter(s=>s.kind!=="rv");
   PHASES=[
     {id:"r1", label:"Run 1", run:"1", steps:steps("1")},
@@ -2064,17 +2123,62 @@ function recommendHero(run, s, st, p){
   const fb=["Golem"].concat(RANK_PRIORITY[run]).find(h=>st[h] && onTeamAt(run,h,p) && st[h][s]<10 && !capWhy(run,h,s,st,p));
   return fb ? {hero:fb, why:"no one's plan needs "+STAT_NAMES[s]+" right now, so it goes to "+fb} : null;
 }
-/* Replays a run's predicted level-ups and the rank-up points you recorded, in story order. */
+/* ---- Hero XP: level-ups and rank-ups, recounted from the calls you mark failed and the levels you set ---- */
+const XP_FIRST = {"Invisigal":700, "Waterboy":400, "Phenomaman":10500, "Blazer":10500}, XP_STEP = 300, XP_MAX = 10, RANK_BARS = [12,32,34,36];
+function xpNeed(h, lv){ return (XP_FIRST[h]||1000)+(lv-1)*XP_STEP; }
+function isFailed(run, src){ return !!(state.fail[run] && state.fail[run][src]); }
+/* A call you can mark failed: one the guide sends a team on in that run (not one it lets go, and not a training). */
+function canFail(run, src, c){ const d=(XP_DATA[run]||{})[src]; return !!(d && d[0]) && !/Training/.test(c.n); }
+/* One pass over a run in story order. A sent call pays its XP (XP_DATA) unless you marked it failed: a failed call pays no
+   one and scores -1 career point instead of +2, and a call the guide lets go scores -2. Each end-of-shift review ranks you
+   up past bars of 12, 32, 34 and 36 points, the excess carrying over. A level you set in the Levels panel puts that hero
+   at the start of that level from that step on. bare: the guide's own plan, without your marks.
+   Returns the level-ups {p, src, hero, lv, adj}, the reviews that rank you up, and each hero's level and XP after step "now". */
+function walkXp(run, now, bare){
+  const D=XP_DATA[run]||{}, F=bare?{}:(state.fail[run]||{}), seq=SEQ[run]||[], lv={}, xp={}, evs=[], ranks=[], at={};
+  Object.keys(D).forEach(k=>Object.keys(D[k][1]||{}).forEach(h=>{ lv[h]=1; xp[h]=0; }));
+  (bare?[]:(state.lva[run]||[])).forEach(a=>{ const i=a[0]==="start" ? -1 : STEP_IX[run][a[0]]; if(i!=null && lv[a[1]]!=null) (at[i]=at[i]||[]).push(a); });
+  let rank=0, pts=0, sp=0, snap=null;
+  const anchor=(i, s)=>(at[i]||[]).forEach(([id,h,l])=>{
+    if(l===lv[h]) return;
+    if(l>lv[h]) for(let L=lv[h]+1; L<=l; L++) evs.push({p:i, src:s?(s.src||s.id):"start", hero:h, lv:L, adj:true});
+    else for(let j=evs.length-1; j>=0; j--) if(evs[j].hero===h && evs[j].lv>l) evs.splice(j,1);
+    lv[h]=l; xp[h]=0;
+  });
+  const shot=i=>{ snap={p:i, lv:Object.assign({},lv), xp:Object.assign({},xp)}; };
+  anchor(-1, null); if(now<0) shot(-1);
+  seq.forEach((s,i)=>{
+    const d=s.kind==="c" && D[s.src];
+    if(d){
+      if(!d[0]) sp-=2;
+      else if(F[s.src]) sp-=d[0];
+      else { sp+=2*d[0]; const g=d[1]||{};
+        Object.keys(g).forEach(h=>{ xp[h]+=g[h]; while(lv[h]<XP_MAX && xp[h]>=xpNeed(h,lv[h])){ xp[h]-=xpNeed(h,lv[h]); lv[h]++; evs.push({p:i, src:s.src, hero:h, lv:lv[h]}); } }); }
+    } else if(s.kind==="rv"){
+      pts=Math.max(0, pts+sp); sp=0;
+      while(rank<4 && pts>=RANK_BARS[rank]){ pts-=RANK_BARS[rank]; rank++; ranks.push(s.rv); }
+      if(rank>=4) pts=0;
+    }
+    anchor(i, s);
+    if(i===now) shot(i);
+  });
+  return {evs, ranks, snap:snap||{p:now, lv, xp}, heroes:Object.keys(lv)};
+}
+function recalc(){ ["1","2"].forEach(r=>{ XPS[r]=walkXp(r, furthestPos(r), false); }); }
+/* Your off-plan picks by hero and level, so a pick follows its level-up when a fail mark moves it to another call. */
+function lvPicks(run){ const m={}, ov=state.lvl[run]||{}; Object.keys(ov).forEach(id=>{ const p=id.split("|"); if(p.length===3) m[p[1]+"|"+p[2]]=ov[id]; }); return m; }
+/* Replays a run's level-ups (recounted from your marks) and the rank-up points you recorded, in story order. */
 function computePlan(run){
-  const pos=POS[run], evs=[], rk=state.rk[run]||{}, ov=state.lvl[run]||{};
-  (LEVEL_PLAN[run]||[]).forEach(([src,hero,lv])=>{ if(pos[src]!=null) evs.push({type:"lv", p:pos[src], src, hero, lv, id:src+"|"+hero+"|"+lv}); });
-  Object.keys(rk).forEach(rv=>{ if(pos[rv]!=null && rk[rv] && rk[rv].s!=null) evs.push({type:"rk", p:pos[rv], rv, s:rk[rv].s, h:rk[rv].h}); });
+  const evs=[], rk=state.rk[run]||{}, pick=lvPicks(run);
+  (XPS[run]?XPS[run].evs:[]).forEach(x=>evs.push({type:"lv", p:x.p, src:x.src, hero:x.hero, lv:x.lv, adj:!!x.adj, id:x.src+"|"+x.hero+"|"+x.lv}));
+  Object.keys(rk).forEach(rv=>{ const p=POS[run][rv]; if(p!=null && rk[rv] && rk[rv].s!=null) evs.push({type:"rk", p, rv, s:rk[rv].s, h:rk[rv].h}); });
   evs.sort((a,b)=>a.p-b.p);
   const st={}; HEROES.forEach(x=>{ st[x.n]=x.st.slice(); });
   evs.forEach(e=>{
     if(e.type==="lv"){
+      if(!st[e.hero]) st[e.hero]=[1,1,1,1,1];
       e.rec=recommend(run, e.hero, st, e.p);
-      e.over=ov[e.id]!=null; e.stat=e.over ? ov[e.id] : e.rec.stat;
+      const k=e.hero+"|"+e.lv; e.over=pick[k]!=null; e.stat=e.over ? pick[k] : e.rec.stat;
       if(e.stat!=null && st[e.hero][e.stat]<10) st[e.hero][e.stat]++;
     } else {
       e.best=recommendHero(run, e.s, st, e.p);
@@ -2088,14 +2192,17 @@ function computePlan(run){
 }
 function lvlLine(run, e){
   const r=e.rec;
-  let t='<span class="lvl-k">Level up</span> <strong>'+esc(e.hero)+'</strong> should reach level '+e.lv+' on this call. ';
+  let t='<span class="lvl-k">Level up</span> <strong>'+esc(e.hero)+'</strong> '+(e.adj ? 'is level '+e.lv+' here: you set it in the Levels panel. ' : 'should reach level '+e.lv+' on this call. ');
   t+= r.stat!=null ? 'Put the point in <strong>'+STAT_NAMES[r.stat]+'</strong> ('+r.cur+' → '+(r.cur+1)+(r.target&&r.target>r.cur+1?', aiming for '+r.target:'')+'): '+esc(r.why)+'.' : esc(r.why);
+  const b=BASE_AT[run] && BASE_AT[run][e.hero+"|"+e.lv], bs=b && SEQ[run][b.p];
+  if(!e.adj && bs && b.src!==e.src){ const hf=Object.keys(state.fail[run]||{}).length>0, ha=(state.lva[run]||[]).length>0;
+    t+=' <span class="lvl-moved">Moved here from '+esc(bs.label)+' (Ep '+EP_BY_ID[bs.ep].num+') by '+(hf&&ha?'your fail marks and set levels':ha?'the levels you set':'your fail marks')+'.</span>'; }
   if(e.over) t+=' <span class="lvl-over">You put it in '+STAT_NAMES[e.stat]+'; later points adjust.</span>';
   const opts='<option value="">'+(r.stat!=null?'the plan ('+STAT_NAMES[r.stat]+')':'nothing')+'</option>'+STAT_NAMES.map((s,i)=>'<option value="'+i+'"'+(e.over&&e.stat===i?' selected':'')+'>'+s+'</option>').join("");
   return '<div class="lvl">'+t+' <label class="lvl-sel">Spent it on <select data-lvset="'+run+'|'+esc(e.id)+'">'+opts+'</select></label></div>';
 }
 function rkBox(run, rv, plan){
-  const rec=(state.rk[run]||{})[rv], e=plan.evs.find(x=>x.type==="rk" && x.rv===rv), pi=RANK_PLAN[run].indexOf(rv.slice(3));
+  const rec=(state.rk[run]||{})[rv], e=plan.evs.find(x=>x.type==="rk" && x.rv===rv), pi=(XPS[run]?XPS[run].ranks:[]).indexOf(rv);
   let body='<div class="statpick" role="group" aria-label="Stat the wheel landed on">'+STAT_NAMES.map((s,i)=>'<button type="button" data-rkset="'+run+'|'+rv+'|'+i+'" aria-pressed="'+(!!rec && rec.s===i)+'">'+s+'</button>').join("")+(rec?'<button type="button" class="clr" data-rkset="'+run+'|'+rv+'|-1">Clear</button>':'')+'</div>';
   if(rec && e){
     const b=e.best;
@@ -2106,42 +2213,90 @@ function rkBox(run, rv, plan){
   if(pi>=0) return '<p class="rk-q"><span class="badge save">Rank-up '+(pi+1)+' of 4</span> You should rank up to <strong>'+RANK_NAMES[pi]+'</strong> here'+(pi===3?' and pop Career Development':'')+'. The end-of-shift screen spins a wheel for a random stat point: tap the stat it lands on.</p>'+body+(pi===3?'<div class="links">'+chip({t:"Career Development",run:+run,auto:1})+'</div>':'');
   return '<details class="rk-more"'+(rec?' open':'')+'><summary>Ranked up after this shift instead? Record the random point</summary>'+body+'</details>';
 }
-function heroesIn(run){ return HEROES.filter(x=>(x.run==null || x.run===run) && ((BUILDS[run]||{})[x.n] || (LEVEL_PLAN[run]||[]).some(e=>e[1]===x.n))).map(x=>x.n); }
+function heroesIn(run){ const up=new Set(); [BASE[run],XPS[run]].forEach(X=>{ if(X) X.evs.forEach(e=>up.add(e.hero)); }); return HEROES.filter(x=>(x.run==null || x.run===run) && ((BUILDS[run]||{})[x.n] || up.has(x.n))).map(x=>x.n); }
 function plannerHtml(){
   const run=state.run==="2"?"2":"1", plan=PLAN[run], now=furthestPos(run);
-  let h='<p class="muted small">Showing Run '+run+'. "Now" follows your ticks in this run. Points are planned for the guide\'s send on every call, assuming each call succeeds, and change when you record a rank-up point or spend a point off-plan.</p><div class="heroes">';
+  let h='<p class="muted small">Showing Run '+run+'. "Now" follows your ticks in this run. Points are planned for the guide\'s send on every call. They assume each call succeeds unless you mark it failed, and they change when you record a rank-up point, spend a point off-plan or set a level in the Levels panel.</p><div class="heroes">';
   heroesIn(run).forEach(name=>{
     const base=HEROES.find(x=>x.n===name), mine=plan.evs.filter(e=>e.hero===name), st=base.st.slice();
     let lv=1; mine.forEach(e=>{ if(e.p<=now){ if(e.type==="lv") lv=e.lv; if(e.after) st.splice(0,5,...e.after); } });
     const nextLv=mine.find(e=>e.type==="lv" && e.p>now), b=(BUILDS[run]||{})[name];
     const stepTxt=b && b.steps.length ? b.steps.map(x=>STAT_NAMES[STAT_IX[x[0]]]+' '+x[1]).join(" → ") : esc((b&&b.note)||"No plan");
     h+='<article class="herocard"><div><h3>'+esc(name)+'</h3><p class="mono muted">Now: level '+lv+' · '+esc(fmtStats(st))+'</p></div>'+radar(st);
-    h+='<dl><div><dt>Next point</dt><dd>'+(nextLv ? (nextLv.rec.stat!=null?'<strong>'+STAT_NAMES[nextLv.rec.stat]+'</strong> at level '+nextLv.lv+' (Ep '+EP_BY_ID[nextLv.src.split(":")[0]].num+', '+esc(SEQ[run][nextLv.p].label)+')':esc(nextLv.rec.why)) : 'No more level-ups expected')+'</dd></div><div><dt>Plan</dt><dd>'+stepTxt+'</dd></div></dl>';
+    h+='<dl><div><dt>Next point</dt><dd>'+(nextLv ? (nextLv.rec.stat!=null?'<strong>'+STAT_NAMES[nextLv.rec.stat]+'</strong> at level '+nextLv.lv+' (Ep '+EP_BY_ID[SEQ[run][nextLv.p].ep].num+', '+esc(SEQ[run][nextLv.p].label)+')':esc(nextLv.rec.why)) : 'No more level-ups expected')+'</dd></div><div><dt>Plan</dt><dd>'+stepTxt+'</dd></div></dl>';
     if(mine.length) h+='<details class="lv-all"><summary>All '+mine.length+' points</summary><ol class="lv-list">'+mine.map(e=>{ const s=SEQ[run][e.p]; const where=s && s.ep ? 'Ep '+EP_BY_ID[s.ep].num+' · '+(e.type==="rk"?'end of shift':s.label) : '';
       return '<li class="'+(e.p<=now?'past':'')+'"><span class="mono">'+(e.type==="lv"?'Lv '+e.lv:'Rank pt')+'</span> '+esc(where)+' → <strong>'+(e.type==="lv" ? (e.stat!=null?STAT_NAMES[e.stat]:'—') : STAT_NAMES[e.s])+'</strong></li>'; }).join("")+'</ol></details>';
     h+='</article>';
   });
-  h+='</div><h3 class="rk-h3">Random rank-up points · Run '+run+'</h3><ol class="plain">'+RANK_PLAN[run].map((k,i)=>{ const rv="rv:"+k, rec=(state.rk[run]||{})[rv], e=plan.evs.find(x=>x.type==="rk"&&x.rv===rv), ep=EP_BY_ID[k.split(":")[0]];
-    return '<li>'+RANK_NAMES[i]+': expected at the end of '+stepLink({id:rv.replace(/:/g,"-"), ep:ep.id}, run, 'Ep '+ep.num+' '+esc(shiftBuckets(ep)[+k.split(":")[1]].t))+'. '+(rec&&e ? 'Rolled '+STAT_NAMES[e.s]+', given to <strong>'+esc(e.hero||"?")+'</strong>.' : 'Not recorded yet.')+'</li>'; }).join("")+'</ol>';
+  const rks=XPS[run]?XPS[run].ranks:[];
+  h+='</div><h3 class="rk-h3">Random rank-up points · Run '+run+'</h3><ol class="plain">'+RANK_NAMES.map((nm,i)=>{ if(!rks[i]) return '<li>'+nm+': not reached along this plan with the calls you marked failed. Each fail scores 3 points less than a win.</li>';
+    const rv=rks[i], k=rv.slice(3), rec=(state.rk[run]||{})[rv], e=plan.evs.find(x=>x.type==="rk"&&x.rv===rv), ep=EP_BY_ID[k.split(":")[0]];
+    return '<li>'+nm+': expected at the end of '+stepLink({id:rv.replace(/:/g,"-"), ep:ep.id}, run, 'Ep '+ep.num+' '+esc(shiftBuckets(ep)[+k.split(":")[1]].t))+'. '+(rec&&e ? 'Rolled '+STAT_NAMES[e.s]+', given to <strong>'+esc(e.hero||"?")+'</strong>.' : 'Not recorded yet.')+'</li>'; }).join("")+'</ol>';
   return h;
 }
-/* A recorded pick is keyed "call|hero|level". When a regenerated plan moves that level-up to another call,
-   keep the pick on the same hero level. */
-function migrateLvl(){
-  let moved=false;
-  ["1","2"].forEach(r=>{
-    const ov=state.lvl[r]; if(!ov) return;
-    const now={}; (LEVEL_PLAN[r]||[]).forEach(([src,h,lv])=>{ now[h+"|"+lv]=src+"|"+h+"|"+lv; });
-    Object.keys(ov).forEach(id=>{ const p=id.split("|"), nid=now[p[1]+"|"+p[2]];
-      if(nid && nid!==id && ov[nid]==null){ ov[nid]=ov[id]; delete ov[id]; moved=true; } });
+/* ---- Levels panel: each hero's level and XP as of your last tick, with - and + to match the game ---- */
+function lvRun(){ return state.run==="1"||state.run==="2" ? state.run : state.lvr; }
+function stepName(run, p){ const s=SEQ[run][p]; return s ? 'Ep '+EP_BY_ID[s.ep].num+' · '+(s.kind==="rv" ? 'end of shift' : trim(s.label,42)) : 'the start'; }
+function renderLvPanel(){
+  const el=document.getElementById("lvPanel"); if(!el || el.hidden || !XPS["1"] || !PLAN["1"]) return;
+  const run=lvRun(), X=XPS[run], plan=PLAN[run], now=X.snap.p, step=SEQ[run][now], sid=step ? step.id : "start";
+  const f=document.activeElement, fk=f && el.contains(f) ? (f.dataset.lvadj ? '[data-lvadj="'+f.dataset.lvadj+'"]' : f.dataset.lvr ? '[data-lvr="'+f.dataset.lvr+'"]' : f.id ? '#'+f.id : null) : null;
+  let h='<div class="lvp-head"><h2>Hero levels</h2>';
+  h+=state.run==="both" ? '<div class="seg" role="group" aria-label="Run shown here">'+["1","2"].map(r=>'<button type="button" data-lvr="'+r+'" aria-pressed="'+(r===run)+'">Run '+r+'</button>').join("")+'</div>' : '<span class="chip r'+run+'">Run '+run+'</span>';
+  h+='<button type="button" class="icon-btn" id="lvClose">Close</button></div>';
+  h+='<p class="lvp-asof">'+(step ? 'As of your last tick: '+stepLink(step, run, esc(stepName(run, now)))+'.' : 'Nothing is ticked in Run '+run+' yet, so this is the start of the run.')+' Tick calls as you finish them, and tap <strong>Mark failed</strong> on any call that fails.</p>';
+  if(BASE[run].evs.some(e=>e.lv===10) && !X.evs.some(e=>e.lv===10)) h+='<p class="lvp-warn">With these fails no hero reaches level 10 in Run '+run+', so From Zero To Hero won\'t pop in this run.</p>';
+  if(BASE[run].ranks.length>=4 && X.ranks.length<4) h+='<p class="lvp-warn">With these fails you reach '+X.ranks.length+' of 4 career ranks in Run '+run+', so Career Development won\'t pop in this run.</p>';
+  h+='<ul class="lvp-list">';
+  heroesIn(run).forEach(name=>{
+    const L=X.snap.lv[name]||1, x=X.snap.xp[name]||0, max=L>=XP_MAX, need=xpNeed(name,L), on=onTeamAt(run,name,Math.max(now,0));
+    const mine=(state.lva[run]||[]).some(a=>a[0]===sid && a[1]===name);
+    const here=plan.evs.filter(e=>e.type==="lv" && e.adj && e.hero===name && e.p===now), nx=plan.evs.find(e=>e.type==="lv" && e.hero===name && e.p>now);
+    h+='<li class="lvp-h'+(mine?' set':'')+(on?'':' off')+'"><div class="lvp-top"><span class="lvp-n">'+esc(name)+'</span>'+(mine?'<span class="lvp-tag">Set by you</span>':'')+'<span class="lvp-lv">Lv '+L+'</span>';
+    h+='<span class="lvp-btns"><button type="button" data-lvadj="'+run+'|'+esc(name)+'|-1" aria-label="'+esc(name)+': one level lower"'+(L<=1?' disabled':'')+'>−</button><button type="button" data-lvadj="'+run+'|'+esc(name)+'|1" aria-label="'+esc(name)+': one level higher"'+(max?' disabled':'')+'>+</button></span></div>';
+    h+='<div class="lvp-bar" aria-hidden="true"><i style="width:'+(max?100:Math.min(100,x/need*100)).toFixed(1)+'%"></i></div>';
+    h+='<p class="lvp-next">'+(max ? 'Max level' : '≈'+Math.round(x).toLocaleString("en-US")+' / '+need.toLocaleString("en-US")+' XP to level '+(L+1))+(on?'':' · off your roster here')+'</p>';
+    if(here.length) h+='<p class="lvp-pt">Put the new point'+(here.length>1?'s':'')+' in '+here.map(e=>'<strong>'+(e.stat!=null?STAT_NAMES[e.stat]:'any stat')+'</strong>').join(" and ")+'.</p>';
+    if(!max) h+='<p class="lvp-next">'+(nx ? 'Next: level '+nx.lv+' on '+stepLink(SEQ[run][nx.p], run, esc(stepName(run, nx.p)))+(nx.stat!=null?' → '+STAT_NAMES[nx.stat]:'') : 'No more level-ups along this run')+'</p>';
+    h+='</li>';
   });
-  return moved;
+  h+='</ul>';
+  const F=Object.keys(state.fail[run]||{}).filter(k=>POS[run][k]!=null).sort((a,b)=>POS[run][a]-POS[run][b]);
+  h+='<h3 class="lvp-h3">Failed calls · Run '+run+'</h3>'+(F.length ? '<ul class="lvp-marks">'+F.map(k=>'<li>'+stepLink(SEQ[run][POS[run][k]], run, esc(stepName(run, POS[run][k])))+'<button type="button" class="lvp-undo" data-fail="'+run+'|'+k+'">Undo</button></li>').join("")+'</ul>' : '<p class="lvp-note">None marked yet.</p>');
+  const A=(state.lva[run]||[]).filter(a=>a[0]==="start" || STEP_IX[run][a[0]]!=null);
+  if(A.length) h+='<h3 class="lvp-h3">Levels you set · Run '+run+'</h3><ul class="lvp-marks">'+A.map(a=>{ const p=a[0]==="start" ? -1 : STEP_IX[run][a[0]];
+    return '<li><span><strong>'+esc(a[1])+'</strong> level '+a[2]+' at '+(p<0 ? 'the start' : stepLink(SEQ[run][p], run, esc(stepName(run, p))))+'</span><button type="button" class="lvp-undo" data-lvdel="'+run+'|'+esc(a[0])+'|'+esc(a[1])+'">Undo</button></li>'; }).join("")+'</ul>';
+  h+='<p class="lvp-note">How it counts: a call pays XP only when it succeeds, so a call you mark failed pays no one and the level-ups after it move. If the game still shows a different level, use − and + to set it as of your last tick; the guide then counts from the start of that level. Going back to the guide\'s level clears it.</p>';
+  el.innerHTML=h;
+  if(fk){ const n=el.querySelector(fk); if(n && !n.disabled) n.focus(); }
 }
+function setLvPanel(open, focus){
+  state.lvp=!!open; saveStore();
+  const p=document.getElementById("lvPanel"), t=document.getElementById("lvToggle"); if(!p) return;
+  p.hidden=!open; if(t) t.setAttribute("aria-expanded", String(!!open)); document.body.classList.toggle("lvp-open", !!open);
+  if(open){ renderLvPanel(); if(focus){ const c=document.getElementById("lvClose"); if(c) c.focus(); } }
+  else if(focus && t) t.focus();
+}
+/* - and + set a hero's level as of your last tick in that run; landing back on the guide's own count removes the setting. */
+function adjustLevel(run, hero, d){
+  const X=XPS[run]; if(!X) return;
+  const step=SEQ[run][X.snap.p], id=step ? step.id : "start", want=Math.max(1, Math.min(XP_MAX, (X.snap.lv[hero]||1)+d));
+  const list=state.lva[run]=state.lva[run]||[], i=list.findIndex(a=>a[0]===id && a[1]===hero);
+  if(i>=0) list.splice(i,1);
+  if(want!==(walkXp(run, X.snap.p, false).snap.lv[hero]||1)) list.push([id, hero, want]);
+  if(!list.length) delete state.lva[run];
+  saveStore(); refreshPlanner(); updateCounts();
+}
+function stripSig(){ return ["1","2"].map(r=>{ const X=XPS[r]; if(!X) return ""; const e=X.evs.find(e=>e.lv===10), s=e && SEQ[r][e.p]; return (s?s.ep:"")+"/"+(X.ranks[3]||""); }).join("|"); }
 function refreshPlanner(){
+  recalc();
   PLAN={"1":computePlan("1"), "2":computePlan("2")};
-  document.querySelectorAll(".lvl-slot[data-lv]").forEach(el=>{ const i=el.dataset.lv.indexOf("|"), r=el.dataset.lv.slice(0,i), src=el.dataset.lv.slice(i+1); el.innerHTML=PLAN[r].evs.filter(e=>e.type==="lv" && e.src===src).map(e=>lvlLine(r,e)).join(""); });
+  const by={}; ["1","2"].forEach(r=>PLAN[r].evs.forEach(e=>{ if(e.type==="lv"){ const k=r+"|"+e.src; (by[k]=by[k]||[]).push(e); } }));
+  document.querySelectorAll(".lvl-slot[data-lv]").forEach(el=>{ const k=el.dataset.lv, r=k.slice(0,k.indexOf("|")), html=by[k] ? by[k].map(e=>lvlLine(r,e)).join("") : ""; if(el._h!==html){ el._h=html; el.innerHTML=html; } });
   document.querySelectorAll(".rk[data-rk]").forEach(el=>{ const i=el.dataset.rk.indexOf("|"); el.innerHTML=rkBox(el.dataset.rk.slice(0,i), el.dataset.rk.slice(i+1), PLAN[el.dataset.rk.slice(0,i)]); });
   const pl=document.getElementById("planner"); if(pl) pl.innerHTML=plannerHtml();
+  const sig=stripSig(); if(sig!==STRIP_SIG){ STRIP_SIG=sig; document.querySelectorAll(".estrip[data-ep]").forEach(el=>{ el.outerHTML=epStrip(EP_BY_ID[el.dataset.ep]); }); }
+  renderLvPanel();
   syncAll();
 }
 /* Every copy of a tick box shows the same state, and each row dims when its own tick (or its run's tick) is done. */
@@ -2149,6 +2304,8 @@ function syncAll(){
   document.querySelectorAll("input[data-tick]").forEach(inp=>{ const on=!!state.ticks[inp.dataset.tick]; if(inp.checked!==on) inp.checked=on; });
   document.querySelectorAll("[data-k]").forEach(el=>el.classList.toggle("done", !!state.ticks[el.dataset.k]));
   document.querySelectorAll("[data-k1],[data-k2]").forEach(el=>{ const a=el.dataset.k1, b=el.dataset.k2; el.classList.toggle("done-1", !!(a && state.ticks[a])); el.classList.toggle("done-2", !!(b && state.ticks[b])); });
+  document.querySelectorAll(".failbtn[data-fail]").forEach(b=>{ const i=b.dataset.fail.indexOf("|"), on=isFailed(b.dataset.fail.slice(0,i), b.dataset.fail.slice(i+1)); if(b.getAttribute("aria-pressed")!==String(on)){ b.setAttribute("aria-pressed", String(on)); b.textContent=on?"Failed":"Mark failed"; } });
+  document.querySelectorAll(".call[data-src]").forEach(li=>{ li.classList.toggle("failed-1", isFailed("1", li.dataset.src)); li.classList.toggle("failed-2", isFailed("2", li.dataset.src)); });
 }
 
 /* ================= BEHAVIOUR ================= */
@@ -2166,6 +2323,7 @@ function setRun(r){
   document.querySelectorAll(".seg button[data-run]").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.run===r)));
   document.querySelectorAll(".rn-text").forEach(s=>{ s.innerHTML='Showing <strong>'+esc(RUN_LABEL[r])+'</strong>'; });
   const pl=document.getElementById("planner"); if(pl && PLAN["1"]) pl.innerHTML=plannerHtml();
+  renderLvPanel();
   saveStore();
 }
 function updateCounts(){
@@ -2232,13 +2390,23 @@ function wire(){
     const inp=e.target.closest("input[data-tick]");
     if(inp){ setTick(inp.dataset.tick, inp.checked); return; }
     const ls=e.target.closest("select[data-lvset]");
-    if(ls){ const i=ls.dataset.lvset.indexOf("|"), r=ls.dataset.lvset.slice(0,i), id=ls.dataset.lvset.slice(i+1), m=state.lvl[r]=state.lvl[r]||{};
-      if(ls.value==="") delete m[id]; else m[id]=+ls.value; saveStore(); refreshPlanner(); updateCounts(); return; }
+    if(ls){ const i=ls.dataset.lvset.indexOf("|"), r=ls.dataset.lvset.slice(0,i), id=ls.dataset.lvset.slice(i+1), m=state.lvl[r]=state.lvl[r]||{}, p=id.split("|");
+      Object.keys(m).forEach(k=>{ const q=k.split("|"); if(q[1]===p[1] && q[2]===p[2]) delete m[k]; });
+      if(ls.value!=="") m[id]=+ls.value; saveStore(); refreshPlanner(); updateCounts(); return; }
     const rh=e.target.closest("select[data-rkhero]");
     if(rh){ const i=rh.dataset.rkhero.indexOf("|"), rec=(state.rk[rh.dataset.rkhero.slice(0,i)]||{})[rh.dataset.rkhero.slice(i+1)];
       if(rec){ if(rh.value) rec.h=rh.value; else delete rec.h; } saveStore(); refreshPlanner(); updateCounts(); }
   });
   document.addEventListener("click",e=>{
+    if(e.target.closest("#lvToggle")){ setLvPanel(!state.lvp, true); return; }
+    if(e.target.closest("#lvClose")){ setLvPanel(false, true); return; }
+    const lr=e.target.closest("button[data-lvr]"); if(lr){ state.lvr=lr.dataset.lvr; saveStore(); renderLvPanel(); return; }
+    const fl=e.target.closest("button[data-fail]");
+    if(fl){ const i=fl.dataset.fail.indexOf("|"), r=fl.dataset.fail.slice(0,i), k=fl.dataset.fail.slice(i+1), m=state.fail[r]=state.fail[r]||{};
+      if(m[k]) delete m[k]; else m[k]=1; if(!Object.keys(m).length) delete state.fail[r]; saveStore(); refreshPlanner(); updateCounts(); return; }
+    const la=e.target.closest("button[data-lvadj]"); if(la){ const p=la.dataset.lvadj.split("|"); adjustLevel(p[0], p[1], +p[2]); return; }
+    const lx=e.target.closest("button[data-lvdel]");
+    if(lx){ const p=lx.dataset.lvdel.split("|"), list=state.lva[p[0]]||[], i=list.findIndex(a=>a[0]===p[1] && a[1]===p[2]); if(i>=0) list.splice(i,1); if(!list.length) delete state.lva[p[0]]; saveStore(); refreshPlanner(); updateCounts(); return; }
     const rs=e.target.closest("[data-rkset]");
     if(rs){ const p=rs.dataset.rkset.split("|"), s=+p[2], m=state.rk[p[0]]=state.rk[p[0]]||{}, before=TICK_RULES.map(holds);
       if(s<0) delete m[p[1]]; else m[p[1]]={s}; rankTrophy(); applyRules(before); afterChange(); return; }
@@ -2250,7 +2418,7 @@ function wire(){
     const fb=e.target.closest(".filters button");
     if(fb){ state.filter[fb.dataset.f]=fb.dataset.v; fb.parentElement.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed", String(b===fb))); applyTrophyFilter(); return; }
     const rb=e.target.closest("#resetTicks");
-    if(rb){ if(rb.classList.contains("armed")){ state.ticks={}; state.auto={}; state.lvl={}; state.rk={}; saveStore(); renderAll(); show(currentView()); } else { rb.classList.add("armed"); rb.textContent="Tap again to clear every tick"; setTimeout(()=>{ if(document.body.contains(rb)){ rb.classList.remove("armed"); rb.textContent="Reset all ticks"; } },4000); } return; }
+    if(rb){ if(rb.classList.contains("armed")){ state.ticks={}; state.auto={}; state.lvl={}; state.rk={}; state.fail={}; state.lva={}; saveStore(); renderAll(); show(currentView()); } else { rb.classList.add("armed"); rb.textContent="Tap again to clear every tick"; setTimeout(()=>{ if(document.body.contains(rb)){ rb.classList.remove("armed"); rb.textContent="Reset all ticks"; } },4000); } return; }
     const cp=e.target.closest("#xferCopy");
     if(cp){ const out=document.getElementById("xferOut"), st=document.getElementById("xferStatus"); const code=exportCode(); out.value=code;
       const fallback=()=>{ try{ out.focus(); out.select(); out.setSelectionRange(0,code.length); }catch(_){} st.textContent="Couldn't copy automatically. The code is selected: copy it from the box."; };
@@ -2262,13 +2430,15 @@ function wire(){
       else document.getElementById("xferStatus").textContent="That code didn't load. Copy it again from the other device and paste the whole thing.";
       return; }
     const jump=e.target.closest("a[data-jump]");
-    if(jump){ e.preventDefault(); const v=jump.dataset.view, id=jump.dataset.jump||null; closeSearch(); if(location.hash!=="#"+v){ pendingFocus=id; location.hash=v; } else show(v,id); }
+    if(jump){ e.preventDefault(); const v=jump.dataset.view, id=jump.dataset.jump||null; closeSearch();
+      if(jump.closest("#lvPanel") && !window.matchMedia("(min-width:1420px)").matches) setLvPanel(false); if(location.hash!=="#"+v){ pendingFocus=id; location.hash=v; } else show(v,id); }
   });
   const tg=document.getElementById("searchToggle"), panel=document.getElementById("searchPanel"), q=document.getElementById("q");
   tg.addEventListener("click",()=>{ const open=panel.hidden; panel.hidden=!open; tg.setAttribute("aria-expanded",String(open)); if(open){ q.focus(); } });
   q.addEventListener("input",()=>doSearch(q.value));
   q.addEventListener("keydown",e=>{ if(e.key==="Escape") closeSearch(); });
   window.addEventListener("hashchange",()=>{ show(currentView(), pendingFocus); pendingFocus=null; });
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape" && state.lvp){ const p=document.getElementById("lvPanel"); if(p && p.contains(document.activeElement)) setLvPanel(false, true); } });
 }
 let pendingFocus=null;
 function closeSearch(){ const panel=document.getElementById("searchPanel"); panel.hidden=true; document.getElementById("searchToggle").setAttribute("aria-expanded","false"); }
@@ -2281,10 +2451,11 @@ function start(data){
   if(state.v<3){ applyRules(TICK_RULES.map(()=>false)); rankTrophy(); state.v=3; saveStore(); }
   /* Overkill can't pop in the Ep 1 tutorial: drop a tick the old Ep 1 link made. */
   if(state.v<4){ const before=TICK_RULES.map(holds); if((state.auto["t:Overkill"]||"").indexOf("ep1:0:8")>=0){ delete state.ticks["t:Overkill"]; delete state.auto["t:Overkill"]; applyRules(before); } state.v=4; saveStore(); }
-  if(migrateLvl()) saveStore();
   NEXT_SHIFT=(whereAmI().next||{}).sh||null;
   renderTabs(); renderAll(); buildIndex(); wire();
   setRun(state.run);
+  /* The panel reopens by itself only where it docks beside the page. */
+  if(state.lvp && window.matchMedia("(min-width:1420px)").matches) setLvPanel(true, false); else if(state.lvp){ state.lvp=false; saveStore(); }
   show(currentView());
 }
 if(window.claude && window.claude.hot && window.claude.hot.snapshot){ try{ window.claude.hot.snapshot(()=>({run:state.run})); }catch(e){} }
