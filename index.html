@@ -212,6 +212,13 @@ ul.opts{list-style:none;margin:0;padding:0;display:grid;gap:4px}
 .pk-r1{background:var(--r1)}
 .pk-r2{background:var(--r2)}
 .run-1 .pk-r2,.run-2 .pk-r1,.run-1 .t-r2,.run-2 .t-r1,.run-1 .na-2,.run-2 .na-1,.run-1 .dc-r2,.run-2 .dc-r1{display:none}
+/* PlayStation face button for each dialogue option */
+.psb{display:inline-flex;align-self:center;flex:0 0 auto}
+.psb svg{width:22px;height:22px;display:block;border-radius:50%}
+.psb .pb-bg{fill:#1B2130;stroke:#3B4661;stroke-width:1}
+.run-1 .psb-r2,.run-2 .psb-r1{display:none}
+.run-both .psb-r1 svg{box-shadow:0 0 0 2px var(--r1)}
+.run-both .psb-r2 svg{box-shadow:0 0 0 2px var(--r2)}
 .tmr,.oif{font:700 .625rem/1 var(--mono);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);border:1px dashed var(--line);padding:3px 5px;border-radius:4px}
 .fx{font:700 .6875rem/1 var(--mono);padding:3px 6px;border-radius:4px;white-space:nowrap;border:1px solid var(--line);color:var(--muted)}
 .fx.m{color:var(--good);border-color:var(--good)}
@@ -1688,6 +1695,19 @@ function renderEpisode(ep){
   return h;
 }
 
+/* The PlayStation button each dialogue option is on. The game's choice box (WBP_StandardChoiceUI) fills its buttons in
+   option order: Square (left), Circle (right), then Triangle (on the row above). An option whose condition isn't met
+   isn't offered, so the ones after it move up a button. DLG_IF: does each option condition hold in [Run 1, Run 2] with
+   this guide's picks (Ep 1 goon and kiss, Ep 4 date and dinner kiss, Ep 5 "I'm Mecha Man", Invisigal's bond). */
+const DLG_IF = {"if you didn't kiss Blazer in Ep 1":[1,0], "if you kissed Blazer in Ep 1":[0,1],
+  "if you kissed her at dinner":[0,1], "if you didn't kiss her at dinner":[1,0],
+  "if you said I'm Robert":[0,1], "if you said I'm Mecha Man":[1,0], "movie route":[1,0], "dinner route":[0,1],
+  "bond under 10":[0,1], "bond 10+":[1,0], "if you dropped the goon":[0,1], "if you pulled the goon up":[1,0]};
+const PS_BTN = [["Square",'<rect x="6.1" y="6.1" width="7.8" height="7.8" rx=".5"/>',"#E58FD2"],
+  ["Circle",'<circle cx="10" cy="10" r="4.2"/>',"#F2626A"], ["Triangle",'<path d="M10 5.4l4.5 7.9H5.5z"/>',"#3FCBA2"]];
+function psBtn(i, cls){ const b=PS_BTN[i]; return '<span class="psb'+(cls?' '+cls:'')+'" role="img" aria-label="'+b[0]+' button" title="'+b[0]+'"><svg viewBox="0 0 20 20" aria-hidden="true"><circle class="pb-bg" cx="10" cy="10" r="9.4"/><g fill="none" stroke="'+b[2]+'" stroke-width="1.7" stroke-linejoin="round">'+b[1]+'</g></svg></span>'; }
+/* Button index per option for a run's conditions (-1: not offered). */
+function dlgButtons(v, run){ let n=0; return v.o.map(o=>{ const ok=!o.i || !!(DLG_IF[o.i]||[1,1])[run==="1"?0:1]; return ok && n<3 ? n++ : -1; }); }
 /* Dialogue checklist. Tick keys are "d:<id>:1" and "d:<id>:2", one per run. */
 const DLG_SAVE = new Set(["E2-SQ0060-0010x","E3-SQ0110-0010x","E4-SQ0070-0030x","E5-SQ0120-0070a","E7-SQ0050-0200a","E8-SQ0090-0350x"]);
 const DLG_KEY = new Set(["E3-SQ0070-0011a","E4-SQ0110-0010x","E4-SQ0120-0010x","E5-SQ0020-0010x","E7-SQ0010-0010x","E7-SQ0060-0075x","E8-SQ0020-0100x"]);
@@ -1806,9 +1826,12 @@ function renderDlgItem(x){
   if(x.q) h+='<p class="dlg-q"><span class="who">'+esc(x.q[0])+'</span>'+esc(x.q[1])+'</p>';
   x.v.forEach(v=>{
     if(v.c) h+='<p class="dlg-ver">'+esc(v.c)+'</p>';
+    /* A version only one run reaches shows that run's buttons in both. QTE beats have their own prompts. */
+    const in1=v.a>=0, in2=v.b>=0, k1=dlgButtons(v, in1||!in2?"1":"2"), k2=dlgButtons(v, in2||!in1?"2":"1");
     h+='<ul class="opts">'+v.o.map((o,i)=>{
       const c=["opt"]; if(i===v.a) c.push("is-r1"); if(i===v.b) c.push("is-r2");
-      return '<li class="'+c.join(" ")+'"><span class="ot">'+esc(o.t)+'</span>'+(o.d?'<span class="tmr" title="The game picks this if the timer runs out">timer</span>':'')+(o.i?'<span class="oif">'+esc(o.i)+'</span>':'')+fxTags(o.x)+(i===v.a?'<span class="pk pk-r1">Run 1</span>':'')+(i===v.b?'<span class="pk pk-r2">Run 2</span>':'')+'</li>';
+      const btn=x.qte ? '' : k1[i]===k2[i] ? (k1[i]>=0 ? psBtn(k1[i]) : '') : (k1[i]>=0 ? psBtn(k1[i],"psb-r1") : '')+(k2[i]>=0 ? psBtn(k2[i],"psb-r2") : '');
+      return '<li class="'+c.join(" ")+'">'+btn+'<span class="ot">'+esc(o.t)+'</span>'+(o.d?'<span class="tmr" title="The game picks this if the timer runs out">timer</span>':'')+(o.i?'<span class="oif">'+esc(o.i)+'</span>':'')+fxTags(o.x)+(i===v.a?'<span class="pk pk-r1">Run 1</span>':'')+(i===v.b?'<span class="pk pk-r2">Run 2</span>':'')+'</li>';
     }).join("")+'</ul>';
   });
   if(x.n) h+='<p class="dlg-n">'+md(x.n)+'</p>';
@@ -1820,7 +1843,7 @@ function renderDlgItem(x){
 function renderDialogue(ep){
   const items=DIALOGUE[ep.id]||[];
   let h='<section class="block" id="dlg-'+ep.id+'"><div class="block-head"><h2>Walkthrough</h2><span class="dcount mono" id="dc-'+ep.id+'">'+dlgCountText(ep.id)+'</span></div>';
-  h+='<p class="muted small">The whole episode in story order: all '+items.filter(x=>x.v).length+' dialogue choices (read from the game files), the hacks, the story trophies where they pop, and each shift as a dropdown at the point it starts. The outlined line is the pick for the run you\'re showing; tick the box once you\'ve made it. Trophies and hacks a step earns tick themselves. <span class="fx m">Mentor</span> is Invisigal\'s hidden mentor score (45+ for her hero ending). <span class="fx bd">Bond</span> is her hidden romance score (10+ unlocks the Ep 7 Lean In). <span class="fx">Hero</span> and <span class="fx">Antihero</span> only feed the end-of-game personality stat. <span class="tmr">timer</span> marks the line the game picks if the timer runs out.</p>';
+  h+='<p class="muted small">The whole episode in story order: all '+items.filter(x=>x.v).length+' dialogue choices (read from the game files), the hacks, the story trophies where they pop, and each shift as a dropdown at the point it starts. The outlined line is the pick for the run you\'re showing; tick the box once you\'ve made it. Trophies and hacks a step earns tick themselves. <span class="fx m">Mentor</span> is Invisigal\'s hidden mentor score (45+ for her hero ending). <span class="fx bd">Bond</span> is her hidden romance score (10+ unlocks the Ep 7 Lean In). <span class="fx">Hero</span> and <span class="fx">Antihero</span> only feed the end-of-game personality stat. <span class="tmr">timer</span> marks the line the game picks if the timer runs out. The PlayStation button before each line is the one to press: Square on the left, Circle on the right, Triangle on top. When a line only shows up under a condition, the lines after it move to another button, so those show each run\'s button.</p>';
   if(DLG_NOTE[ep.id]) h+='<p class="panel small">'+md(DLG_NOTE[ep.id])+'</p>';
   h+='<ol class="dlg-list">';
   let lastSc=null;
