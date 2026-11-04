@@ -1947,6 +1947,11 @@ function renderAll(){
 /* ================= AUTO-TICKS, LEVEL-UPS, PROGRESS ================= */
 /* XPS: each run's level-ups and rank-ups, recounted from your fail marks and set levels; BASE: the guide's own plan. */
 let SEQ={}, POS={}, STEP_IX={}, TICK_RULES=[], PHASES=[], PLAN={}, XPS={}, BASE={}, BASE_AT={}, STRIP_SIG="", NEXT_SHIFT=null;
+/* NEXT_ID: the element id of the highlighted next step; STEP_KEYS: the tick keys of every step in the progress order. */
+let NEXT_ID=null, STEP_KEYS=new Set();
+/* OWN[i]: the keys phase i is first to have (a hack ticked in Run 1 is ticked for Run 2 as well, so it says nothing about
+   Run 2); SHARED: keys in both runs' steps. */
+let OWN=[], SHARED=new Set();
 
 /* Rules: k ticks itself once n of the keys in "of" are ticked. id stays stable so a saved "who ticked this" still matches. */
 function buildRules(){
@@ -1985,11 +1990,20 @@ function rankTrophy(){
   else if(n<4 && state.auto[k]==="rank"){ delete state.ticks[k]; delete state.auto[k]; }
 }
 function setTick(k, on){
-  const before=TICK_RULES.map(holds);
+  const before=TICK_RULES.map(holds), prev=NEXT_ID;
   if(on) state.ticks[k]=true; else delete state.ticks[k];
   delete state.auto[k];
   applyRules(before);
   afterChange();
+  /* Ticking a step moves the highlight on: follow it when the new next step is on the page you're looking at. */
+  if(on && STEP_KEYS.has(k) && NEXT_ID && NEXT_ID!==prev){ const el=document.getElementById(NEXT_ID); if(el && el.closest(".view.on")) revealStep(el, true); }
+}
+/* Scroll a step to just under the header, opening the shift dropdown it sits in. A step hidden in this run's view is left alone. */
+function revealStep(el, smooth){
+  for(let d=el.closest("details"); d; d=d.parentElement && d.parentElement.closest("details")) d.open=true;
+  if(!el.getClientRects().length) return false;
+  el.scrollIntoView({block:"start", behavior: smooth && !window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "smooth" : "auto"});
+  return true;
 }
 function afterChange(){ saveStore(); syncAll(); updateCounts(); applyTrophyFilter(); refreshPlanner(); }
 function autoHint(k){
@@ -2033,12 +2047,15 @@ function buildSteps(){
     {id:"cl", label:"Cleanup", steps:STEP_A.map((s,i)=>({key:"a:"+i, id:"a-"+i, view:"cleanup", label:"Cleanup step A"+(i+1)}))},
     {id:"r2", label:"Run 2", run:"2", steps:steps("2")}
   ];
+  STEP_KEYS=new Set(); PHASES.forEach(p=>p.steps.forEach(s=>{ if(s.key) STEP_KEYS.add(s.key); }));
+  const seen=new Set(); OWN=PHASES.map(p=>{ const own=new Set(); p.steps.forEach(s=>{ if(s.key && !seen.has(s.key)) own.add(s.key); }); p.steps.forEach(s=>{ if(s.key) seen.add(s.key); }); return own; });
+  const k1=new Set(SEQ["1"].map(s=>s.key).filter(Boolean)); SHARED=new Set(SEQ["2"].map(s=>s.key).filter(k=>k && k1.has(k)));
 }
-/* Where you are: the latest phase with real progress (3+ ticks, so a stray tick in Run 2 doesn't count), then the first
-   unticked step after your furthest tick in it. */
+/* Where you are: the latest phase with real progress (3+ ticks on its own steps, so a stray tick in Run 2 doesn't count,
+   nor a hack you won in Run 1), then the first unticked step after your furthest tick on its own steps. */
 function whereAmI(){
-  let cur=0; PHASES.forEach((p,i)=>{ if(p.steps.filter(s=>state.ticks[s.key]).length>=Math.min(3,p.steps.length)) cur=i; });
-  const p=PHASES[cur]; let far=-1; p.steps.forEach((s,i)=>{ if(state.ticks[s.key]) far=i; });
+  let cur=0; PHASES.forEach((p,i)=>{ const own=p.steps.filter(s=>OWN[i].has(s.key)); if(own.length && own.filter(s=>state.ticks[s.key]).length>=Math.min(3,own.length)) cur=i; });
+  const p=PHASES[cur]; let far=-1; p.steps.forEach((s,i)=>{ if(state.ticks[s.key] && OWN[cur].has(s.key)) far=i; });
   let next=null, phase=p;
   for(let i=far+1;i<p.steps.length;i++) if(!state.ticks[p.steps[i].key]){ next=p.steps[i]; break; }
   for(let j=cur+1;!next && j<PHASES.length;j++){ const s=PHASES[j].steps.find(s=>!state.ticks[s.key]); if(s){ next=s; phase=PHASES[j]; } }
@@ -2046,7 +2063,7 @@ function whereAmI(){
   let done=0, total=0; PHASES.forEach(q=>{ total+=q.steps.length; done+=q.steps.filter(s=>state.ticks[s.key]).length; });
   return {phase, next, skipped, done, total};
 }
-function furthestPos(run){ let p=-1; SEQ[run].forEach((s,i)=>{ if(s.key && state.ticks[s.key]) p=i; }); return p; }
+function furthestPos(run){ let p=-1; SEQ[run].forEach((s,i)=>{ if(s.key && state.ticks[s.key] && (run==="1" || !SHARED.has(s.key))) p=i; }); return p; }
 const trim=(s,n)=>{ s=String(s); return s.length>n ? s.slice(0,n-1)+"…" : s; };
 function stepLink(s, run, text, cls){
   const view=s.view||s.ep;
@@ -2080,6 +2097,7 @@ function updateProgress(){
   document.querySelectorAll(".is-next").forEach(el=>el.classList.remove("is-next"));
   const el=w.next && document.getElementById(w.next.id); if(el) el.classList.add("is-next");
   NEXT_SHIFT=w.next ? w.next.sh||null : null;
+  NEXT_ID=w.next ? w.next.id : null;
 }
 
 /* ---- Level-up planner ---- */
@@ -2317,6 +2335,9 @@ function show(view, focusId){
   if(focusId){ const el=document.getElementById(focusId); if(el){
     for(let d=el.closest("details"); d; d=d.parentElement && d.parentElement.closest("details")) d.open=true;
     el.scrollIntoView({block: el.offsetHeight > window.innerHeight*0.5 ? "start" : "center"}); el.style.outline="3px solid var(--accent)"; setTimeout(()=>{el.style.outline="";},1600); return; } }
+  /* A page that holds your highlighted next step opens on it, so switching away and back returns you there. */
+  const nx=NEXT_ID && document.getElementById(NEXT_ID);
+  if(nx && nx.closest("#view-"+view) && revealStep(nx, false)) return;
   window.scrollTo(0,0);
 }
 function setRun(r){
@@ -2445,6 +2466,8 @@ let pendingFocus=null;
 function closeSearch(){ const panel=document.getElementById("searchPanel"); panel.hidden=true; document.getElementById("searchToggle").setAttribute("aria-expanded","false"); }
 
 function start(data){
+  /* The page places itself on load (your next step), so the browser shouldn't restore an old scroll position over it. */
+  try{ if("scrollRestoration" in history) history.scrollRestoration="manual"; }catch(e){}
   loadStore(); migrateTicks();
   if(data && data.run) state.run=data.run;
   buildRules(); buildSteps();
